@@ -1,0 +1,5394 @@
+{
+ "updatedOn": "2 octobre 2026",
+ "domains": [
+  {
+   "slug": "patients",
+   "title": "Patients",
+   "summary": "Un dossier administratif unique par patient : identité, contacts, assurances, historique.",
+   "pack": "operationnel",
+   "modules": [
+    {
+     "slug": "dossier-administratif-patient",
+     "title": "Dossier administratif patient",
+     "pack": "operationnel",
+     "features": [
+      {
+       "title": "Rechercher / lister les patients",
+       "items": [
+        {
+         "title": "Liste paginée avec filtres",
+         "goal": "Rechercher par nom, prénom, numéro, téléphone ; filtres sexe, statut, régime, années de naissance, ville ; tri et pagination (20 par défaut, 100 max) ; les patients ARCHIVED sont masqués.",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Secrétaire",
+          "Orthoptiste"
+         ],
+         "menu": "Soins › Patients"
+        }
+       ]
+      },
+      {
+       "title": "Afficher le détail d'un patient (tiroir)",
+       "items": [
+        {
+         "title": "Bouton « Détails »",
+         "goal": "Voir nom, âge, naissance, sexe, téléphone, email, adresse, ville, nationalité, assurances, dernière activité.",
+         "status": "disponible",
+         "menu": "Soins › Patients"
+        }
+       ]
+      },
+      {
+       "title": "Ouvrir un patient",
+       "items": [
+        {
+         "title": "Charger la fiche",
+         "goal": "Récupérer un patient par identifiant (fiche d'édition).",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Soins › Patients"
+        }
+       ]
+      },
+      {
+       "title": "Détecter les doublons avant création",
+       "items": [
+        {
+         "title": "Alerte « patients potentiellement similaires »",
+         "goal": "Si un patient de même n° de sécurité sociale, ou de mêmes prénom + nom + date de naissance, existe : afficher la liste et exiger une confirmation (force=true) pour créer quand même.",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ],
+         "menu": "Soins › Patients › Nouveau patient"
+        }
+       ]
+      },
+      {
+       "title": "Modifier un patient",
+       "items": [
+        {
+         "title": "Page de fiche patient",
+         "goal": "Mettre à jour identité, contact, adresse, ville, nationalité et liste des assurances.",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Soins › Patients › Modifier"
+        }
+       ]
+      },
+      {
+       "title": "Archiver (supprimer) un patient",
+       "items": [
+        {
+         "title": "Bouton « Supprimer » + confirmation + raison",
+         "goal": "Suppression logique : statut ARCHIVED, raison obligatoire, audit ; le patient disparaît de la liste standard.",
+         "status": "disponible",
+         "menu": "Soins › Patients › Modifier"
+        }
+       ]
+      },
+      {
+       "title": "Historique d'audit d'un patient",
+       "items": [
+        {
+         "title": "Traces d'accès et de modification",
+         "goal": "Retourner les entrées d'audit relatives à un patient.",
+         "status": "disponible"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "reception",
+   "title": "Réception et accueil",
+   "summary": "L'arrivée du patient, les prestations du jour, le lien avec l'assurance, la consultation et la caisse.",
+   "pack": "operationnel",
+   "modules": [
+    {
+     "slug": "dossiers-d-accueil",
+     "title": "Dossiers d'accueil",
+     "pack": "operationnel",
+     "features": [
+      {
+       "title": "Lister les réceptions",
+       "items": [
+        {
+         "title": "Liste filtrable paginée",
+         "goal": "Afficher les réceptions avec statut ; filtre statut (Brouillon, Envoyé, Approuvé, Rejeté, Partiellement approuvé), pagination ; un compte INSURANCE ne voit que celles de sa compagnie.",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ],
+         "menu": "Soins › Accueil patient"
+        }
+       ]
+      },
+      {
+       "title": "Statistiques du jour",
+       "items": [
+        {
+         "title": "Cartes « Demandes du jour, En attente, Acceptées, Rejetées »",
+         "goal": "Compter les réceptions du jour par statut (DRAFT, SENT, APPROVED, REJECTED).",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Soins › Accueil patient"
+        }
+       ]
+      },
+      {
+       "title": "Créer une réception",
+       "items": [
+        {
+         "title": "Formulaire « Nouvelle réception »",
+         "goal": "Ouvrir un dossier d'accueil : patient, assurance (ou paiement direct), prestations avec médecin assigné, quantités, notes ; génère un code et un jeton assureur (48 h) et calcule le total ; sans assurance la réception est APPROVED d'office.",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Soins › Accueil patient"
+        }
+       ]
+      },
+      {
+       "title": "Consultation de suivi gratuite",
+       "items": [
+        {
+         "title": "Règle des 15 jours",
+         "goal": "Mettre à 0 le prix d'une consultation si le patient a eu la même consultation dans les 15 derniers jours, et l'approuver automatiquement avec justification ; désactivable par =false.",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ],
+         "menu": "Soins › Accueil patient"
+        }
+       ]
+      },
+      {
+       "title": "Envoyer la demande à l'assurance",
+       "items": [
+        {
+         "title": "Bouton « Envoyer » + confirmation",
+         "goal": "Passer la réception de DRAFT à SENT et envoyer un email à l'assureur avec le lien de validation (un échec d'email n'annule pas l'envoi).",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ],
+         "menu": "Soins › Accueil patient"
+        }
+       ]
+      },
+      {
+       "title": "Ajouter une prestation à une réception",
+       "items": [
+        {
+         "title": "Ajout de ligne",
+         "goal": "Ajouter une prestation (médecin, quantité, prix) à une réception existante.",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ],
+         "menu": "Soins › Accueil patient › Modifier"
+        }
+       ]
+      },
+      {
+       "title": "Réactiver une prestation annulée automatiquement",
+       "items": [
+        {
+         "title": "Bouton « Réactiver »",
+         "goal": "Réactiver une prestation annulée après 72 h d'impayé ; refusé si déjà payée ou non annulée automatiquement.",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ],
+         "menu": "Soins › Accueil patient › Détail"
+        }
+       ]
+      },
+      {
+       "title": "Supprimer une prestation d'une réception",
+       "items": [
+        {
+         "title": "Retrait de ligne",
+         "goal": "Retirer une prestation d'une réception.",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ],
+         "menu": "Soins › Accueil patient › Modifier"
+        }
+       ]
+      },
+      {
+       "title": "Annulation automatique après 72 h",
+       "items": [
+        {
+         "title": "Balayage d'impayés",
+         "goal": "Marquer annulées les prestations non encaissées au-delà de 72 h ; déclenché par le service d'encaissement.",
+         "status": "disponible",
+         "menu": "Argent › Caisse (effet visible dans Accueil patient)"
+        }
+       ]
+      },
+      {
+       "title": "Ajouter une assurance au patient depuis la réception",
+       "items": [
+        {
+         "title": "Modale « Ajouter une assurance »",
+         "goal": "Quand le patient n'a pas d'assurance, ouvrir une modale pour en choisir une (assurances actives) et l'enregistrer sur le patient.",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ],
+         "menu": "Soins › Accueil patient › Nouvelle réception"
+        }
+       ]
+      },
+      {
+       "title": "Saisir les constantes depuis la liste d'accueil",
+       "items": [
+        {
+         "title": "Bouton « Constantes »",
+         "goal": "Ouvrir la saisie des constantes pour le patient d'une réception.",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Infirmier(ère)"
+         ],
+         "menu": "Soins › Accueil patient"
+        }
+       ]
+      },
+      {
+       "title": "Notifications de succès/erreur de la liste",
+       "items": [
+        {
+         "title": "Toasts d'envoi et de suppression",
+         "goal": "Afficher une notification après envoi ou suppression d'une réception.",
+         "status": "developpement",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ],
+         "menu": "Soins › Accueil patient"
+        }
+       ]
+      },
+      {
+       "title": "Sélecteur de prestations par type",
+       "items": [
+        {
+         "title": "Composant PrestationSelector",
+         "goal": "Choix de prestation avec types de prestations.",
+         "status": "developpement",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ],
+         "menu": "Soins › Accueil patient"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "clinique",
+   "title": "Clinique médicale",
+   "summary": "Consultations, examens, dossiers médicaux, constantes, ordonnances, certificats et rendez-vous.",
+   "pack": "operationnel",
+   "modules": [
+    {
+     "slug": "consultations",
+     "title": "Consultations",
+     "pack": "operationnel",
+     "features": [
+      {
+       "title": "File de consultation",
+       "items": [
+        {
+         "title": "Consultations en cours du médecin",
+         "goal": "Afficher au médecin ses consultations IN_PROGRESS (file « mes patients »)",
+         "status": "disponible",
+         "menu": "Soins › Consultation"
+        },
+        {
+         "title": "Patients prêts pour consultation",
+         "goal": "Afficher au médecin les patients dont la réception est réglée et prête à être consultée",
+         "status": "disponible",
+         "menu": "Soins › Consultation"
+        },
+        {
+         "title": "Filtres de file (Tous / En cours / Prêt / À imprimer)",
+         "goal": "Filtrer la liste latérale de patients par état de consultation",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste"
+         ],
+         "menu": "Soins › Consultation"
+        },
+        {
+         "title": "Recherche patient dans la file",
+         "goal": "Rechercher un patient par nom, prénom ou téléphone dans la file",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste"
+         ],
+         "menu": "Soins › Consultation"
+        },
+        {
+         "title": "Afficher les consultations de plus de 72 h",
+         "goal": "Basculer l'affichage des consultations en cours anciennes (médecin)",
+         "status": "disponible",
+         "profiles": [
+          "Médecin"
+         ],
+         "menu": "Soins › Consultation"
+        }
+       ]
+      },
+      {
+       "title": "Consultation",
+       "items": [
+        {
+         "title": "Charger une consultation par identifiant",
+         "goal": "Rouvrir une consultation connue par son ID",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste",
+          "Direction"
+         ],
+         "menu": "Soins › Consultation"
+        },
+        {
+         "title": "Spécialités éligibles du patient",
+         "goal": "Lister les spécialités pour lesquelles le patient a une consultation encaissée et non close (avec compteur restant)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste",
+          "Direction"
+         ],
+         "menu": "Soins › Consultation"
+        },
+        {
+         "title": "Prestations de consultation payées",
+         "goal": "Lister les lignes de réception « consultation » payées (et validées par l'assurance si applicable) du patient",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste",
+          "Direction"
+         ],
+         "menu": "Soins › Consultation"
+        },
+        {
+         "title": "Créer le dossier de consultation",
+         "goal": "Ouvrir une consultation IN_PROGRESS pour un patient, une spécialité et un médecin",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Soins › Consultation › Créer le dossier"
+        },
+        {
+         "title": "Historique des consultations du patient",
+         "goal": "Lister les consultations d'un patient (panneau « Contexte patient » et historique)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste",
+          "Direction"
+         ],
+         "menu": "Soins › Consultation"
+        },
+        {
+         "title": "Enregistrer le dossier (création des données de spécialité)",
+         "goal": "Enregistrer le contenu du formulaire dynamique, brouillon ou final",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Soins › Consultation › Valider et enregistrer"
+        },
+        {
+         "title": "Enregistrer le dossier (mise à jour)",
+         "goal": "Mettre à jour le contenu déjà enregistré ; refusé si la consultation est COMPLETED",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin"
+         ],
+         "menu": "Soins › Consultation › Valider et enregistrer"
+        },
+        {
+         "title": "Envoi automatique des examens prescrits à la réception",
+         "goal": "À l'enregistrement, créer des lignes de réception pour les examens sélectionnés dans la consultation",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin"
+         ],
+         "menu": "Soins › Consultation"
+        },
+        {
+         "title": "Clôturer la consultation",
+         "goal": "Passer la consultation à COMPLETED après enregistrement (idempotent)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Soins › Consultation › Clôturer la consultation"
+        },
+        {
+         "title": "Clôturer sans consultation",
+         "goal": "Annuler une consultation en cours (CANCELLED) pour sortir le patient de la file",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin"
+         ],
+         "menu": "Soins › Consultation › Clôturer sans consultation"
+        },
+        {
+         "title": "Clôture automatique nocturne",
+         "goal": "Clôturer en COMPLETED les consultations IN_PROGRESS sans activité depuis plus de 48 h (job vers minuit, par cabinet)",
+         "status": "disponible"
+        },
+        {
+         "title": "Lier les prestations de suivi (réception)",
+         "goal": "Associer à la consultation des prestations de suivi payées créées à l'accueil",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin"
+         ],
+         "menu": "Soins › Consultation › Suivi (étape Suivi et orientation)"
+        },
+        {
+         "title": "Supprimer une consultation",
+         "goal": "Supprimer une consultation (confirmation, irréversible) ; refusé si liée à une facture (409)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Soins › Consultation › Historique (bouton de suppression)"
+        },
+        {
+         "title": "Top des médicaments prescrits",
+         "goal": "Proposer les médicaments les plus prescrits par le médecin (Top 10) lors de la rédaction d'ordonnance",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste",
+          "Direction"
+         ],
+         "menu": "Soins › Consultation › Ordonnances"
+        },
+        {
+         "title": "Parcours en 6 étapes",
+         "goal": "Naviguer entre Dossier médical, Résultats d'examen, Observations, Examens, Suivi et orientation, Certificat avec contrôle de complétude",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste"
+         ],
+         "menu": "Soins › Consultation"
+        },
+        {
+         "title": "Garde de sortie",
+         "goal": "Avertir avant de quitter l'écran avec une saisie non enregistrée",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste"
+         ],
+         "menu": "Soins › Consultation"
+        },
+        {
+         "title": "Mode lecture seule",
+         "goal": "Afficher le dossier sans pouvoir saisir pour les rôles sans écriture ou si la session a expiré",
+         "status": "disponible",
+         "profiles": [
+          "Infirmier(ère)"
+         ],
+         "menu": "Soins › Consultation"
+        },
+        {
+         "title": "Résumé avant clôture",
+         "goal": "Aperçu de synthèse (dossier, observations, examens demandés, ordonnance, suivi) avant validation",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste"
+         ],
+         "menu": "Soins › Consultation"
+        },
+        {
+         "title": "Erreurs de validation nommées",
+         "goal": "Lister les champs obligatoires manquants et se positionner dessus",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste"
+         ],
+         "menu": "Soins › Consultation"
+        },
+        {
+         "title": "Envoyer en caisse après clôture",
+         "goal": "Lien direct vers l'encaissement du patient à la clôture",
+         "status": "disponible",
+         "menu": "Soins › Consultation"
+        },
+        {
+         "title": "Barre de contexte patient",
+         "goal": "Rappeler le patient actif et permettre d'en changer",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste"
+         ],
+         "menu": "Soins › Consultation"
+        },
+        {
+         "title": "Dernières constantes dans le dossier",
+         "goal": "Afficher les dernières constantes du patient dans l'écran de consultation",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste"
+         ],
+         "menu": "Soins › Consultation"
+        }
+       ]
+      },
+      {
+       "title": "Étape Résultats d'examen",
+       "items": [
+        {
+         "title": "Résultats d'examen disponibles",
+         "goal": "Lister les examens terminés du patient et ceux prescrits dans la consultation",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste"
+         ],
+         "menu": "Soins › Consultation › étape Résultats d'examen"
+        },
+        {
+         "title": "Analyse IA d'un résultat",
+         "goal": "Faire interpréter un résultat d'examen dans le contexte du patient (observations + suggestions)",
+         "status": "disponible",
+         "menu": "Soins › Consultation › étape Résultats d'examen"
+        }
+       ]
+      },
+      {
+       "title": "Étape Observations",
+       "items": [
+        {
+         "title": "Motif et histoire de la maladie",
+         "goal": "Saisir le motif et l'histoire dans un champ fusionné (enregistré dans chiefComplaint et hpi)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste"
+         ],
+         "menu": "Soins › Consultation › étape Observations"
+        },
+        {
+         "title": "Formulaire dynamique de spécialité",
+         "goal": "Rendre les sections et champs définis par le modèle publié de la spécialité (text, select, nombre, date, tableau, objet)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste"
+         ],
+         "menu": "Soins › Consultation › étape Observations"
+        },
+        {
+         "title": "Actes posés / réalisés",
+         "goal": "Noter les actes réalisés en liste libre (ex. mesure d'acuité, fond d'œil)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste"
+         ],
+         "menu": "Soins › Consultation › étape Observations"
+        }
+       ]
+      },
+      {
+       "title": "Étape Examens",
+       "items": [
+        {
+         "title": "Sélection des examens à réaliser",
+         "goal": "Rechercher dans le catalogue d'examens, sélectionner et annoter chaque examen",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste"
+         ],
+         "menu": "Soins › Consultation › étape Examens"
+        },
+        {
+         "title": "Recommandation d'examens par IA",
+         "goal": "Proposer des examens complémentaires pertinents choisis uniquement dans le catalogue",
+         "status": "disponible",
+         "menu": "Soins › Consultation › étape Examens"
+        },
+        {
+         "title": "Imprimer la liste des examens",
+         "goal": "Générer le bon d'examens à remettre au patient (aperçu puis impression)",
+         "status": "disponible",
+         "profiles": [
+          "Médecin",
+          "Administrateur"
+         ],
+         "menu": "Soins › Consultation › Imprimer examens"
+        }
+       ]
+      },
+      {
+       "title": "Étape Suivi et orientation",
+       "items": [
+        {
+         "title": "Prochain rendez-vous",
+         "goal": "Programmer un rendez-vous de suivi depuis la consultation (clôt la consultation liée)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Secrétaire"
+         ],
+         "menu": "Soins › Consultation › étape Suivi et orientation"
+        },
+        {
+         "title": "Ajouter un médicament au catalogue depuis l'ordonnance",
+         "goal": "Enregistrer un médicament saisi librement dans le catalogue partagé",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin"
+         ],
+         "menu": "Soins › Consultation › Ordonnances"
+        },
+        {
+         "title": "Copilote IA de suivi",
+         "goal": "Proposer ordonnance et délai de prochain rendez-vous à partir des résultats d'examen",
+         "status": "disponible",
+         "menu": "Soins › Consultation › étape Suivi et orientation"
+        },
+        {
+         "title": "Imprimer l'ordonnance",
+         "goal": "Générer et imprimer l'ordonnance de la consultation (aperçu)",
+         "status": "disponible",
+         "profiles": [
+          "Médecin",
+          "Administrateur"
+         ],
+         "menu": "Soins › Consultation › Imprimer ordonnance"
+        },
+        {
+         "title": "Prestations de suivi (réception)",
+         "goal": "Lier à la consultation des prestations « consultation » payées pour la suite du parcours",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin"
+         ],
+         "menu": "Soins › Consultation › étape Suivi et orientation"
+        }
+       ]
+      },
+      {
+       "title": "Étape Certificat",
+       "items": [
+        {
+         "title": "Émettre un certificat depuis la consultation",
+         "goal": "Ouvrir le formulaire de certificat médical dans l'étape finale",
+         "status": "disponible",
+         "profiles": [
+          "Médecin"
+         ],
+         "menu": "Soins › Consultation › étape Certificat"
+        }
+       ]
+      },
+      {
+       "title": "Assistance IA de consultation",
+       "items": [
+        {
+         "title": "Synthèse et recommandations du patient",
+         "goal": "Générer synthèse historique, points clés, recommandations et examens récents du patient",
+         "status": "disponible",
+         "menu": "Soins › Consultation › panneau Contexte patient"
+        },
+        {
+         "title": "Questions au module IA",
+         "goal": "Poser des questions libres sur le patient dans la consultation",
+         "status": "disponible",
+         "menu": "Soins › Consultation › panneau Contexte patient"
+        },
+        {
+         "title": "Transparence des données transmises",
+         "goal": "Lister avant l'appel les données envoyées au service IA tiers et permettre l'annulation",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste"
+         ],
+         "menu": "Soins › Consultation"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "slug": "modeles-de-consultation-specialites",
+     "title": "Modèles de consultation (spécialités)",
+     "pack": "operationnel",
+     "features": [
+      {
+       "title": "Spécialités",
+       "items": [
+        {
+         "title": "Lister les spécialités",
+         "goal": "Afficher les spécialités de consultation (actives, ou toutes avec includeInactive)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste",
+          "Direction"
+         ],
+         "menu": "Soins › Consultation › Spécialités et modèles"
+        },
+        {
+         "title": "Créer une spécialité",
+         "goal": "Ajouter une spécialité (code technique MAJUSCULES + nom affiché)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin"
+         ],
+         "menu": "Soins › Consultation › Spécialités et modèles › Ajouter une spécialité"
+        },
+        {
+         "title": "Modifier / activer-désactiver une spécialité",
+         "goal": "Renommer ou masquer une spécialité aux médecins sans la supprimer",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin"
+         ],
+         "menu": "Soins › Consultation › Spécialités et modèles"
+        },
+        {
+         "title": "Supprimer une spécialité",
+         "goal": "Supprimer une spécialité jamais utilisée (refus si des consultations ou données existent)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin"
+         ],
+         "menu": "Soins › Consultation › Spécialités et modèles"
+        },
+        {
+         "title": "Création automatique depuis les prestations de consultation",
+         "goal": "Générer spécialités et modèle publié par défaut à partir des prestations de consultation actives",
+         "status": "disponible"
+        }
+       ]
+      },
+      {
+       "title": "Modèles de consultation",
+       "items": [
+        {
+         "title": "Lister les modèles (gestion)",
+         "goal": "Afficher toutes les versions de modèles (DRAFT, PUBLISHED, ARCHIVED) par spécialité",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste",
+          "Direction"
+         ],
+         "menu": "Soins › Consultation › Spécialités et modèles › Templates"
+        },
+        {
+         "title": "Obtenir le modèle publié d'une spécialité",
+         "goal": "Charger le modèle publié (version choisie ou dernière) pour construire le formulaire",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste",
+          "Direction"
+         ],
+         "menu": "Soins › Consultation"
+        },
+        {
+         "title": "Créer / mettre à jour un modèle (upsert)",
+         "goal": "Enregistrer une version de modèle (schéma des champs + mise en page) avec son statut",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin"
+         ],
+         "menu": "Soins › Consultation › Spécialités et modèles › Templates › Enregistrer"
+        },
+        {
+         "title": "Charger un modèle pour modification",
+         "goal": "Remplir l'éditeur avec une version existante",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin"
+         ],
+         "menu": "Soins › Consultation › Spécialités et modèles"
+        },
+        {
+         "title": "Dupliquer un modèle (nouvelle version)",
+         "goal": "Créer une nouvelle version à partir d'une existante avec version suggérée",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin"
+         ],
+         "menu": "Soins › Consultation › Spécialités et modèles"
+        },
+        {
+         "title": "Vérification du modèle",
+         "goal": "Valider le modèle avant sauvegarde et situer chaque erreur",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin"
+         ],
+         "menu": "Soins › Consultation › Spécialités et modèles"
+        },
+        {
+         "title": "Aperçu du formulaire généré",
+         "goal": "Afficher le formulaire tel que le verra le médecin, dès que le modèle est valide",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin"
+         ],
+         "menu": "Soins › Consultation › Spécialités et modèles"
+        },
+        {
+         "title": "Aide « Un template définit le formulaire »",
+         "goal": "Aide contextuelle expliquant schemaJson et uiJson",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin"
+         ],
+         "menu": "Soins › Consultation › Spécialités et modèles"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "slug": "examens",
+     "title": "Examens",
+     "pack": "operationnel",
+     "features": [
+      {
+       "title": "Examens programmés",
+       "items": [
+        {
+         "title": "Lister les examens programmés",
+         "goal": "Lister les examens (lignes de réception d'examen) avec filtres, tri et pagination",
+         "status": "disponible",
+         "menu": "Soins › Examens"
+        },
+        {
+         "title": "Compteurs par statut",
+         "goal": "Afficher le nombre d'examens par statut sur la page chargée",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste",
+          "Technicien d'examens"
+         ],
+         "menu": "Soins › Examens"
+        },
+        {
+         "title": "Détail d'un examen",
+         "goal": "Ouvrir la fiche d'un examen (patient, prestation, médecin, statut, formulaire)",
+         "status": "disponible",
+         "menu": "Soins › Examens › Voir"
+        }
+       ]
+      },
+      {
+       "title": "Réalisation d'un examen",
+       "items": [
+        {
+         "title": "Continuer un examen en cours",
+         "goal": "Rouvrir l'examen IN_PROGRESS pour saisie",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Technicien d'examens"
+         ],
+         "menu": "Soins › Examens › Continuer"
+        },
+        {
+         "title": "Saisir et sauvegarder les résultats",
+         "goal": "Enregistrer les valeurs du formulaire d'examen, observations, résultats et recommandations",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Technicien d'examens"
+         ],
+         "menu": "Soins › Examens › Voir"
+        },
+        {
+         "title": "Sauvegarder et terminer",
+         "goal": "Enregistrer puis passer l'examen en COMPLETED (démarrage automatique si nécessaire)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Technicien d'examens"
+         ],
+         "menu": "Soins › Examens › Sauvegarder et Terminer"
+        },
+        {
+         "title": "Annuler un examen",
+         "goal": "Annuler un examen programmé ou en cours avec raison obligatoire (côté écran)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Technicien d'examens"
+         ],
+         "menu": "Soins › Examens › Annuler"
+        },
+        {
+         "title": "Remplir via PDF (IA)",
+         "goal": "Extraire les valeurs d'un PDF de résultats (≤ 10 Mo) vers les champs du modèle",
+         "status": "disponible",
+         "menu": "Soins › Examens › Voir › IA - Remplir via PDF"
+        },
+        {
+         "title": "Imprimer les résultats",
+         "goal": "Générer le document de résultats d'un examen terminé (aperçu)",
+         "status": "disponible",
+         "profiles": [
+          "Médecin",
+          "Administrateur"
+         ],
+         "menu": "Soins › Examens › Imprimer résultats"
+        }
+       ]
+      },
+      {
+       "title": "Fichiers d'examen",
+       "items": [
+        {
+         "title": "Téléverser des fichiers d'un examen",
+         "goal": "Joindre un ou plusieurs fichiers à un champ de l'examen",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Technicien d'examens"
+         ]
+        },
+        {
+         "title": "Supprimer un fichier d'examen",
+         "goal": "Retirer un fichier joint",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Technicien d'examens"
+         ]
+        }
+       ]
+      },
+      {
+       "title": "Modèles d'examen",
+       "items": [
+        {
+         "title": "Lister les modèles d'examen",
+         "goal": "Lister les modèles avec pagination et filtres",
+         "status": "disponible",
+         "menu": "Soins › Examens › Modèles d’examen"
+        },
+        {
+         "title": "Détail d'un modèle",
+         "goal": "Lire un modèle par identifiant",
+         "status": "disponible",
+         "menu": "Soins › Examens › Modèles d’examen"
+        },
+        {
+         "title": "Modèle par type de prestation",
+         "goal": "Retrouver le modèle d'un type de prestation",
+         "status": "disponible",
+         "menu": "Soins › Examens"
+        },
+        {
+         "title": "Créer un modèle d'examen",
+         "goal": "Créer un modèle de champs pour un type de prestation",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin"
+         ],
+         "menu": "Soins › Examens › Modèles d’examen"
+        },
+        {
+         "title": "Modifier un modèle d'examen",
+         "goal": "Modifier description et champs (ajouter, retirer, libellé, unité, valeur normale, options) ; l'identifiant d'un champ n'est pas modifiable",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Direction"
+         ],
+         "menu": "Soins › Examens › Modèles d’examen › Modifier"
+        },
+        {
+         "title": "Supprimer un modèle d'examen",
+         "goal": "Supprimer un modèle non utilisé",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ]
+        },
+        {
+         "title": "Liste et recherche des modèles (écran)",
+         "goal": "Afficher les modèles avec recherche, totaux, nombre de champs, types de champs",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste",
+          "Technicien d'examens"
+         ],
+         "menu": "Soins › Examens › Modèles d’examen"
+        },
+        {
+         "title": "Créer un examen personnalisé",
+         "goal": "Créer à la volée la prestation d'examen et son modèle à partir d'un nom et de champs",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin"
+         ],
+         "menu": "Soins › Consultation › Examens › Examen personnalisé"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "slug": "bulletins-d-examen",
+     "title": "Bulletins d'examen",
+     "pack": "operationnel",
+     "features": [
+      {
+       "title": "Demande d'examens",
+       "items": [
+        {
+         "title": "Créer un bulletin de demande d'examens",
+         "goal": "Enregistrer un bulletin lié à un dossier médical (examens, quantité, renseignements cliniques)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin"
+         ],
+         "menu": "Soins › Dossiers médicaux › Demande d'examens"
+        },
+        {
+         "title": "Lire un bulletin",
+         "goal": "Consulter un bulletin par ID",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste",
+          "Direction"
+         ],
+         "menu": "Soins › Dossiers médicaux"
+        },
+        {
+         "title": "Bulletins d'un patient",
+         "goal": "Lister les bulletins d'un patient",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste",
+          "Direction"
+         ],
+         "menu": "Soins › Dossiers médicaux"
+        },
+        {
+         "title": "Changer le statut d'un bulletin",
+         "goal": "Faire évoluer PENDING, APPROVED, REJECTED, COMPLETED, CANCELLED selon les transitions autorisées",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin"
+         ]
+        },
+        {
+         "title": "Recherche paginée de bulletins",
+         "goal": "Lister les bulletins avec filtres et pagination",
+         "status": "developpement",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste",
+          "Direction"
+         ]
+        },
+        {
+         "title": "Télécharger le bulletin Word",
+         "goal": "Générer et télécharger le bulletin au format.docx (Bulletin_Examens_Prénom_Nom_date)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste",
+          "Direction"
+         ],
+         "menu": "Soins › Dossiers médicaux › Demande d'examens"
+        },
+        {
+         "title": "Générer un bulletin depuis un dossier médical (documents)",
+         "goal": "Produire le bulletin d'examen Word à partir d'un dossier médical",
+         "status": "disponible"
+        },
+        {
+         "title": "Formulaire de demande d'examens",
+         "goal": "Saisir les examens demandés (type, quantité) et les renseignements cliniques ; enregistrer seul ou enregistrer et télécharger",
+         "status": "disponible",
+         "profiles": [
+          "Médecin",
+          "Administrateur"
+         ],
+         "menu": "Soins › Dossiers médicaux › Demande d'examens"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "slug": "dossiers-medicaux",
+     "title": "Dossiers médicaux",
+     "pack": "operationnel",
+     "features": [
+      {
+       "title": "Navigation",
+       "items": [
+        {
+         "title": "Choisir un patient",
+         "goal": "Rechercher et sélectionner un patient pour afficher son dossier (patientId en URL ou depuis la fiche patient)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste"
+         ],
+         "menu": "Soins › Dossiers médicaux"
+        }
+       ]
+      },
+      {
+       "title": "Dossier médical",
+       "items": [
+        {
+         "title": "Créer un dossier médical",
+         "goal": "Créer un dossier structuré (motif, symptômes, examen clinique, diagnostic, plan de traitement, suivi) pour un patient",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin"
+         ],
+         "menu": "Soins › Dossiers médicaux › Nouveau dossier"
+        },
+        {
+         "title": "Dossier temporaire (hors ligne local)",
+         "goal": "Conserver localement un dossier si l'enregistrement échoue et le sauvegarder ensuite (purge à 24 h)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin"
+         ],
+         "menu": "Soins › Dossiers médicaux"
+        },
+        {
+         "title": "Rechercher des dossiers",
+         "goal": "Rechercher par patient, texte, dates, urgence, suivi requis, avec pagination et tri",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste",
+          "Direction"
+         ],
+         "menu": "Soins › Dossiers médicaux"
+        },
+        {
+         "title": "Lire un dossier",
+         "goal": "Charger un dossier par identifiant",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste",
+          "Direction"
+         ],
+         "menu": "Soins › Dossiers médicaux"
+        },
+        {
+         "title": "Modifier un dossier",
+         "goal": "Mettre à jour un dossier existant",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin"
+         ],
+         "menu": "Soins › Dossiers médicaux › Modifier"
+        },
+        {
+         "title": "Supprimer un dossier (suppression logique)",
+         "goal": "Marquer un dossier supprimé (deletedAt)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ]
+        },
+        {
+         "title": "Modifier une mesure d'acuité visuelle",
+         "goal": "Corriger une mesure existante",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste",
+          "Technicien d'examens"
+         ],
+         "menu": "Soins › Dossiers médicaux"
+        },
+        {
+         "title": "Modifier une mesure de PIO",
+         "goal": "Corriger une mesure de PIO existante",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste",
+          "Technicien d'examens"
+         ],
+         "menu": "Soins › Dossiers médicaux"
+        }
+       ]
+      },
+      {
+       "title": "Historique médical",
+       "items": [
+        {
+         "title": "Lire l'historique médical du patient",
+         "goal": "Charger antécédents familiaux, cardiovasculaires, diabète, chirurgies oculaires et autres antécédents",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste",
+          "Direction"
+         ],
+         "menu": "Soins › Dossiers médicaux › Historique médical"
+        },
+        {
+         "title": "Mettre à jour l'historique médical",
+         "goal": "Enregistrer les antécédents du patient (cases à cocher et champs structurés)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin"
+         ],
+         "menu": "Soins › Dossiers médicaux › Historique médical"
+        },
+        {
+         "title": "Brouillon local de l'historique",
+         "goal": "Conserver la saisie d'historique en brouillon local",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin"
+         ],
+         "menu": "Soins › Dossiers médicaux › Historique médical"
+        }
+       ]
+      },
+      {
+       "title": "Patients prêts",
+       "items": [
+        {
+         "title": "Lister les patients prêts pour consultation",
+         "goal": "Lister les patients dont les prestations sont réglées et prêts à être vus",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste",
+          "Direction"
+         ],
+         "menu": "Soins › Dossiers médicaux"
+        }
+       ]
+      },
+      {
+       "title": "Tableau de bord du patient",
+       "items": [
+        {
+         "title": "Statistiques rapides",
+         "goal": "Afficher dossiers total, examens complétés, suivis à venir, mesures d'acuité",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste"
+         ],
+         "menu": "Soins › Dossiers médicaux"
+        },
+        {
+         "title": "Panneau d'informations cruciales",
+         "goal": "Résumer allergies, antécédents et éléments clés du patient",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste"
+         ],
+         "menu": "Soins › Dossiers médicaux"
+        },
+        {
+         "title": "Examens terminés dans la liste",
+         "goal": "Afficher les examens COMPLETED du patient mélangés aux dossiers avec résultats",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste"
+         ],
+         "menu": "Soins › Dossiers médicaux"
+        }
+       ]
+      },
+      {
+       "title": "IA des dossiers",
+       "items": [
+        {
+         "title": "Synthèse IA du patient",
+         "goal": "Produire une synthèse du patient à partir des dossiers",
+         "status": "disponible",
+         "menu": "Soins › Dossiers médicaux › AI Insights"
+        },
+        {
+         "title": "Chat avec l'IA sur le patient",
+         "goal": "Poser des questions libres sur le patient",
+         "status": "disponible",
+         "menu": "Soins › Dossiers médicaux › Chat Avec AI"
+        }
+       ]
+      },
+      {
+       "title": "Documents depuis le dossier",
+       "items": [
+        {
+         "title": "Actions par dossier",
+         "goal": "Accéder depuis une carte de dossier à Acuité, PIO, Bulletin d'examen, Ordonnance de vision, Ordonnance médicale, Certificat, Modifier (désactivées tant que le dossier est temporaire)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste"
+         ],
+         "menu": "Soins › Dossiers médicaux"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "slug": "constantes-signes-vitaux",
+     "title": "Constantes (signes vitaux)",
+     "pack": "operationnel",
+     "features": [
+      {
+       "title": "Saisie des constantes",
+       "items": [
+        {
+         "title": "Modifier une saisie",
+         "goal": "Corriger une saisie existante (champs nullables, patient non modifiable)",
+         "status": "disponible",
+         "profiles": [
+          "Infirmier(ère)",
+          "Administrateur",
+          "Direction"
+         ],
+         "menu": "Soins › Constantes › Historique › Modifier"
+        }
+       ]
+      },
+      {
+       "title": "Consultation des constantes",
+       "items": [
+        {
+         "title": "Historique des constantes d'un patient",
+         "goal": "Lister les saisies d'un patient, plus récentes d'abord",
+         "status": "disponible",
+         "menu": "Soins › Constantes › Historique des constantes"
+        },
+        {
+         "title": "Dernière saisie d'un patient",
+         "goal": "Lire la dernière saisie (utilisé dans la consultation)",
+         "status": "disponible",
+         "menu": "Soins › Constantes"
+        }
+       ]
+      },
+      {
+       "title": "Écran Constantes",
+       "items": [
+        {
+         "title": "File du jour",
+         "goal": "Choisir un patient arrivé à l'accueil sans retaper son nom",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Soins › Constantes"
+        },
+        {
+         "title": "Autre patient (recherche)",
+         "goal": "Sélectionner un patient hors file du jour",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Soins › Constantes"
+        },
+        {
+         "title": "Raccourci Ctrl+S et brouillon local",
+         "goal": "Enregistrer au clavier ; reprendre une saisie interrompue",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Soins › Constantes"
+        },
+        {
+         "title": "Modifier depuis l'historique",
+         "goal": "Recharger une ancienne saisie dans le formulaire",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Soins › Constantes"
+        }
+       ]
+      },
+      {
+       "title": "Choisir le patient depuis la file du jour",
+       "items": [
+        {
+         "title": "Composant FileDuJour",
+         "goal": "Éviter de retaper un patient arrivé à l'accueil",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Infirmier(ère)"
+         ],
+         "menu": "Soins › Constantes"
+        }
+       ]
+      },
+      {
+       "title": "Choisir un autre patient",
+       "items": [
+        {
+         "title": "Sélecteur de patient (recherche libre)",
+         "goal": "Saisir les constantes d'un patient absent de la file",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Infirmier(ère)"
+         ],
+         "menu": "Soins › Constantes"
+        }
+       ]
+      },
+      {
+       "title": "Afficher le contexte patient",
+       "items": [
+        {
+         "title": "PatientContextBar (nom, âge, sexe, arrivée, « Changer patient », retour Accueil)",
+         "goal": "Dire à qui seront attribuées les mesures",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Infirmier(ère)"
+         ],
+         "menu": "Soins › Constantes"
+        }
+       ]
+      },
+      {
+       "title": "Enregistrer des constantes",
+       "items": [
+        {
+         "title": "Formulaire 9 mesures + notes + IMC automatique",
+         "goal": "Saisir tension, pouls, température, fréquence respiratoire, SpO2, poids, taille, glycémie",
+         "status": "disponible",
+         "profiles": [
+          "Infirmier(ère)",
+          "Administrateur",
+          "Direction"
+         ],
+         "menu": "Soins › Constantes"
+        }
+       ]
+      },
+      {
+       "title": "Modifier une saisie de constantes",
+       "items": [
+        {
+         "title": "Bouton « Modifier » de l'historique",
+         "goal": "Corriger une saisie existante",
+         "status": "disponible",
+         "profiles": [
+          "Infirmier(ère)",
+          "Administrateur",
+          "Direction"
+         ],
+         "menu": "Soins › Constantes"
+        }
+       ]
+      },
+      {
+       "title": "Consulter l'historique des constantes d'un patient",
+       "items": [
+        {
+         "title": "Tableau triable (date, TA, pouls, T°, FR, SpO2, poids, taille, IMC, glycémie)",
+         "goal": "Suivre l'évolution des mesures",
+         "status": "disponible",
+         "profiles": [
+          "Infirmier(ère)"
+         ],
+         "menu": "Soins › Constantes"
+        }
+       ]
+      },
+      {
+       "title": "Dernière saisie de constantes",
+       "items": [
+        {
+         "title": "Panneau « Constantes (dernière saisie) » dans la consultation",
+         "goal": "Rappeler au médecin les dernières mesures",
+         "status": "disponible",
+         "menu": "Soins › Consultation (panneau)"
+        }
+       ]
+      },
+      {
+       "title": "Brouillon de saisie des constantes",
+       "items": [
+        {
+         "title": "Copie locale automatique (2 s) et reprise explicite",
+         "goal": "Ne rien perdre d'une saisie interrompue",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Infirmier(ère)"
+         ],
+         "menu": "Soins › Constantes"
+        }
+       ]
+      },
+      {
+       "title": "Raccourci d'enregistrement",
+       "items": [
+        {
+         "title": "Bouton avec raccourci clavier affiché",
+         "goal": "Enregistrer au clavier",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Infirmier(ère)"
+         ],
+         "menu": "Soins › Constantes"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "slug": "ordonnances-medicales",
+     "title": "Ordonnances médicales",
+     "pack": "operationnel",
+     "features": [
+      {
+       "title": "Ordonnance du dossier",
+       "items": [
+        {
+         "title": "Créer une ordonnance médicale",
+         "goal": "Enregistrer une ordonnance (médicaments, dosage, fréquence, durée, quantité, instructions) dans le champ treatment du dossier médical",
+         "status": "disponible",
+         "profiles": [
+          "Médecin"
+         ],
+         "menu": "Soins › Dossiers médicaux › Ordonnance médicale"
+        },
+        {
+         "title": "Créer et générer le document Word",
+         "goal": "Créer l'ordonnance et générer le.docx en une opération",
+         "status": "disponible",
+         "profiles": [
+          "Médecin"
+         ],
+         "menu": "Soins › Dossiers médicaux › Ordonnance médicale"
+        },
+        {
+         "title": "Télécharger l'ordonnance Word",
+         "goal": "Télécharger le.docx de l'ordonnance",
+         "status": "disponible",
+         "menu": "Soins › Dossiers médicaux › Ordonnance médicale"
+        },
+        {
+         "title": "Lire une ordonnance par ID",
+         "goal": "Récupérer une ordonnance",
+         "status": "developpement"
+        },
+        {
+         "title": "Ordonnances d'un patient",
+         "goal": "Lister les ordonnances d'un patient",
+         "status": "developpement"
+        },
+        {
+         "title": "Ordonnances d'un dossier médical",
+         "goal": "Lister les ordonnances d'un dossier",
+         "status": "developpement"
+        },
+        {
+         "title": "Modifier une ordonnance",
+         "goal": "Mettre à jour une ordonnance",
+         "status": "developpement"
+        },
+        {
+         "title": "Supprimer une ordonnance",
+         "goal": "Supprimer une ordonnance",
+         "status": "developpement"
+        }
+       ]
+      },
+      {
+       "title": "Formulaire d'ordonnance",
+       "items": [
+        {
+         "title": "Saisir une ordonnance (dossier médical)",
+         "goal": "Ajouter des médicaments (au moins un complet), quantité, instructions, avec liste intégrée de médicaments ophtalmologiques courants, aide et démarrage rapide",
+         "status": "disponible",
+         "menu": "Soins › Dossiers médicaux › Ordonnance médicale"
+        },
+        {
+         "title": "Gestionnaire de médicaments (MedicineManager)",
+         "goal": "Composant de gestion de liste de médicaments",
+         "status": "developpement"
+        }
+       ]
+      },
+      {
+       "title": "Impression en consultation",
+       "items": [
+        {
+         "title": "Ordonnance imprimée depuis la consultation",
+         "goal": "Ordonnance issue du parcours de consultation (distincte de l'ordonnance du dossier médical)",
+         "status": "disponible",
+         "profiles": [
+          "Médecin",
+          "Administrateur"
+         ],
+         "menu": "Soins › Consultation › Imprimer ordonnance"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "slug": "ordonnances-de-lunettes-vision",
+     "title": "Ordonnances de lunettes (vision)",
+     "pack": "operationnel",
+     "features": [
+      {
+       "title": "Ordonnance de vision",
+       "items": [
+        {
+         "title": "Lire une ordonnance de vision",
+         "goal": "Récupérer une ordonnance par identifiant",
+         "status": "disponible",
+         "menu": "Soins › Dossiers médicaux › Ordonnance de vision"
+        },
+        {
+         "title": "Télécharger l'ordonnance Word",
+         "goal": "Générer le.docx (Ordonnance_Vision_Patient_date)",
+         "status": "disponible",
+         "menu": "Soins › Dossiers médicaux › Ordonnance de vision"
+        },
+        {
+         "title": "Ordonnances de vision d'un patient",
+         "goal": "Lister les ordonnances d'un patient",
+         "status": "disponible",
+         "menu": "Soins › Dossiers médicaux › Ordonnance de vision"
+        },
+        {
+         "title": "Ordonnances de vision d'un dossier",
+         "goal": "Lister les ordonnances d'un dossier médical",
+         "status": "disponible",
+         "menu": "Soins › Dossiers médicaux › Ordonnance de vision"
+        },
+        {
+         "title": "Modifier une ordonnance de vision",
+         "goal": "Mettre à jour les valeurs (patient, médecin et dossier non modifiables)",
+         "status": "disponible",
+         "profiles": [
+          "Médecin"
+         ],
+         "menu": "Soins › Dossiers médicaux › Ordonnance de vision"
+        },
+        {
+         "title": "Supprimer une ordonnance de vision",
+         "goal": "Supprimer une ordonnance",
+         "status": "disponible",
+         "profiles": [
+          "Médecin",
+          "Administrateur"
+         ]
+        }
+       ]
+      },
+      {
+       "title": "Formulaire d'ordonnance de vision",
+       "items": [
+        {
+         "title": "Saisir et télécharger l'ordonnance de lunettes",
+         "goal": "Remplir le formulaire de correction optique puis créer et ouvrir le document Word",
+         "status": "disponible",
+         "profiles": [
+          "Médecin"
+         ],
+         "menu": "Soins › Dossiers médicaux › Ordonnance de vision"
+        },
+        {
+         "title": "Fenêtre VisionPrescriptionModal",
+         "goal": "Ancien conteneur modal de l'ordonnance de vision",
+         "status": "developpement"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "slug": "certificats-medicaux",
+     "title": "Certificats médicaux",
+     "pack": "operationnel",
+     "features": [
+      {
+       "title": "Catalogue",
+       "items": [
+        {
+         "title": "Types de certificat disponibles",
+         "goal": "Alimenter le sélecteur avec les 5 types (repos, attestation de consultation, aptitude, bonne santé, grossesse)",
+         "status": "disponible",
+         "menu": "Soins › Consultation › étape Certificat"
+        }
+       ]
+      },
+      {
+       "title": "Émission",
+       "items": [
+        {
+         "title": "Émettre un certificat de repos / arrêt de travail",
+         "goal": "Figer un certificat de repos (date de début, nombre de jours, sorties autorisées)",
+         "status": "disponible",
+         "profiles": [
+          "Médecin"
+         ],
+         "menu": "Soins › Consultation › étape Certificat"
+        },
+        {
+         "title": "Émettre une attestation de consultation / de présence",
+         "goal": "Attester la présence (date, heures d'arrivée et de départ) sans information clinique",
+         "status": "disponible",
+         "profiles": [
+          "Médecin"
+         ],
+         "menu": "Soins › Consultation › étape Certificat"
+        },
+        {
+         "title": "Émettre un certificat d'aptitude",
+         "goal": "Certifier apte / apte avec réserves / inapte selon le contexte (sport, embauche, visite périodique, scolaire), validité en mois",
+         "status": "disponible",
+         "profiles": [
+          "Médecin"
+         ],
+         "menu": "Soins › Consultation › étape Certificat"
+        },
+        {
+         "title": "Émettre un certificat de bonne santé",
+         "goal": "Certifier la bonne santé avec mentions cochées (examen normal, vaccinations à jour, aucun traitement, aucun signe de contagion) et destinataire",
+         "status": "disponible",
+         "profiles": [
+          "Médecin"
+         ],
+         "menu": "Soins › Consultation › étape Certificat"
+        },
+        {
+         "title": "Émettre un certificat de grossesse",
+         "goal": "Attester une grossesse (dernières règles, terme en semaines, mode de confirmation) ; réservé aux patientes de sexe féminin (422 sinon)",
+         "status": "disponible",
+         "profiles": [
+          "Médecin"
+         ],
+         "menu": "Soins › Consultation › étape Certificat"
+        }
+       ]
+      },
+      {
+       "title": "Consultation",
+       "items": [
+        {
+         "title": "Lister les certificats",
+         "goal": "Filtrer par patient, consultation, statut, type et date d'émission",
+         "status": "disponible",
+         "profiles": [
+          "Médecin",
+          "Secrétaire",
+          "Administrateur",
+          "Direction",
+          "Personnel"
+         ],
+         "menu": "Impressions › Certificats en attente (écran du centre d'impression)"
+        },
+        {
+         "title": "Lire un certificat",
+         "goal": "Consulter un certificat et son corps figé",
+         "status": "disponible",
+         "profiles": [
+          "Médecin",
+          "Secrétaire",
+          "Administrateur",
+          "Direction",
+          "Personnel"
+         ],
+         "menu": "Soins › Consultation › étape Certificat"
+        }
+       ]
+      },
+      {
+       "title": "Impression",
+       "items": [
+        {
+         "title": "Enregistrer une impression au guichet",
+         "goal": "Marquer le certificat imprimé",
+         "status": "disponible",
+         "profiles": [
+          "Médecin",
+          "Secrétaire",
+          "Administrateur",
+          "Direction",
+          "Personnel"
+         ],
+         "menu": "Impressions › Certificats en attente"
+        }
+       ]
+      },
+      {
+       "title": "Annulation",
+       "items": [
+        {
+         "title": "Annuler un certificat",
+         "goal": "Annuler avec motif obligatoire (le document est conservé pour la traçabilité)",
+         "status": "disponible",
+         "profiles": [
+          "Médecin"
+         ],
+         "menu": "Soins › Consultation › étape Certificat"
+        }
+       ]
+      },
+      {
+       "title": "Formulaire",
+       "items": [
+        {
+         "title": "Aperçu et impression côté client",
+         "goal": "Mettre en page les blocs reçus du serveur (paragraphes, titres, mentions légales, tableaux) avec le branding du cabinet",
+         "status": "disponible",
+         "profiles": [
+          "Médecin",
+          "Secrétaire",
+          "Administrateur",
+          "Direction",
+          "Personnel"
+         ],
+         "menu": "Soins › Consultation › étape Certificat"
+        },
+        {
+         "title": "Liste des certificats du patient dans le formulaire",
+         "goal": "Afficher les certificats déjà émis du patient avec réimpression et annulation",
+         "status": "disponible",
+         "profiles": [
+          "Médecin"
+         ],
+         "menu": "Soins › Consultation › étape Certificat"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "slug": "medicaments",
+     "title": "Médicaments",
+     "pack": "operationnel",
+     "features": [
+      {
+       "title": "Catalogue",
+       "items": [
+        {
+         "title": "Lister / rechercher les médicaments",
+         "goal": "Rechercher dans le catalogue (nom, code, forme, dosage), insensible à la casse",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste",
+          "Direction"
+         ],
+         "menu": "Soins › Consultation › Ordonnances"
+        },
+        {
+         "title": "Ajouter un médicament au catalogue",
+         "goal": "Créer un médicament saisi librement (code USR-hash) ; renvoie l'existant si le nom est déjà présent",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin"
+         ],
+         "menu": "Soins › Consultation › Ordonnances"
+        },
+        {
+         "title": "Liste de médicaments intégrée au formulaire d'ordonnance du dossier",
+         "goal": "Proposer des médicaments ophtalmologiques courants avec posologie type, durée et catégorie",
+         "status": "disponible",
+         "profiles": [
+          "Médecin"
+         ],
+         "menu": "Soins › Dossiers médicaux › Ordonnance médicale"
+        }
+       ]
+      },
+      {
+       "title": "Statistiques",
+       "items": [
+        {
+         "title": "Médicaments les plus prescrits",
+         "goal": "Voir le Top 10 d'un médecin",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Orthoptiste",
+          "Direction"
+         ],
+         "menu": "Soins › Consultation › Ordonnances"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "slug": "agenda-et-rendez-vous",
+     "title": "Agenda et rendez-vous",
+     "pack": "operationnel",
+     "features": [
+      {
+       "title": "Planning (agenda hebdomadaire)",
+       "items": [
+        {
+         "title": "Rendez-vous d'un médecin sur une plage",
+         "goal": "Lister les rendez-vous actifs (SCHEDULED, CONFIRMED, IN_PROGRESS, RESCHEDULED) d'un médecin entre deux dates (62 jours max) avec heure de fin",
+         "status": "disponible",
+         "menu": "Agenda › Planning"
+        },
+        {
+         "title": "Créer un rendez-vous",
+         "goal": "Programmer un rendez-vous (grille de 15 min, durée 15-240 min, hors passé, dans les horaires, sans conflit médecin ni patient) ; un suivi lié clôt la consultation",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire",
+          "Médecin"
+         ],
+         "menu": "Agenda › Planning › sélection d'un créneau"
+        },
+        {
+         "title": "Replanifier / modifier un rendez-vous",
+         "goal": "Déplacer, changer la durée, les notes ou la prestation ; statut RESCHEDULED ; contrôle des conflits et des transitions",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire",
+          "Médecin"
+         ],
+         "menu": "Agenda › Planning › Rendez-vous › Enregistrer / glisser-déposer"
+        },
+        {
+         "title": "Annuler un rendez-vous",
+         "goal": "Annulation logique (CANCELLED) ; un suivi annulé rouvre la consultation liée s'il n'y a pas d'autre suivi actif",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire",
+          "Médecin"
+         ],
+         "menu": "Agenda › Planning › Rendez-vous › Supprimer"
+        },
+        {
+         "title": "Choisir médecin, patient et prestation",
+         "goal": "Sélectionner le médecin (recherche), le patient et la prestation (durée par défaut) avant de réserver ; médecin et patient passables par l'URL",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Secrétaire",
+          "Orthoptiste",
+          "Personnel"
+         ],
+         "menu": "Agenda › Planning"
+        },
+        {
+         "title": "Glisser-déposer et redimensionner",
+         "goal": "Déplacer ou allonger un rendez-vous directement sur le calendrier, refusé vers le passé",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire",
+          "Médecin"
+         ],
+         "menu": "Agenda › Planning"
+        },
+        {
+         "title": "Messages d'erreur traduits",
+         "goal": "Traduire les codes en français",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Secrétaire",
+          "Orthoptiste",
+          "Personnel"
+         ],
+         "menu": "Agenda › Planning"
+        }
+       ]
+      },
+      {
+       "title": "Consultation des rendez-vous",
+       "items": [
+        {
+         "title": "Exporter en Excel",
+         "goal": "Exporter le tableau filtré au format tableur (HTML.xls) après confirmation",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Secrétaire",
+          "Orthoptiste",
+          "Personnel"
+         ],
+         "menu": "Agenda › Rendez-vous › Exporter Excel"
+        },
+        {
+         "title": "Exporter en PDF",
+         "goal": "Générer un PDF paysage A4 des rendez-vous filtrés, ouvert en aperçu",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Secrétaire",
+          "Orthoptiste",
+          "Personnel"
+         ],
+         "menu": "Agenda › Rendez-vous › Exporter PDF"
+        },
+        {
+         "title": "Rappel par email (sélection)",
+         "goal": "Ouvrir le client mail avec les emails des patients sélectionnés en copie cachée et le texte de rappel",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Secrétaire",
+          "Orthoptiste",
+          "Personnel"
+         ],
+         "menu": "Agenda › Rendez-vous › Envoyer email"
+        },
+        {
+         "title": "Rappel par WhatsApp (sélection)",
+         "goal": "Ouvrir un lien wa.me par patient avec le texte de rappel",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Secrétaire",
+          "Orthoptiste",
+          "Personnel"
+         ],
+         "menu": "Agenda › Rendez-vous › Envoyer WhatsApp"
+        },
+        {
+         "title": "Statistiques et statuts",
+         "goal": "Afficher les statuts de rendez-vous via des étiquettes (SCHEDULED, CONFIRMED, IN_PROGRESS, RESCHEDULED, COMPLETED, CANCELLED, NO_SHOW)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Secrétaire",
+          "Orthoptiste",
+          "Personnel"
+         ],
+         "menu": "Agenda › Rendez-vous"
+        }
+       ]
+      },
+      {
+       "title": "Rappels automatiques",
+       "items": [
+        {
+         "title": "Rappels WhatsApp de rendez-vous et digest médecin",
+         "goal": "Envoyer automatiquement des rappels de rendez-vous et un récapitulatif quotidien au médecin à heure fixe, par cabinet",
+         "status": "disponible"
+        }
+       ]
+      },
+      {
+       "title": "Machine à états",
+       "items": [
+        {
+         "title": "Transitions de statut des rendez-vous",
+         "goal": "Interdire les transitions invalides (COMPLETED, CANCELLED, NO_SHOW sont terminaux)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire",
+          "Médecin"
+         ]
+        }
+       ]
+      },
+      {
+       "title": "Horaires",
+       "items": [
+        {
+         "title": "Horaires de travail du médecin",
+         "goal": "Respecter les plages actives du médecin (DoctorSchedule) pour accepter ou refuser un créneau",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire",
+          "Médecin"
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "assurances",
+   "title": "Assurances et prise en charge",
+   "summary": "Catalogue des assurances, validation des prises en charge, portail assureur sécurisé.",
+   "pack": "operationnel",
+   "modules": [
+    {
+     "slug": "compagnies-d-assurance",
+     "title": "Compagnies d'assurance",
+     "pack": "operationnel",
+     "features": [
+      {
+       "title": "Lister les compagnies",
+       "items": [
+        {
+         "title": "Liste paginée, recherche, statistiques",
+         "goal": "Afficher les compagnies avec filtres (recherche, type, actif), tri, pagination et cartes Total / Actives / Inactives / Patients assurés / Réceptions.",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Référentiels › Compagnies d'assurance"
+        }
+       ]
+      },
+      {
+       "title": "Types d'assurance",
+       "items": [
+        {
+         "title": "Liste de choix",
+         "goal": "Fournir les types disponibles pour le formulaire.",
+         "status": "disponible",
+         "menu": "Référentiels › Compagnies d'assurance"
+        }
+       ]
+      },
+      {
+       "title": "Rechercher une assurance",
+       "items": [
+        {
+         "title": "Autocomplétion",
+         "goal": "Rechercher des compagnies pour sélection (50 max).",
+         "status": "disponible",
+         "menu": "Référentiels › Compagnies d'assurance"
+        }
+       ]
+      },
+      {
+       "title": "Voir une compagnie",
+       "items": [
+        {
+         "title": "Détail avec statistiques",
+         "goal": "Récupérer une compagnie avec ses compteurs (patients, réceptions).",
+         "status": "disponible",
+         "menu": "Référentiels › Compagnies d'assurance"
+        }
+       ]
+      },
+      {
+       "title": "Créer une compagnie",
+       "items": [
+        {
+         "title": "Formulaire de création",
+         "goal": "Enregistrer nom, code unique, type, adresse, téléphone, email, site, FSE, tiers payant, taux de remboursement par défaut, actif.",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ],
+         "menu": "Référentiels › Compagnies d'assurance"
+        }
+       ]
+      },
+      {
+       "title": "Modifier une compagnie",
+       "items": [
+        {
+         "title": "Formulaire d'édition",
+         "goal": "Modifier les champs de la compagnie.",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ],
+         "menu": "Référentiels › Compagnies d'assurance"
+        }
+       ]
+      },
+      {
+       "title": "Supprimer / désactiver une compagnie",
+       "items": [
+        {
+         "title": "Bouton de suppression + confirmation",
+         "goal": "Désactiver la compagnie si elle a des patients assurés ou des réceptions, sinon la supprimer définitivement.",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Référentiels › Compagnies d'assurance"
+        }
+       ]
+      },
+      {
+       "title": "Créer un compte assureur",
+       "items": [
+        {
+         "title": "Compte utilisateur INSURANCE rattaché",
+         "goal": "Créer un utilisateur de rôle INSURANCE lié à une compagnie active, avec mot de passe fourni ou temporaire généré.",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ],
+         "menu": "Référentiels › Compagnies d'assurance"
+        }
+       ]
+      },
+      {
+       "title": "Récupérer / créer « AUCUNE ASSURANCE »",
+       "items": [
+        {
+         "title": "Assurance spéciale NO_INS",
+         "goal": "Obtenir (ou créer) la compagnie système NO_INS pour les patients sans assurance.",
+         "status": "disponible"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "slug": "portail-assureur",
+     "title": "Portail assureur",
+     "pack": "operationnel",
+     "features": [
+      {
+       "title": "Valider une demande par lien",
+       "items": [
+        {
+         "title": "Bouton « Valider la demande »",
+         "goal": "Pour chaque prestation, approuver ou rejeter avec justification ; toutes les prestations doivent être traitées ; le statut devient APPROVED, REJECTED ou PARTIAL ; des notifications partent ensuite.",
+         "status": "disponible"
+        }
+       ]
+      },
+      {
+       "title": "Santé du portail",
+       "items": [
+        {
+         "title": "Contrôle de disponibilité",
+         "goal": "Indiquer que le portail d'assurance est opérationnel.",
+         "status": "disponible"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "medecins",
+   "title": "Médecins et spécialités",
+   "summary": "Référentiel des médecins, spécialités, plannings et profils d'impression.",
+   "pack": "operationnel",
+   "modules": [
+    {
+     "slug": "referentiel-medecins",
+     "title": "Référentiel médecins",
+     "pack": "operationnel",
+     "features": [
+      {
+       "title": "Lister les médecins",
+       "items": [
+        {
+         "title": "Liste avec recherche et filtre spécialité",
+         "goal": "Afficher les médecins (nom, email) filtrés par texte et par spécialité.",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Référentiels › Médecins"
+        }
+       ]
+      },
+      {
+       "title": "Lister les spécialités médicales",
+       "items": [
+        {
+         "title": "Filtre « Toutes les spécialités »",
+         "goal": "Fournir les spécialités rattachables à un médecin.",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ],
+         "menu": "Référentiels › Médecins"
+        }
+       ]
+      },
+      {
+       "title": "Créer un médecin",
+       "items": [
+        {
+         "title": "Modale « Nouveau médecin »",
+         "goal": "Créer le compte médecin : email, mot de passe initial, prénom, nom, n° de licence, prime fixe, pourcentage d'honoraire, tarif de consultation, téléphone, mobile, en-tête et pied d'impression, spécialités, planning.",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ],
+         "menu": "Référentiels › Médecins"
+        }
+       ]
+      },
+      {
+       "title": "Modifier un médecin",
+       "items": [
+        {
+         "title": "Bouton « Editer »",
+         "goal": "Mettre à jour identité, licence, honoraires, impression, spécialités, statut.",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ],
+         "menu": "Référentiels › Médecins"
+        }
+       ]
+      },
+      {
+       "title": "Téléverser la photo",
+       "items": [
+        {
+         "title": "Bouton « Téléverser » (photo)",
+         "goal": "Importer la photo (jpeg, png, webp ; 5 Mo) et mettre à jour photoUrl.",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ],
+         "menu": "Référentiels › Médecins"
+        }
+       ]
+      },
+      {
+       "title": "Supprimer la photo",
+       "items": [
+        {
+         "title": "Retrait de la photo",
+         "goal": "Supprimer la photo du profil.",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ],
+         "menu": "Référentiels › Médecins"
+        }
+       ]
+      },
+      {
+       "title": "Téléverser la signature",
+       "items": [
+        {
+         "title": "Image de signature (PNG)",
+         "goal": "Importer la signature du médecin au format PNG.",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ],
+         "menu": "Référentiels › Médecins"
+        }
+       ]
+      },
+      {
+       "title": "Supprimer la signature",
+       "items": [
+        {
+         "title": "Retrait de la signature",
+         "goal": "Supprimer l'image de signature.",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ],
+         "menu": "Référentiels › Médecins"
+        }
+       ]
+      },
+      {
+       "title": "Consulter le planning hebdomadaire",
+       "items": [
+        {
+         "title": "Bloc « Planning hebdo »",
+         "goal": "Afficher les créneaux par jour (1 à 7, HH:MM).",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ],
+         "menu": "Référentiels › Médecins"
+        }
+       ]
+      },
+      {
+       "title": "Enregistrer le planning",
+       "items": [
+        {
+         "title": "Bouton « Sauvegarder planning »",
+         "goal": "Remplacer le planning (jour, début, fin, actif).",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ],
+         "menu": "Référentiels › Médecins"
+        }
+       ]
+      },
+      {
+       "title": "Prestations d'un médecin hors examens/imagerie",
+       "items": [
+        {
+         "title": "Liste pour la facturation",
+         "goal": "Lister (100 par défaut, 500 max) les prestations du médecin hors examens et imagerie.",
+         "status": "disponible"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "slug": "specialites-de-consultation",
+     "title": "Spécialités de consultation",
+     "pack": "operationnel",
+     "features": [
+      {
+       "title": "Lister les spécialités de consultation",
+       "items": [
+        {
+         "title": "Onglet Spécialités",
+         "goal": "Lister les spécialités de consultation, avec ou sans inactives.",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)"
+         ],
+         "menu": "Soins › Consultation › Spécialités et modèles"
+        }
+       ]
+      },
+      {
+       "title": "Créer une spécialité",
+       "items": [
+        {
+         "title": "Formulaire code + nom affiché",
+         "goal": "Créer une spécialité avec code technique unique en majuscules et nom affiché.",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Soins › Consultation › Spécialités et modèles"
+        }
+       ]
+      },
+      {
+       "title": "Modifier / activer-désactiver une spécialité",
+       "items": [
+        {
+         "title": "Interrupteur actif",
+         "goal": "Modifier le nom ou masquer une spécialité aux médecins sans la supprimer.",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin"
+         ],
+         "menu": "Soins › Consultation › Spécialités et modèles"
+        }
+       ]
+      },
+      {
+       "title": "Supprimer une spécialité",
+       "items": [
+        {
+         "title": "Bouton « Supprimer » + confirmation",
+         "goal": "Supprimer une spécialité non utilisée ; refusée si déjà utilisée par des consultations.",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin"
+         ],
+         "menu": "Soins › Consultation › Spécialités et modèles"
+        }
+       ]
+      },
+      {
+       "title": "Modèles de consultation par spécialité",
+       "items": [
+        {
+         "title": "Onglet Modèles (schemaJson, uiJson, statut, version)",
+         "goal": "Créer des modèles de formulaire par spécialité (Brouillon, Publié, Archivé) avec aperçu ; détaillé dans le domaine Consultations.",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin"
+         ],
+         "menu": "Soins › Consultation › Spécialités et modèles"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "argent",
+   "title": "Caisse, facturation et comptabilité",
+   "summary": "Prestations et tarifs, facturation, caisse, honoraires des médecins et comptabilité.",
+   "pack": "financier",
+   "modules": [
+    {
+     "slug": "caisse",
+     "title": "Caisse",
+     "pack": "financier",
+     "features": [
+      {
+       "title": "Accès au module",
+       "items": [
+        {
+         "title": "Redirection d'entrée",
+         "goal": "Ouvrir le module Caisse vers l'étape d'encaissement",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse"
+        },
+        {
+         "title": "Chargement unique de l'état de caisse",
+         "goal": "Charger session courante + liste des sessions en parallèle, avec Réessayer en cas d'erreur (une panne n'est plus prise pour une caisse fermée)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse"
+        },
+        {
+         "title": "Stepper des 4 étapes avec règle de franchissement",
+         "goal": "Afficher Ouverture, Encaissement, Fermeture, Historique et désactiver les étapes indisponibles avec leur motif (« Ouvrez d'abord la caisse », « Clôturez d'abord la session du … »)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse"
+        },
+        {
+         "title": "Lien Historique dans l'en-tête",
+         "goal": "Accéder à l'historique des paiements même si l'état de caisse ne se charge pas",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse"
+        }
+       ]
+      },
+      {
+       "title": "Ouverture de caisse",
+       "items": [
+        {
+         "title": "Saisir le fond de caisse",
+         "goal": "Saisir le montant d'ouverture (FCFA) et des notes ; affichage du montant en toutes lettres",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse › Ouverture"
+        },
+        {
+         "title": "Ouvrir la session",
+         "goal": "Créer une session de caisse OPEN pour la caissière connectée",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse › Ouverture"
+        },
+        {
+         "title": "Refus si caisse déjà ouverte",
+         "goal": "Empêcher d'ouvrir deux caisses pour un même caissier",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse › Ouverture"
+        },
+        {
+         "title": "Consulter la session courante",
+         "goal": "Récupérer la session OPEN du caissier connecté",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse"
+        }
+       ]
+      },
+      {
+       "title": "Encaissement",
+       "items": [
+        {
+         "title": "Rechercher un patient à encaisser",
+         "goal": "Chercher par nom, prénom ou téléphone un patient ayant des prestations prêtes à payer",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse › Encaissement"
+        },
+        {
+         "title": "Sélectionner un patient",
+         "goal": "Charger le dossier à encaisser d'un patient et ses prestations dues",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse › Encaissement"
+        },
+        {
+         "title": "Lister les prestations impayées (global)",
+         "goal": "Obtenir toutes les prestations à encaisser",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse › Encaissement"
+        },
+        {
+         "title": "Prestations impayées d'un patient",
+         "goal": "Obtenir les prestations impayées d'un patient donné",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse › Encaissement"
+        },
+        {
+         "title": "Sélectionner les actes à encaisser",
+         "goal": "Cocher une ou plusieurs prestations ; total calculé en direct",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse › Encaissement"
+        },
+        {
+         "title": "Changer de patient / Annuler",
+         "goal": "Réinitialiser la sélection",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse › Encaissement"
+        },
+        {
+         "title": "Payer en espèces et calculer la monnaie rendue",
+         "goal": "Saisir le montant donné et afficher la monnaie à rendre (ou « Manque … »)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse › Encaissement"
+        },
+        {
+         "title": "Payer en mobile money",
+         "goal": "Choisir l'opérateur (Orange Money, MTN Mobile Money, Moov Money…) et saisir le numéro",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse › Encaissement"
+        },
+        {
+         "title": "Valider l'encaissement (bouton portant le montant)",
+         "goal": "Enregistrer le paiement, recalculer la part patient côté serveur, marquer les prestations payées, générer l'écriture comptable",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse › Encaissement"
+        },
+        {
+         "title": "Prestations entièrement prises en charge (reçu sans paiement)",
+         "goal": "Émettre un reçu à 0 FCFA quand l'assurance couvre tout",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse › Encaissement"
+        },
+        {
+         "title": "Total négatif (à rembourser) dans la sélection",
+         "goal": "Gérer une sélection au total négatif : montant payé 0 et monnaie = |total|",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse › Encaissement"
+        },
+        {
+         "title": "Lien « Voir dans l'historique »",
+         "goal": "Aller à l'historique depuis la confirmation",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse › Encaissement"
+        },
+        {
+         "title": "Méthodes CARD,, CHECK, à l'écran",
+         "goal": "Proposer les 4 autres méthodes dans l'écran d'encaissement (référence, banque, n° de chèque, 4 derniers chiffres de carte)",
+         "status": "developpement",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse › Encaissement"
+        },
+        {
+         "title": "Mise à jour de paiement (schéma)",
+         "goal": "Schéma PaymentUpdateSchema défini (statut, notes)",
+         "status": "developpement"
+        }
+       ]
+      },
+      {
+       "title": "Fermeture de caisse",
+       "items": [
+        {
+         "title": "Actualiser session et liste",
+         "goal": "Recharger la session courante et la liste",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse › Fermeture"
+        },
+        {
+         "title": "Résumé de session",
+         "goal": "Obtenir fond initial, espèces, mobile money, solde attendu d'une session",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse › Fermeture"
+        },
+        {
+         "title": "Ajouter un mouvement manuel (hors prestation)",
+         "goal": "Enregistrer une entrée (IN) ou sortie (OUT) d'espèces ou de mobile money",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse › Fermeture"
+        },
+        {
+         "title": "Exporter les mouvements (CSV compatible Excel)",
+         "goal": "Télécharger les mouvements de la session avec totaux (espèces théorique, mobile money, fond initial, solde espèces attendu)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse › Fermeture"
+        },
+        {
+         "title": "Saisir le montant d'espèces compté",
+         "goal": "Saisir le comptage ; l'écart (compté − attendu) s'affiche en grand",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse › Fermeture"
+        },
+        {
+         "title": "Justifier l'écart",
+         "goal": "Imposer une justification si écart non nul avant clôture",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse › Fermeture"
+        },
+        {
+         "title": "Clôturer la session",
+         "goal": "Fermer définitivement la session, calculer solde attendu et écart, constater l'écart en comptabilité",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse › Fermeture"
+        }
+       ]
+      },
+      {
+       "title": "Historique des paiements",
+       "items": [
+        {
+         "title": "Lister les paiements",
+         "goal": "Afficher les paiements passés (référence, patient, date, montant, méthode, statut)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse › Historique"
+        },
+        {
+         "title": "Filtrer par période, méthode, statut",
+         "goal": "Appliquer des filtres avancés dans l'URL (« Appliquer »)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse › Historique"
+        },
+        {
+         "title": "Recherche locale par patient",
+         "goal": "Filtrer les lignes déjà chargées par nom de patient",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse › Historique"
+        },
+        {
+         "title": "Actualiser",
+         "goal": "Recharger la liste",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse › Historique"
+        },
+        {
+         "title": "Exporter en Excel",
+         "goal": "Exporter les lignes affichées",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse › Historique"
+        },
+        {
+         "title": "Réimprimer le reçu (avec aperçu)",
+         "goal": "Voir l'aperçu PDF puis imprimer un reçu passé",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse › Historique"
+        },
+        {
+         "title": "Voir le détail d'un paiement",
+         "goal": "Consulter un paiement",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ],
+         "menu": "Argent › Caisse › Historique"
+        },
+        {
+         "title": "Supprimer un paiement (admin, moins de 24 h)",
+         "goal": "Annuler un paiement récent : prestations remises « à payer » et écriture comptable contre-passée",
+         "status": "disponible",
+         "menu": "Argent › Caisse › Historique"
+        }
+       ]
+      },
+      {
+       "title": "Remboursements",
+       "items": [
+        {
+         "title": "Demander un remboursement",
+         "goal": "Créer une demande de remboursement liée à un paiement",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ]
+        },
+        {
+         "title": "Approuver ou rejeter un remboursement",
+         "goal": "Décision d'un administrateur ; l'approbation traite le remboursement et poste D 709 / C 571",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ]
+        },
+        {
+         "title": "Lister les remboursements",
+         "goal": "Lister les demandes avec filtres",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Caissier(ère)"
+         ]
+        },
+        {
+         "title": "Annulation automatique des prestations à 72 h",
+         "goal": "Auto-annuler les prestations de réception non encaissées après 72 h ; ces lignes sont exclues du calcul des honoraires",
+         "status": "disponible"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "slug": "facturation",
+     "title": "Facturation",
+     "pack": "financier",
+     "features": [
+      {
+       "title": "Facturation assurances",
+       "items": [
+        {
+         "title": "Lister les prestations à facturer",
+         "goal": "Afficher les prestations facturables avec statut, décision de l'assurance, objection",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Comptabilité"
+         ],
+         "menu": "Argent › Facturation"
+        },
+        {
+         "title": "Filtrer par assurance",
+         "goal": "Choisir une assurance (ou « Toutes les assurances »)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Comptabilité",
+          "Assureur"
+         ],
+         "menu": "Argent › Facturation"
+        },
+        {
+         "title": "Filtrer par période",
+         "goal": "Date de début / date de fin dans l'URL",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Comptabilité",
+          "Assureur"
+         ],
+         "menu": "Argent › Facturation"
+        },
+        {
+         "title": "Filtrer par décision de paiement",
+         "goal": "Tous / En attente / Validé / Refusé",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Comptabilité",
+          "Assureur"
+         ],
+         "menu": "Argent › Facturation"
+        },
+        {
+         "title": "Réinitialiser les filtres",
+         "goal": "Remettre les filtres à zéro",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Comptabilité",
+          "Assureur"
+         ],
+         "menu": "Argent › Facturation"
+        },
+        {
+         "title": "Sélection multiple de lignes",
+         "goal": "Cocher des prestations pour une action en lot",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Comptabilité",
+          "Assureur"
+         ],
+         "menu": "Argent › Facturation"
+        },
+        {
+         "title": "Marquer des prestations Facturé / Payé (en lot)",
+         "goal": "Passer des lignes en INVOICED (n° facture, date de facturation) ou PAID (date de paiement)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Argent › Facturation"
+        },
+        {
+         "title": "Changer le statut d'une prestation (unitaire)",
+         "goal": "Passer une prestation en INVOICED ou PAID",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Argent › Facturation"
+        },
+        {
+         "title": "Valider ou refuser le paiement (côté assureur)",
+         "goal": "L'utilisateur INSURANCE valide ou refuse le paiement de lignes ; l'objection est obligatoire en cas de refus",
+         "status": "disponible",
+         "profiles": [
+          "Assureur"
+         ],
+         "menu": "Argent › Facturation"
+        },
+        {
+         "title": "Exporter en CSV",
+         "goal": "Télécharger les lignes affichées",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Comptabilité",
+          "Assureur"
+         ],
+         "menu": "Argent › Facturation"
+        },
+        {
+         "title": "Export CSV serveur",
+         "goal": "Exporter côté serveur selon filtres",
+         "status": "disponible",
+         "menu": "Argent › Facturation"
+        },
+        {
+         "title": "Synthèse de facturation",
+         "goal": "Totaux par statut",
+         "status": "disponible",
+         "menu": "Argent › Facturation"
+        }
+       ]
+      },
+      {
+       "title": "Approbations assurance",
+       "items": [
+        {
+         "title": "Lister les prestations en attente d'approbation",
+         "goal": "Afficher les prestations dont l'approbation de l'assurance est en attente",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Assureur"
+         ],
+         "menu": "Argent › Approbations assurance"
+        },
+        {
+         "title": "Approuver une prestation",
+         "goal": "Marquer insuranceApproved = true sur la prestation de réception",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Assureur"
+         ],
+         "menu": "Argent › Approbations assurance"
+        },
+        {
+         "title": "Refuser une prestation avec justification",
+         "goal": "Refuser avec motif obligatoire (modale)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Assureur"
+         ],
+         "menu": "Argent › Approbations assurance"
+        },
+        {
+         "title": "Charger la liste des assurances (filtre)",
+         "goal": "Alimenter le filtre Assurance",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Assureur"
+         ],
+         "menu": "Argent › Approbations assurance"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "slug": "prestations",
+     "title": "Prestations",
+     "pack": "operationnel",
+     "features": [
+      {
+       "title": "Catalogue",
+       "items": [
+        {
+         "title": "Afficher le catalogue",
+         "goal": "Lister les prestations (code, nom, type, coût, durée, statut)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Référentiels › Prestations"
+        },
+        {
+         "title": "Filtrer par type (pastilles)",
+         "goal": "Cliquer un type pour filtrer ; recliquer pour retirer",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ],
+         "menu": "Référentiels › Prestations"
+        },
+        {
+         "title": "Rechercher par code ou nom",
+         "goal": "Recherche textuelle",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ],
+         "menu": "Référentiels › Prestations"
+        },
+        {
+         "title": "Basculer Actives / Toutes",
+         "goal": "Afficher aussi les prestations inactives",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ],
+         "menu": "Référentiels › Prestations"
+        },
+        {
+         "title": "Statistiques des prestations",
+         "goal": "Compter prestations et types",
+         "status": "disponible",
+         "menu": "Référentiels › Prestations"
+        },
+        {
+         "title": "Détail d'une prestation",
+         "goal": "Obtenir une prestation avec type et historique de tarifs",
+         "status": "disponible",
+         "menu": "Référentiels › Prestations"
+        },
+        {
+         "title": "Lister les prestations d'examens",
+         "goal": "Prestations de la catégorie examens",
+         "status": "disponible"
+        },
+        {
+         "title": "Créer une prestation (modale)",
+         "goal": "Créer une prestation : type, code, nom, description, coût, durée estimée, actif",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ],
+         "menu": "Référentiels › Prestations"
+        },
+        {
+         "title": "Modifier une prestation",
+         "goal": "Modifier les champs ; si le coût change, un historique de tarif est enregistré avec motif",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin"
+         ],
+         "menu": "Référentiels › Prestations"
+        },
+        {
+         "title": "Désactiver (supprimer) une prestation",
+         "goal": "Suppression logique (actif = false), motif obligatoire",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Référentiels › Prestations"
+        }
+       ]
+      },
+      {
+       "title": "Types de prestation",
+       "items": [
+        {
+         "title": "Lister les types",
+         "goal": "Lister les types (nom, description, couleur, actif, ordre)",
+         "status": "disponible"
+        },
+        {
+         "title": "Détail d'un type",
+         "goal": "Obtenir un type",
+         "status": "disponible"
+        },
+        {
+         "title": "Créer un type",
+         "goal": "Créer un type de prestation",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin"
+         ]
+        },
+        {
+         "title": "Modifier un type",
+         "goal": "Modifier un type",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin"
+         ]
+        },
+        {
+         "title": "Supprimer un type",
+         "goal": "Supprimer un type sans prestations associées (motif obligatoire)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "slug": "honoraires",
+     "title": "Honoraires",
+     "pack": "financier",
+     "features": [
+      {
+       "title": "Honoraires médecins v2",
+       "items": [
+        {
+         "title": "Aperçu des prestations éligibles",
+         "goal": "Lister les prestations encaissées, non encore payées au médecin, hors annulations 72 h, sur la période",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Argent › Honoraires"
+        },
+        {
+         "title": "Sélectionner / désélectionner des prestations",
+         "goal": "Choisir précisément les prestations à payer (Tout sélectionner prend toutes les pages)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Comptabilité"
+         ],
+         "menu": "Argent › Honoraires"
+        },
+        {
+         "title": "Calculer et payer (sélection)",
+         "goal": "Créer le lot d'honoraires : prime fixe (une fois par période) + pourcentage sur les prestations cochées ; lignes marquées payées",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Argent › Honoraires"
+        },
+        {
+         "title": "Payer uniquement la prime fixe",
+         "goal": "Créer un lot sans prestation éligible (prime seule)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Comptabilité"
+         ],
+         "menu": "Argent › Honoraires"
+        }
+       ]
+      },
+      {
+       "title": "Honoraires médecins v1",
+       "items": [
+        {
+         "title": "Calculer et payer (toutes les prestations de la période)",
+         "goal": "Créer le lot sans sélection manuelle",
+         "status": "disponible",
+         "menu": "Argent › Honoraires"
+        },
+        {
+         "title": "Lister les lots d'honoraires",
+         "goal": "Lister les paiements de médecins",
+         "status": "disponible",
+         "menu": "Argent › Honoraires"
+        },
+        {
+         "title": "Détail d'un lot",
+         "goal": "Obtenir un lot et ses lignes",
+         "status": "disponible",
+         "menu": "Argent › Honoraires"
+        },
+        {
+         "title": "Bulletin de paie PDF",
+         "goal": "Aperçu puis téléchargement du bulletin de paie du lot",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Argent › Honoraires"
+        }
+       ]
+      },
+      {
+       "title": "Honoraires médecins",
+       "items": [
+        {
+         "title": "Saisir la prime fixe et le pourcentage du médecin",
+         "goal": "Configurer la rémunération du médecin",
+         "status": "developpement",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Argent › Honoraires"
+        },
+        {
+         "title": "Écriture comptable du paiement effectif des honoraires",
+         "goal": "Constater le décaissement (D 421 / C trésorerie)",
+         "status": "developpement",
+         "profiles": [
+          "Administrateur",
+          "Comptabilité"
+         ],
+         "menu": "Argent › Honoraires"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "slug": "comptabilite",
+     "title": "Comptabilité",
+     "pack": "financier",
+     "features": [
+      {
+       "title": "Navigation",
+       "items": [
+        {
+         "title": "Entrée Comptabilité et 8 onglets",
+         "goal": "Parcourir Contrôles, Journal, Grand livre, Balance, Créances et dettes, Clôtures, Dépenses, Fournisseurs",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité"
+        }
+       ]
+      },
+      {
+       "title": "Contrôles d'audit",
+       "items": [
+        {
+         "title": "Synthèse des contrôles",
+         "goal": "Lancer les 22 contrôles d'audit sur la période (par défaut le mois en cours) et afficher la synthèse (OK / à revoir / critique)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Contrôles"
+        },
+        {
+         "title": "Relancer",
+         "goal": "Recalculer les contrôles",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Contrôles"
+        },
+        {
+         "title": "Anomalies d'un contrôle",
+         "goal": "Voir les constats d'un contrôle (date, référence, montant, personne, détail), paginés",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Contrôles"
+        },
+        {
+         "title": "Export CSV d'un contrôle",
+         "goal": "Exporter les anomalies d'un contrôle (tracé dans l'audit)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Contrôles"
+        },
+        {
+         "title": "Contrôle",
+         "goal": "Encaissements sans écriture comptable (gravité high)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Contrôles"
+        },
+        {
+         "title": "Contrôle",
+         "goal": "Remboursements sans écriture comptable (gravité high)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Contrôles"
+        },
+        {
+         "title": "Contrôle",
+         "goal": "Écarts de caisse sans écriture comptable (gravité high)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Contrôles"
+        },
+        {
+         "title": "Contrôle",
+         "goal": "Honoraires médecins sans écriture comptable (gravité medium)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Contrôles"
+        },
+        {
+         "title": "Contrôle",
+         "goal": "Dépenses sans écriture comptable (gravité high)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Contrôles"
+        },
+        {
+         "title": "Contrôle",
+         "goal": "Dépenses approuvées par leur saisisseur (gravité high)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Contrôles"
+        },
+        {
+         "title": "Contrôle",
+         "goal": "Dépenses en double suspectées (gravité medium)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Contrôles"
+        },
+        {
+         "title": "Contrôle",
+         "goal": "Dépenses approuvées non payées depuis plus de 60 jours (gravité info)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Contrôles"
+        },
+        {
+         "title": "Contrôle",
+         "goal": "Rapprochement dettes fournisseurs / compte 401 (gravité medium)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Contrôles"
+        },
+        {
+         "title": "Contrôle",
+         "goal": "Écritures dont la pièce d'origine a disparu (gravité high)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Contrôles"
+        },
+        {
+         "title": "Contrôle",
+         "goal": "Trous dans la numérotation du journal (gravité critical)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Contrôles"
+        },
+        {
+         "title": "Contrôle",
+         "goal": "Écritures déséquilibrées ou incomplètes (gravité critical)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Contrôles"
+        },
+        {
+         "title": "Contrôle",
+         "goal": "Périodes clôturées modifiées depuis leur clôture (gravité critical)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Contrôles"
+        },
+        {
+         "title": "Contrôle",
+         "goal": "Rapprochement encaissements / trésorerie comptable (gravité high)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Contrôles"
+        },
+        {
+         "title": "Contrôle",
+         "goal": "Remboursements sans séparation des tâches (gravité high)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Contrôles"
+        },
+        {
+         "title": "Contrôle",
+         "goal": "Écritures contre-passées par leur auteur (gravité medium)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Contrôles"
+        },
+        {
+         "title": "Contrôle",
+         "goal": "Paiements supprimés (gravité medium)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Contrôles"
+        },
+        {
+         "title": "Contrôle",
+         "goal": "Écarts de caisse à la clôture (gravité medium)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Contrôles"
+        },
+        {
+         "title": "Contrôle",
+         "goal": "Écarts de caisse faussés par la monnaie rendue (clôtures antérieures au correctif) (gravité high)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Contrôles"
+        },
+        {
+         "title": "Contrôle",
+         "goal": "Caisses restées ouvertes (gravité medium)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Contrôles"
+        },
+        {
+         "title": "Contrôle",
+         "goal": "Encaissements hors horaires (gravité info)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Contrôles"
+        },
+        {
+         "title": "Contrôle",
+         "goal": "Écritures manuelles (gravité info)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Contrôles"
+        }
+       ]
+      },
+      {
+       "title": "Journal",
+       "items": [
+        {
+         "title": "Lister les journaux",
+         "goal": "Obtenir les journaux (CAI caisse, MM mobile money, BQ banque, ACH achats, HON honoraires, OD opérations diverses, CLO clôture d'exercice)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Journal"
+        },
+        {
+         "title": "Lister les écritures",
+         "goal": "Afficher N°, date, journal, libellé, montant, état (contre-passée / contre-passation)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Journal"
+        },
+        {
+         "title": "Filtrer par période, journal, compte, texte",
+         "goal": "Affiner la liste",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Journal"
+        },
+        {
+         "title": "Détail d'une écriture",
+         "goal": "Voir lignes (compte, débit, crédit), totaux, devise, piste d'audit, liens contre-passation",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Journal"
+        },
+        {
+         "title": "Contre-passer une écriture",
+         "goal": "Annuler par une écriture inverse avec motif (≥ 5 car.) ; jamais de modification ni suppression",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Comptabilité"
+         ],
+         "menu": "Finances › Comptabilité › Journal"
+        },
+        {
+         "title": "Écritures automatiques",
+         "goal": "Constater automatiquement encaissement (D 571/531 + 4112 / C 706), remboursement (D 709 / C 571), écart de caisse (658), honoraires (D 661 / C 421), dépenses",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Journal"
+        }
+       ]
+      },
+      {
+       "title": "Plan de comptes",
+       "items": [
+        {
+         "title": "Créer un compte",
+         "goal": "Ajouter un compte (code 2 à 10 chiffres, libellé, type)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Comptabilité"
+         ],
+         "menu": "Finances › Comptabilité"
+        },
+        {
+         "title": "Modifier libellé / activer-désactiver un compte",
+         "goal": "Le code et le type ne changent jamais",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Comptabilité"
+         ],
+         "menu": "Finances › Comptabilité"
+        },
+        {
+         "title": "Devise de la comptabilité",
+         "goal": "Lire la devise (défaut XOF)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité"
+        },
+        {
+         "title": "Changer la devise",
+         "goal": "Modifier la devise (code ISO 4217) ; tracé en audit",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Finances › Comptabilité"
+        }
+       ]
+      },
+      {
+       "title": "Grand livre",
+       "items": [
+        {
+         "title": "Consulter un compte",
+         "goal": "Report d'ouverture, mouvements avec solde cumulé, totaux, solde de clôture",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Grand livre"
+        },
+        {
+         "title": "Choisir le compte",
+         "goal": "Sélectionner un compte du plan",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Grand livre"
+        },
+        {
+         "title": "Exclure les écritures de clôture d'exercice",
+         "goal": "Voir les comptes avant l'écriture de résultat",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Grand livre"
+        }
+       ]
+      },
+      {
+       "title": "Balance",
+       "items": [
+        {
+         "title": "Exporter la balance en CSV",
+         "goal": "Télécharger la balance",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Balance"
+        },
+        {
+         "title": "Exporter la balance en PDF",
+         "goal": "Télécharger la balance en PDF (nom de la clinique, devise)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Balance"
+        }
+       ]
+      },
+      {
+       "title": "Créances et dettes",
+       "items": [
+        {
+         "title": "Créances des assurances par ancienneté",
+         "goal": "Part assurance des prestations encaissées non soldée en facturation, par tranches d'âge, comparée au grand livre (4112)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Créances et dettes"
+        },
+        {
+         "title": "Exporter les créances en CSV",
+         "goal": "Télécharger",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Créances et dettes"
+        },
+        {
+         "title": "Dettes fournisseurs par ancienneté",
+         "goal": "Dépenses approuvées non payées par tranches d'âge, rapprochées du compte 401",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Créances et dettes"
+        },
+        {
+         "title": "Exporter les dettes en CSV",
+         "goal": "Télécharger",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Créances et dettes"
+        },
+        {
+         "title": "Choisir la date d'arrêté",
+         "goal": "Date « Au » (défaut Aujourd'hui)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Créances et dettes"
+        },
+        {
+         "title": "Règlement de l'assurance en comptabilité",
+         "goal": "Constater l'encaissement du règlement de l'assurance (D 521 / C 4112) pour solder la créance",
+         "status": "developpement",
+         "profiles": [
+          "Administrateur",
+          "Comptabilité"
+         ],
+         "menu": "Finances › Comptabilité › Créances et dettes"
+        }
+       ]
+      },
+      {
+       "title": "Clôtures",
+       "items": [
+        {
+         "title": "Choisir l'exercice",
+         "goal": "Select Exercice (6 dernières années)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Clôtures"
+        },
+        {
+         "title": "Liste de contrôle d'un mois",
+         "goal": "Afficher bloquants et alertes (période terminée, période précédente clôturée, exercice ouvert, aucune caisse ouverte, contrôles bloquants)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Clôtures"
+        },
+        {
+         "title": "Clôturer un mois",
+         "goal": "Verrouiller un mois (dans l'ordre, sans bloquant)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Comptabilité"
+         ],
+         "menu": "Finances › Comptabilité › Clôtures"
+        },
+        {
+         "title": "Rouvrir un mois",
+         "goal": "Rouvrir un mois clôturé avec motif (≥ 10 car.), tracé",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Finances › Comptabilité › Clôtures"
+        },
+        {
+         "title": "Clôturer l'exercice",
+         "goal": "Solder charges et produits et virer le résultat sur 131 (bénéfice) ou 139 (perte)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Comptabilité"
+         ],
+         "menu": "Finances › Comptabilité › Clôtures"
+        },
+        {
+         "title": "Rouvrir l'exercice",
+         "goal": "Rouvrir avec motif (≥ 10 car.) ; l'écriture de résultat est contre-passée",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Finances › Comptabilité › Clôtures"
+        }
+       ]
+      },
+      {
+       "title": "Fournisseurs",
+       "items": [
+        {
+         "title": "Lister les fournisseurs",
+         "goal": "Nom, contact, reste à payer, état",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Fournisseurs"
+        },
+        {
+         "title": "Créer un fournisseur",
+         "goal": "Nom (2-200), n° contribuable, téléphone, courriel, adresse, notes",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Comptabilité"
+         ],
+         "menu": "Finances › Comptabilité › Fournisseurs"
+        },
+        {
+         "title": "Modifier un fournisseur",
+         "goal": "Éditer la fiche",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Comptabilité"
+         ],
+         "menu": "Finances › Comptabilité › Fournisseurs"
+        }
+       ]
+      },
+      {
+       "title": "Dépenses",
+       "items": [
+        {
+         "title": "Lister les dépenses",
+         "goal": "N°, date, fournisseur, libellé, montant, statut (Brouillon, Approuvée, Payée, Annulée)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Dépenses"
+        },
+        {
+         "title": "Filtrer par période, statut, fournisseur, texte",
+         "goal": "Affiner",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Dépenses"
+        },
+        {
+         "title": "Saisir une dépense (brouillon)",
+         "goal": "Fournisseur (facultatif), compte de charge, date, montant, n° de facture fournisseur, libellé",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Comptabilité"
+         ],
+         "menu": "Finances › Comptabilité › Dépenses"
+        },
+        {
+         "title": "Détail d'une dépense",
+         "goal": "Voir statut, justificatifs, écritures d'approbation et de paiement, acteurs, piste d'audit",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Dépenses"
+        },
+        {
+         "title": "Modifier un brouillon",
+         "goal": "Modifier les champs tant que DRAFT",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Comptabilité"
+         ],
+         "menu": "Finances › Comptabilité › Dépenses"
+        },
+        {
+         "title": "Télécharger un justificatif",
+         "goal": "Ouvrir la pièce jointe",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité › Dépenses"
+        },
+        {
+         "title": "Retirer un justificatif",
+         "goal": "Supprimer une pièce (brouillon uniquement)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Comptabilité"
+         ],
+         "menu": "Finances › Comptabilité › Dépenses"
+        },
+        {
+         "title": "Payer une dépense",
+         "goal": "Mode, date (pas antérieure à la dépense), référence",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Comptabilité"
+         ],
+         "menu": "Finances › Comptabilité › Dépenses"
+        },
+        {
+         "title": "Annuler une dépense",
+         "goal": "Annuler avec motif (≥ 5 car.) ; contre-passation si déjà approuvée ; impossible après paiement",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Comptabilité"
+         ],
+         "menu": "Finances › Comptabilité › Dépenses"
+        },
+        {
+         "title": "Suppression d'une dépense",
+         "goal": "Supprimer définitivement",
+         "status": "disponible",
+         "menu": "Finances › Comptabilité › Dépenses"
+        }
+       ]
+      },
+      {
+       "title": "Droits",
+       "items": [
+        {
+         "title": "Masquage des actions selon le rôle",
+         "goal": "Masquer boutons d'écriture (ADMIN, COMPTA), d'approbation (ADMIN, OWNER, COMPTA, hors saisisseur) et de réouverture (ADMIN)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité"
+        },
+        {
+         "title": "Lecture seule pour OWNER et AUDITOR",
+         "goal": "Consulter sans écrire",
+         "status": "disponible",
+         "profiles": [
+          "Direction",
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Finances › Comptabilité"
+        }
+       ]
+      },
+      {
+       "title": "Tableau de bord",
+       "items": [
+        {
+         "title": "Widgets finances",
+         "goal": "Indicateurs d'argent sur le tableau de bord",
+         "status": "developpement",
+         "menu": "Tableau de bord"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "documents",
+   "title": "Documents et impressions",
+   "summary": "Centre d'impression, papier à en-tête, gabarits et aperçus des documents.",
+   "pack": "commun",
+   "modules": [
+    {
+     "slug": "centre-d-impression",
+     "title": "Centre d'impression",
+     "pack": "commun",
+     "features": [
+      {
+       "title": "Lister les patients ayant des documents à imprimer",
+       "items": [
+        {
+         "title": "File des 48 dernières heures",
+         "goal": "Montrer au guichet les patients dont un document est imprimable",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ]
+        }
+       ]
+      },
+      {
+       "title": "Rechercher un patient dans la file",
+       "items": [
+        {
+         "title": "Filtre local par nom ou téléphone",
+         "goal": "Retrouver rapidement un patient",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ]
+        }
+       ]
+      },
+      {
+       "title": "Imprimer la liste d'examens demandés",
+       "items": [
+        {
+         "title": "Bouton « Examens »",
+         "goal": "Remettre au patient la liste des examens prescrits",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ]
+        }
+       ]
+      },
+      {
+       "title": "Imprimer l'ordonnance médicale",
+       "items": [
+        {
+         "title": "Bouton « Ordonnance »",
+         "goal": "Remettre au patient l'ordonnance de la consultation",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ]
+        }
+       ]
+      },
+      {
+       "title": "Télécharger le bulletin d'examens",
+       "items": [
+        {
+         "title": "Bouton « Bulletin » (fichier Word)",
+         "goal": "Obtenir le bulletin d'examens au format.docx",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ]
+        }
+       ]
+      },
+      {
+       "title": "Message d'état vide",
+       "items": [
+        {
+         "title": "Aucun patient avec examens, bulletin ou ordonnance sur les 48 dernières heures",
+         "goal": "Expliquer l'absence de résultats",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "slug": "certificats-medicaux-a-imprimer",
+     "title": "Certificats médicaux à imprimer",
+     "pack": "commun",
+     "features": [
+      {
+       "title": "Lister les certificats en attente d'impression",
+       "items": [
+        {
+         "title": "Panneau « Certificats à imprimer » du Centre d'impression",
+         "goal": "Voir les certificats émis par les médecins et pas encore remis",
+         "status": "disponible",
+         "profiles": [
+          "Médecin",
+          "Secrétaire",
+          "Administrateur",
+          "Direction"
+         ]
+        }
+       ]
+      },
+      {
+       "title": "Catalogue des types de certificat",
+       "items": [
+        {
+         "title": "Titre imprimé par type",
+         "goal": "Afficher le libellé du certificat dans la liste",
+         "status": "disponible"
+        }
+       ]
+      },
+      {
+       "title": "Rechercher un certificat",
+       "items": [
+        {
+         "title": "Filtre local par patient ou référence",
+         "goal": "Retrouver un certificat",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ]
+        }
+       ]
+      },
+      {
+       "title": "Imprimer un certificat",
+       "items": [
+        {
+         "title": "Bouton « Imprimer » (corps figé à l'émission)",
+         "goal": "Remettre le certificat au patient et le sortir de la file",
+         "status": "disponible",
+         "profiles": [
+          "Médecin",
+          "Secrétaire",
+          "Administrateur",
+          "Direction"
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "slug": "configuration-des-impressions-papier-a-en-tete",
+     "title": "Configuration des impressions (papier à en-tête)",
+     "pack": "commun",
+     "features": [
+      {
+       "title": "Consulter la configuration d'impression",
+       "items": [
+        {
+         "title": "Lecture des réglages de la clinique",
+         "goal": "Charger en-tête, pied de page, modèle documentaire et coordonnées",
+         "status": "disponible",
+         "menu": "Administration › Configuration"
+        }
+       ]
+      },
+      {
+       "title": "Enregistrer la configuration d'impression",
+       "items": [
+        {
+         "title": "Bouton « Enregistrer » (désactivé tant que rien n'a changé)",
+         "goal": "Sauvegarder les réglages d'impression",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Administration › Configuration"
+        }
+       ]
+      },
+      {
+       "title": "Coordonnées de l'établissement",
+       "items": [
+        {
+         "title": "Six champs structurés (nom, adresse, ville, téléphone, e-mail, site web)",
+         "goal": "Source unique des coordonnées imprimées (ordonnances, certificats, factures)",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Administration › Configuration"
+        }
+       ]
+      },
+      {
+       "title": "Éditer l'en-tête et le pied de page globaux",
+       "items": [
+        {
+         "title": "Éditeur riche (HTML avancé, tableaux, colonnes, images, édition source)",
+         "goal": "Composer l'en-tête et le pied de page imprimés",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Administration › Configuration"
+        }
+       ]
+      },
+      {
+       "title": "Générer l'en-tête depuis les coordonnées",
+       "items": [
+        {
+         "title": "Bouton « Régénérer depuis les coordonnées »",
+         "goal": "Composer automatiquement le papier à en-tête",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Administration › Configuration"
+        }
+       ]
+      },
+      {
+       "title": "Aperçu HTML du modèle Word",
+       "items": [
+        {
+         "title": "Conversion DOCX en HTML",
+         "goal": "Prévisualiser le modèle importé",
+         "status": "disponible",
+         "menu": "Administration › Configuration"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "slug": "gabarit-et-apercu-des-documents",
+     "title": "Gabarit et aperçu des documents",
+     "pack": "commun",
+     "features": [
+      {
+       "title": "Gabarit commun des documents imprimés",
+       "items": [
+        {
+         "title": "printableDocument (en-tête, bandeau, titre + référence, cartes, corps, consigne, signature, pied)",
+         "goal": "Donner la même apparence à tous les documents HTML remis au patient",
+         "status": "disponible",
+         "menu": "Documents imprimés"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "communication",
+   "title": "Communication",
+   "summary": "Messagerie WhatsApp et notifications automatiques.",
+   "pack": "commun",
+   "modules": [
+    {
+     "slug": "messagerie-whatsapp",
+     "title": "Messagerie WhatsApp",
+     "pack": "commun",
+     "features": [
+      {
+       "title": "Rechercher des contacts",
+       "items": [
+        {
+         "title": "Recherche patients et médecins avec numéro",
+         "goal": "Trouver les destinataires possibles d'un message WhatsApp manuel",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ]
+        }
+       ]
+      },
+      {
+       "title": "Filtrer par type de contact",
+       "items": [
+        {
+         "title": "Sélecteur Tous / Patients / Médecins",
+         "goal": "Restreindre la liste aux patients ou aux médecins",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ]
+        }
+       ]
+      },
+      {
+       "title": "Composer la sélection de destinataires",
+       "items": [
+        {
+         "title": "Sélectionner / désélectionner un contact",
+         "goal": "Constituer la liste des destinataires du message",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ]
+        },
+        {
+         "title": "Tout sélectionner / tout désélectionner les contacts visibles",
+         "goal": "Sélection groupée des contacts affichés",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ]
+        },
+        {
+         "title": "Retirer un destinataire / vider la sélection",
+         "goal": "Corriger la sélection",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ]
+        }
+       ]
+      },
+      {
+       "title": "Rédiger le message",
+       "items": [
+        {
+         "title": "Zone de texte (2000 caractères max, compteur)",
+         "goal": "Saisir le texte libre à envoyer",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ]
+        }
+       ]
+      },
+      {
+       "title": "Envoyer un message WhatsApp manuel",
+       "items": [
+        {
+         "title": "Traçabilité de l'envoi",
+         "goal": "Journaliser chaque message réellement envoyé",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ],
+         "menu": "Administration › Journal d'audit (consultation)"
+        }
+       ]
+      },
+      {
+       "title": "Consulter le résultat du dernier envoi",
+       "items": [
+        {
+         "title": "Carte « Dernier résultat » (envoyés / non envoyés, motif par destinataire)",
+         "goal": "Savoir qui a reçu le message et pourquoi les autres non",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ]
+        }
+       ]
+      },
+      {
+       "title": "Exporter le rapport d'envoi",
+       "items": [
+        {
+         "title": "Rapport par destinataire exportable",
+         "goal": "Conserver un rapport d'envoi",
+         "status": "developpement",
+         "profiles": [
+          "Administrateur",
+          "Secrétaire"
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "pilotage",
+   "title": "Pilotage et analyse",
+   "summary": "Tableaux de bord par rôle, statistiques et assistant analytique.",
+   "pack": "commun",
+   "modules": [
+    {
+     "slug": "tableau-de-bord-par-role",
+     "title": "Tableau de bord par rôle",
+     "pack": "commun",
+     "features": [
+      {
+       "title": "Afficher le tableau de bord",
+       "items": [
+        {
+         "title": "Données agrégées selon le rôle",
+         "goal": "Renvoyer résumé (clinique, date), métriques, alertes, rendez-vous du jour, recherche patient et collections (files, graphiques) propres au rôle.",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Secrétaire",
+          "Orthoptiste",
+          "Technicien d'examens",
+          "Caissier(ère)",
+          "Comptabilité",
+          "Direction",
+          "Personnel",
+          "Assureur"
+         ],
+         "menu": "Tableau de bord"
+        }
+       ]
+      },
+      {
+       "title": "Statistiques (métriques)",
+       "items": [
+        {
+         "title": "Extrait du tableau de bord",
+         "goal": "Retourner uniquement les métriques du rôle.",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Secrétaire",
+          "Orthoptiste",
+          "Technicien d'examens",
+          "Caissier(ère)",
+          "Comptabilité",
+          "Direction",
+          "Personnel",
+          "Assureur"
+         ],
+         "menu": "Tableau de bord"
+        }
+       ]
+      },
+      {
+       "title": "Rendez-vous du jour",
+       "items": [
+        {
+         "title": "Extrait du tableau de bord",
+         "goal": "Retourner les rendez-vous du jour visibles pour le rôle (médecin : les siens ; secrétaire : les siens).",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Secrétaire",
+          "Orthoptiste",
+          "Technicien d'examens",
+          "Caissier(ère)",
+          "Comptabilité",
+          "Direction",
+          "Personnel",
+          "Assureur"
+         ],
+         "menu": "Tableau de bord"
+        }
+       ]
+      },
+      {
+       "title": "Alertes / notifications",
+       "items": [
+        {
+         "title": "Extrait du tableau de bord",
+         "goal": "Retourner les alertes du rôle (patients en attente, examens, factures à suivre, caisse non ouverte, dossiers assurance).",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Secrétaire",
+          "Orthoptiste",
+          "Technicien d'examens",
+          "Caissier(ère)",
+          "Comptabilité",
+          "Direction",
+          "Personnel",
+          "Assureur"
+         ],
+         "menu": "Tableau de bord"
+        }
+       ]
+      },
+      {
+       "title": "Bandeau d'accueil et actions rapides",
+       "items": [
+        {
+         "title": "En-tête personnalisé",
+         "goal": "Afficher initiales, rôle, nom, sous-titre, clinique, date, session et boutons d'actions rapides du rôle (Nouveau patient, Planifier, Consultations, Examens, Accueil, Impressions, Stats détaillées, Encaisser, Valider, Facturation).",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Médecin",
+          "Infirmier(ère)",
+          "Secrétaire",
+          "Orthoptiste",
+          "Technicien d'examens",
+          "Caissier(ère)",
+          "Comptabilité",
+          "Direction",
+          "Personnel",
+          "Assureur"
+         ],
+         "menu": "Tableau de bord"
+        }
+       ]
+      },
+      {
+       "title": "Indicateurs ADMIN",
+       "items": [
+        {
+         "title": "8 cartes",
+         "goal": "Patients actifs, consultations du jour, examens en attente, rendez-vous du jour, recettes du jour, factures impayées, demandes assurance, utilisateurs actifs (liens vers les écrans).",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Tableau de bord"
+        }
+       ]
+      },
+      {
+       "title": "Widgets ADMIN",
+       "items": [
+        {
+         "title": "Notifications, rendez-vous, activité récente, tendance des recettes, consultations par médecin",
+         "goal": "Fil d'activité issu de l'audit, tendance des recettes sur 7 jours, répartition des consultations par médecin.",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Tableau de bord"
+        }
+       ]
+      },
+      {
+       "title": "Indicateurs MÉDECIN",
+       "items": [
+        {
+         "title": "4 cartes + files",
+         "goal": "Mes consultations, patients en attente, examens assignés, résultats à relire ; files « File clinique » et « File des examens ».",
+         "status": "disponible",
+         "profiles": [
+          "Médecin"
+         ],
+         "menu": "Tableau de bord"
+        }
+       ]
+      },
+      {
+       "title": "Indicateurs SECRÉTAIRE",
+       "items": [
+        {
+         "title": "4 cartes",
+         "goal": "Rendez-vous du jour, arrivées guichet, nouveaux patients, salle d'attente.",
+         "status": "disponible",
+         "profiles": [
+          "Secrétaire"
+         ],
+         "menu": "Tableau de bord"
+        }
+       ]
+      },
+      {
+       "title": "Indicateurs INFIRMIER / ORTHOPTISTE / TECHNICIEN LABO",
+       "items": [
+        {
+         "title": "Cartes et file d'examens",
+         "goal": "NURSE : patients actifs, examens en attente, rendez-vous ; ORTHOPTIST et : examens en attente et file des examens.",
+         "status": "disponible",
+         "profiles": [
+          "Infirmier(ère)",
+          "Orthoptiste",
+          "Technicien d'examens"
+         ],
+         "menu": "Tableau de bord"
+        }
+       ]
+      },
+      {
+       "title": "Indicateurs CAISSIÈRE",
+       "items": [
+        {
+         "title": "4 cartes + paiements récents + factures à régler",
+         "goal": "Encaissements du jour, factures à régler, modes utilisés, état de la session de caisse (Ouverte / À ouvrir).",
+         "status": "disponible",
+         "profiles": [
+          "Caissier(ère)"
+         ],
+         "menu": "Tableau de bord"
+        }
+       ]
+      },
+      {
+       "title": "Indicateurs COMPTA",
+       "items": [
+        {
+         "title": "4 cartes + graphique",
+         "goal": "Recettes 7 jours, factures impayées, demandes assurance, paiements saisis ; paiements récents, factures à suivre, tendance des recettes.",
+         "status": "disponible",
+         "profiles": [
+          "Comptabilité"
+         ],
+         "menu": "Tableau de bord"
+        }
+       ]
+      },
+      {
+       "title": "Indicateurs PROPRIÉTAIRE",
+       "items": [
+        {
+         "title": "7 cartes + 10 graphiques",
+         "goal": "Patients actifs, nouveaux patients du mois, patients vus sur 30 jours, taux de fréquentation, recettes cumulées de l'année, factures assurance en attente, prévision à 30 jours.",
+         "status": "disponible",
+         "profiles": [
+          "Direction"
+         ],
+         "menu": "Tableau de bord"
+        }
+       ]
+      },
+      {
+       "title": "Indicateurs STAFF",
+       "items": [
+        {
+         "title": "2 cartes",
+         "goal": "Patients actifs et rendez-vous du jour.",
+         "status": "disponible",
+         "profiles": [
+          "Personnel"
+         ],
+         "menu": "Tableau de bord"
+        }
+       ]
+      },
+      {
+       "title": "Tableau de bord AUDITOR",
+       "items": [
+        {
+         "title": "Aucun contenu",
+         "goal": "Le rôle AUDITOR a une configuration vide (aucune métrique, aucun widget) et n'a pas accès à la section Tableau de bord.",
+         "status": "developpement",
+         "profiles": [
+          "Auditeur (lecture seule)"
+         ],
+         "menu": "Tableau de bord (non visible pour AUDITOR)"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "slug": "statistiques-proprietaire",
+     "title": "Statistiques propriétaire",
+     "pack": "commun",
+     "features": [
+      {
+       "title": "Détail d'un point de graphique (drill-down)",
+       "items": [
+        {
+         "title": "Clic sur une barre ou un élément",
+         "goal": "Ouvrir une modale listant les lignes qui composent le point (patients, prestations, médecins, mois, jours, années, compagnies, prévision).",
+         "status": "disponible",
+         "profiles": [
+          "Direction"
+         ],
+         "menu": "Tableau de bord › Stats détaillées"
+        }
+       ]
+      },
+      {
+       "title": "Exporter le détail en XLS",
+       "items": [
+        {
+         "title": "Bouton « Exporter XLS »",
+         "goal": "Exporter les lignes de la modale de détail au format Excel.",
+         "status": "disponible",
+         "profiles": [
+          "Direction"
+         ],
+         "menu": "Tableau de bord › Stats détaillées"
+        }
+       ]
+      },
+      {
+       "title": "Exporter le détail en PDF",
+       "items": [
+        {
+         "title": "Bouton « Exporter PDF » + aperçu",
+         "goal": "Générer un PDF (jsPDF) du détail avec aperçu d'impression.",
+         "status": "disponible",
+         "profiles": [
+          "Direction"
+         ],
+         "menu": "Tableau de bord › Stats détaillées"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "slug": "assistant-analytique",
+     "title": "Assistant analytique",
+     "pack": "commun",
+     "features": [
+      {
+       "title": "Exemples rapides et « Lancer une analyse »",
+       "items": [
+        {
+         "title": "5 questions suggérées",
+         "goal": "Lancer une question prédéfinie (CA par médecin, évolution des consultations, encaissements par mode, 10 patients les plus actifs, factures assurance par compagnie).",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité"
+         ],
+         "menu": "Analyse IA"
+        }
+       ]
+      },
+      {
+       "title": "Assistant non configuré",
+       "items": [
+        {
+         "title": "Message sans",
+         "goal": "Sans clé côté backend, l'assistant répond qu'il n'est pas configuré.",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur",
+          "Direction",
+          "Comptabilité"
+         ],
+         "menu": "Analyse IA"
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "administration",
+   "title": "Administration de la clinique",
+   "summary": "Utilisateurs, journal d'audit et configuration.",
+   "pack": "commun",
+   "modules": [
+    {
+     "slug": "utilisateurs-de-la-clinique",
+     "title": "Utilisateurs de la clinique",
+     "pack": "commun",
+     "features": [
+      {
+       "title": "Lister les utilisateurs",
+       "items": [
+        {
+         "title": "Tableau, filtres rôle et recherche (nom, prénom, email), 500 max",
+         "goal": "Voir les comptes de la clinique",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Administration › Utilisateurs"
+        }
+       ]
+      },
+      {
+       "title": "Lister les compagnies d'assurance assignables",
+       "items": [
+        {
+         "title": "Liste annexe",
+         "goal": "Choisir la compagnie d'un compte INSURANCE",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Administration › Utilisateurs"
+        }
+       ]
+      },
+      {
+       "title": "Créer un utilisateur",
+       "items": [
+        {
+         "title": "Bouton « Nouvel utilisateur »",
+         "goal": "Ajouter un compte à la clinique",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Administration › Utilisateurs"
+        }
+       ]
+      },
+      {
+       "title": "Modifier un utilisateur",
+       "items": [
+        {
+         "title": "Icône « Modifier » (nom, email, rôle, compte actif)",
+         "goal": "Changer les informations ou le rôle",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Administration › Utilisateurs"
+        }
+       ]
+      },
+      {
+       "title": "Réinitialiser un mot de passe",
+       "items": [
+        {
+         "title": "Icône « Réinitialiser le mot de passe »",
+         "goal": "Définir un nouveau mot de passe et débloquer le compte",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Administration › Utilisateurs"
+        }
+       ]
+      },
+      {
+       "title": "Désactiver un utilisateur",
+       "items": [
+        {
+         "title": "Icône « Désactiver » (désactivation logique)",
+         "goal": "Retirer l'accès sans supprimer le compte",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Administration › Utilisateurs"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "slug": "journal-d-audit",
+     "title": "Journal d'audit",
+     "pack": "commun",
+     "features": [
+      {
+       "title": "Consulter le journal d'audit",
+       "items": [
+        {
+         "title": "Liste paginée (50 par défaut, 200 max)",
+         "goal": "Voir qui a fait quoi",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Administration › Journal d'audit"
+        }
+       ]
+      },
+      {
+       "title": "Alimenter les listes de filtres",
+       "items": [
+        {
+         "title": "Facettes",
+         "goal": "Proposer types d'entité, actions et utilisateurs existants",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Administration › Journal d'audit"
+        }
+       ]
+      },
+      {
+       "title": "Détail d'une entrée d'audit",
+       "items": [
+        {
+         "title": "Panneau de détail (clic sur une ligne)",
+         "goal": "Lire les modifications enregistrées",
+         "status": "disponible",
+         "profiles": [
+          "Administrateur"
+         ],
+         "menu": "Administration › Journal d'audit"
+        }
+       ]
+      },
+      {
+       "title": "Purge de l'audit ancien",
+       "items": [
+        {
+         "title": "cleanupOldAuditTrails (plus d'un an)",
+         "goal": "Conserver l'audit un temps limité",
+         "status": "developpement"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "slug": "configuration-de-la-clinique",
+     "title": "Configuration de la clinique",
+     "pack": "commun",
+     "features": [
+      {
+       "title": "Paramètres système et conservation des données",
+       "items": [
+        {
+         "title": "Politiques de conservation (DataRetentionPolicy) créées à l'amorçage",
+         "goal": "Régler la conservation des données",
+         "status": "developpement",
+         "profiles": [
+          "Administrateur"
+         ]
+        }
+       ]
+      },
+      {
+       "title": "Gestion des sessions utilisateurs",
+       "items": [
+        {
+         "title": "Liste / révocation des sessions",
+         "goal": "Voir et fermer les sessions actives",
+         "status": "developpement",
+         "profiles": [
+          "Administrateur"
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

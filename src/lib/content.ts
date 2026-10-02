@@ -228,6 +228,7 @@ export const navLinks: NavLink[] = [
     ],
     footer: { label: "Toutes les fonctionnalités", href: "/fonctionnalites" },
   },
+  { label: "Wiki", href: "/wiki" },
   { label: "Écosystème", href: "#ecosysteme" },
   { label: "Tarifs", href: "/tarifs" },
   { label: "FAQ", href: "/faq" },
@@ -236,6 +237,7 @@ export const navLinks: NavLink[] = [
 
 export const footerProductLinks = [
   { label: "Fonctionnalités", href: "/fonctionnalites" },
+  { label: "Wiki des fonctionnalités", href: "/wiki" },
   { label: "Tarifs", href: "/tarifs" },
   { label: "FAQ", href: "/faq" },
   { label: "Demander une démo", href: "/contact" },

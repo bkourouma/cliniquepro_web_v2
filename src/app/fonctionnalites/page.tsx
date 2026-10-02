@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Check } from "lucide-react";
+import Link from "next/link";
 import { DemoButton } from "@/components/demo-button";
 import { FinalCta } from "@/components/final-cta";
 import { Navbar } from "@/components/navbar";
@@ -60,6 +61,9 @@ export default function FonctionnalitesPage() {
               </div>
             </section>
           ))}
+          <p className="mb-8 text-center text-ink-900/70">
+            Besoin du détail, action par action ? Consultez le <Link href="/wiki" className="font-semibold text-brand-600 hover:underline">wiki des fonctionnalités</Link>.
+          </p>
           <div className="text-center">
             <DemoButton className="rounded-full bg-gradient-to-r from-brand-500 to-leaf-500 px-8 py-4 font-semibold text-white shadow-[0_10px_40px_-10px_rgba(18,196,106,0.7)]">
               Demander une démonstration
