@@ -288,7 +288,7 @@ function Card({ card, active, near }: { card: HeroCard; active: boolean; near: b
             <Icon aria-hidden className="absolute top-8 right-8 size-24 opacity-[0.14] md:size-36" style={{ color: card.accent }} strokeWidth={1.2} />
           </div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/60 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/80 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 p-6 md:p-8">
           <p className="text-[11px] font-bold tracking-[0.18em] uppercase" style={{ color: card.accent }}>
             {card.eyebrow}
