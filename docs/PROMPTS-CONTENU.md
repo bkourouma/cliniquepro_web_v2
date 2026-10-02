@@ -7,17 +7,25 @@ Ce document liste **ce qui n'y figure pas** et donne, pour chaque point, un prom
 
 ---
 
-## 0. Ce que j'ai supposé (à confirmer ou corriger)
+## 0. Décisions prises et hypothèses restantes
 
-| # | Hypothèse faite dans le site | Où la changer |
+**Confirmées par vous (2 octobre 2026)**
+
+- Les deux packs se cumulent avec une remise de combinaison ; le pourcentage n'a pas été précisé : **−10 % sur le moins cher** (règle d'ImmoTopia), soit 76 500 FCFA HT/mois pour les deux. À corriger dans `COMBO_DISCOUNT` (`src/lib/pricing.ts`) et dans `src/lib/faq.ts`.
+- Prix affichés **hors taxes**.
+- Contact et éditeur repris de immotopia.cloud (Alliance Consultants, RCCM, compte contribuable, hébergeur Hostinger, téléphone, e-mail `support@immotopia.cloud`). Mentions légales et confidentialité calquées sur celles d'ImmoTopia.
+- Domaine : `https://cliniquepro-web.allianceconsultants.net`.
+
+**Encore à confirmer**
+
+| # | Hypothèse | Où la changer |
 | --- | --- | --- |
-| 1 | **Les deux packs sont complémentaires et cumulables** (total 80 000 FCFA/mois). Aucune remise de combinaison n'est annoncée. | `src/lib/pricing.ts`, `src/lib/faq.ts` |
-| 2 | Découpage des modules : *Opérationnelle* = patients, agenda, réception, consultations, dossier médical, examens, ordonnances, assurances (prise en charge). *Financière et comptable* = facturation, caisse, honoraires médecins, comptabilité SYSCOHADA. *Socle commun aux deux* = tableaux de bord, WhatsApp, administration et sécurité. | `src/lib/features.ts` |
-| 3 | Les prix sont affichés « FCFA / mois » **sans mention HT/TTC**, sans essai gratuit, sans frais de mise en route, sans facturation annuelle. | `src/lib/pricing.ts` |
-| 4 | Aucune limite d'utilisateurs, de médecins ou de patients n'est annoncée. | `src/lib/pricing.ts` |
-| 5 | Le pack « Gestion financière et comptable » est mis en avant (carte sombre, bandeau « Maîtrisez vos chiffres »). Simple choix de design, pas une affirmation commerciale. | `src/components/pricing.tsx` |
-| 6 | Le multi-structure (tenants, super-administrateur) n'est pas présenté sur le site, faute de savoir à quel pack il appartient. | `src/lib/features.ts` |
-| 7 | Les écrans animés du carrousel utilisent des **données fictives** (noms, montants). | `src/components/mockups.tsx` |
+| 1 | Découpage des modules : *Opérationnelle* = patients, agenda, réception, consultations, dossier médical, examens, ordonnances, assurances. *Financière et comptable* = facturation, caisse, honoraires, comptabilité SYSCOHADA. *Socle commun* = tableaux de bord, WhatsApp, administration. | `src/lib/features.ts` |
+| 2 | Adresse de connexion à l'application : `/login` sur le même domaine (valeur provisoire). | `NEXT_PUBLIC_APP_URL` |
+| 3 | Pas d'essai gratuit, de frais de mise en route, de facturation annuelle ni de limite d'utilisateurs annoncés. | `src/lib/pricing.ts` |
+| 4 | Le multi-structure n'est pas présenté (pack inconnu). | `src/lib/features.ts` |
+| 5 | Les écrans animés du carrousel utilisent des données fictives. | `src/components/mockups.tsx` |
+| 6 | Mentions légales et confidentialité reprennent ImmoTopia (durée de conservation 3 ans, loi 2013-450, ARTCI) : à faire relire. | `src/app/mentions-legales`, `src/app/confidentialite` |
 
 **Prompt pour valider les hypothèses 2 et 6 avec le code réel** (à exécuter dans une session Claude Code ouverte sur le dépôt `cliniqueprosas`) :
 
@@ -37,39 +45,9 @@ N'invente rien : si le code ne permet pas de trancher, écris « à décider ».
 
 ---
 
-## 1. Informations légales et coordonnées (obligatoires avant mise en ligne)
+## 1. Informations légales et coordonnées
 
-À renseigner dans `src/lib/site.ts` (actuellement « À renseigner » / numéros fictifs `+225 00 00 00 00 00`) :
-
-- Raison sociale, forme juridique, RCCM, numéro de compte contribuable, directeur de la publication
-- Adresse, téléphone, numéro WhatsApp, e-mail de contact
-- Nom de domaine du site et de l'application (`NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_APP_URL`)
-- Hébergeur du site (nom, adresse)
-- Lien Calendly / Cal.com éventuel (`NEXT_PUBLIC_BOOKING_URL`) et webhook de réception des demandes (`N8N_WEBHOOK_URL`)
-
-**Prompt : rédiger les mentions légales et la politique de confidentialité**
-
-```text
-Tu es juriste spécialisé en droit du numérique en Côte d'Ivoire. Rédige, en français,
-les « Mentions légales » et la « Politique de confidentialité » du site vitrine d'un
-logiciel de gestion de clinique (SaaS) nommé CliniquePro.
-
-Informations (remplace [..] par mes valeurs, ne devine rien) :
-- Éditeur : [raison sociale], [forme juridique], RCCM [..], compte contribuable [..]
-- Directeur de la publication : [..]
-- Hébergeur du site : [..]
-- Données collectées par le site : formulaire de demande de démonstration
-  (structure, taille de l'équipe, pack, fonction, nom, clinique, e-mail, téléphone),
-  transmis à [outil : n8n / Airtable / e-mail].
-- Le site ne collecte aucune donnée de santé ; les données de santé sont traitées
-  dans l'application par les cliniques clientes.
-
-Contraintes : cite le cadre ivoirien applicable (loi n° 2013-450 du 19 juin 2013 sur la
-protection des données à caractère personnel, autorité ARTCI) en indiquant que je dois
-faire vérifier les références par un juriste ; prévois durée de conservation,
-droits des personnes, sous-traitants, cookies. Structure en titres courts, phrases simples.
-Signale par [À CONFIRMER] tout point qui dépend d'une information que je ne t'ai pas donnée.
-```
+Renseignées dans `src/lib/site.ts` à partir de immotopia.cloud. Reste à décider : un numéro WhatsApp / une adresse e-mail dédiés à CliniquePro (actuellement ceux d'ImmoTopia), un lien Calendly (`NEXT_PUBLIC_BOOKING_URL`) et le webhook de réception des demandes (`N8N_WEBHOOK_URL`).
 
 ---
 

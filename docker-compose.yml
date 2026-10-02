@@ -3,8 +3,8 @@ services:
     build:
       context: .
       args:
-        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://cliniquepro.com}
-        NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:-https://app.cliniquepro.com/login}
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://cliniquepro-web.allianceconsultants.net}
+        NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:-https://cliniquepro-web.allianceconsultants.net/login}
         NEXT_PUBLIC_BOOKING_URL: ${NEXT_PUBLIC_BOOKING_URL:-}
     image: cliniquepro-site:latest
     container_name: cliniquepro-site

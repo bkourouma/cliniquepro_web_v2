@@ -5,7 +5,7 @@ import { Calculator, Check, ChevronDown, Globe, History, Layers, Minus, ShieldCh
 import { useState } from "react";
 import { features } from "@/lib/features";
 import { fcfa } from "@/lib/format";
-import { packs, pricingNote, type Pack, type PackId } from "@/lib/pricing";
+import { comboPrice, packs, pricingNote, type Pack, type PackId } from "@/lib/pricing";
 import { useDemo } from "./providers";
 import { Eyebrow, MagneticButton, Reveal, trackSpotlight } from "./ui";
 
@@ -13,7 +13,7 @@ const perks = [
   { icon: Globe, text: "Application web, sans installation" },
   { icon: ShieldCheck, text: "Rôles et permissions par métier" },
   { icon: History, text: "Journal d'audit des actions importantes" },
-  { icon: Layers, text: "Deux packs complémentaires" },
+  { icon: Layers, text: "Packs combinables : −10 %" },
 ];
 
 export function Pricing({ comparisonOpen = false }: { comparisonOpen?: boolean }) {
@@ -78,7 +78,7 @@ function PackCard({ pack, onCta }: { pack: Pack; onCta: () => void }) {
         </div>
         <div className="mt-4">
           <p className="font-display text-[2.4rem] leading-none font-bold tracking-tight tabular-nums">{fcfa(pack.monthly).replace(" FCFA", "")}</p>
-          <p className={`mt-1.5 text-sm ${dark ? "text-white/50" : "text-ink-900/45"}`}>FCFA / mois</p>
+          <p className={`mt-1.5 text-sm ${dark ? "text-white/50" : "text-ink-900/45"}`}>FCFA HT / mois</p>
         </div>
         <p className={`mt-4 rounded-xl p-3 text-xs font-semibold ${dark ? "bg-white/[0.06] text-white/80" : "bg-brand-500/[0.06] text-ink-900/70"}`}>{pack.tagline}</p>
         <ul className="mt-6 flex-1 space-y-2.5">
@@ -175,7 +175,7 @@ function Combiner() {
   const { open } = useDemo();
   const toggle = (id: PackId) => setSelected((s) => (s.includes(id) ? (s.length > 1 ? s.filter((x) => x !== id) : s) : [...s, id]));
   const chosen = packs.filter((p) => selected.includes(p.id));
-  const total = chosen.reduce((sum, p) => sum + p.monthly, 0);
+  const { total, discount } = comboPrice(chosen);
 
   return (
     <div className="mt-16 overflow-hidden rounded-[32px] bg-ink-950 text-white">
@@ -201,7 +201,7 @@ function Combiner() {
                     <span className="block font-semibold">{p.name}</span>
                     <span className="block text-xs text-white/50">{p.audience}</span>
                   </span>
-                  <span className="text-sm font-semibold tabular-nums">{fcfa(p.monthly)}</span>
+                  <span className="text-sm font-semibold tabular-nums">{fcfa(p.monthly)} HT</span>
                 </button>
               );
             })}
@@ -214,7 +214,7 @@ function Combiner() {
             <motion.p key={total} initial={{ opacity: 0.3, y: 6 }} animate={{ opacity: 1, y: 0 }} className="mt-1 font-display text-5xl font-bold tracking-tight tabular-nums">
               {fcfa(total).replace(" FCFA", "")}
             </motion.p>
-            <p className="mt-1 text-sm text-white/55">FCFA / mois</p>
+            <p className="mt-1 text-sm text-white/55">FCFA HT / mois</p>
             <div className="mt-6 space-y-2 text-sm">
               {chosen.map((p) => (
                 <div key={p.id} className="flex justify-between gap-4 text-white/75">
@@ -222,6 +222,12 @@ function Combiner() {
                   <span className="shrink-0 tabular-nums">{fcfa(p.monthly)}</span>
                 </div>
               ))}
+              {discount > 0 && (
+                <div className="flex justify-between gap-4 text-mint-400">
+                  <span>Remise de combinaison (−10 % sur le moins cher)</span>
+                  <span className="shrink-0 tabular-nums">− {fcfa(discount)}</span>
+                </div>
+              )}
             </div>
             <MagneticButton onClick={open} strength={0.18} className="mt-8 w-full bg-white py-3.5 text-sm text-ink-950">
               Demander une démonstration

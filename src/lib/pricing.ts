@@ -47,8 +47,16 @@ export const packs: Pack[] = [
   },
 ];
 
-/** Total mensuel de la sélection (les packs sont complémentaires et se cumulent) */
-export const bothPacksMonthly = packs.reduce((sum, p) => sum + p.monthly, 0);
+// Remise de combinaison : 10 % sur le moins cher des packs souscrits ensemble (même règle qu'ImmoTopia).
+// ⚠ Pourcentage repris par défaut, à confirmer.
+export const COMBO_DISCOUNT = 0.1;
+
+/** Total mensuel d'une sélection de packs, avec la remise de combinaison quand il y en a plusieurs */
+export function comboPrice(selected: Pack[]) {
+  const subtotal = selected.reduce((sum, p) => sum + p.monthly, 0);
+  const discount = selected.length > 1 ? Math.round(Math.min(...selected.map((p) => p.monthly)) * COMBO_DISCOUNT) : 0;
+  return { subtotal, discount, total: subtotal - discount };
+}
 
 export const pricingNote =
-  "Tarifs en FCFA par mois. Les deux packs sont complémentaires et peuvent être souscrits ensemble. Demandez une démonstration pour valider le périmètre adapté à votre clinique.";
+  "Prix hors taxes, en FCFA par mois. Les deux packs sont complémentaires : souscrits ensemble, −10 % sur le moins cher. Demandez une démonstration pour valider le périmètre adapté à votre clinique.";

@@ -18,7 +18,7 @@ export default function TarifsPage() {
       <SoftwareJsonLd />
       <main>
         <PageHero eyebrow="Tarifs" title={<>Deux packs, <span className="text-gradient">un seul outil.</span></>}>
-          Gestion opérationnelle à 35 000 FCFA par mois, gestion financière et comptable à 45 000 FCFA par mois.
+          Gestion opérationnelle à 35 000 FCFA HT par mois, gestion financière et comptable à 45 000 FCFA HT par mois.
         </PageHero>
         <Pricing comparisonOpen />
       </main>

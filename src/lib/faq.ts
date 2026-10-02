@@ -9,11 +9,11 @@ export const faqGroups: FaqGroup[] = [
     items: [
       {
         q: "Quels sont les packs CliniquePro ?",
-        a: "Deux packs : la Gestion opérationnelle (35 000 FCFA par mois) qui couvre le parcours patient, médical et assurance, et la Gestion financière et comptable (45 000 FCFA par mois) qui couvre la facturation, la caisse, les honoraires médecins et la comptabilité.",
+        a: "Deux packs : la Gestion opérationnelle (35 000 FCFA HT par mois) qui couvre le parcours patient, médical et assurance, et la Gestion financière et comptable (45 000 FCFA HT par mois) qui couvre la facturation, la caisse, les honoraires médecins et la comptabilité.",
       },
       {
         q: "Puis-je prendre les deux packs ?",
-        a: "Oui. Les deux packs sont complémentaires : une clinique qui souhaite gérer le parcours patient et la partie financière peut les souscrire ensemble.",
+        a: "Oui. Les deux packs sont complémentaires : souscrits ensemble, vous bénéficiez de 10 % de remise sur le moins cher des deux, soit 76 500 FCFA HT par mois au lieu de 80 000.",
       },
       {
         q: "Quel pack choisir pour démarrer ?",
