@@ -16,14 +16,15 @@ Ce document liste **ce qui n'y figure pas** et donne, pour chaque point, un prom
 - FAQ : sauvegarde automatique quotidienne (affirmée par vous : le code ne contient aujourd'hui qu'une sauvegarde manuelle, la sauvegarde nocturne y est seulement prévue — à garder vraie), récupération des données à la fin du contrat sur demande, utilisation mobile/tablette.
 - Photos du carrousel : vous les créez une par une avec les prompts de la section 2.
 - Contact et éditeur repris de immotopia.cloud (Alliance Consultants, RCCM, compte contribuable, hébergeur Hostinger, téléphone, e-mail `support@immotopia.cloud`). Mentions légales et confidentialité calquées sur celles d'ImmoTopia.
-- Domaine : `https://cliniquepro-web.allianceconsultants.net`.
+- Domaine du site : `https://cliniquepro-web.allianceconsultants.net`. Connexion à l'application : `https://cliniquepro.allianceconsultants.net/demo-login`.
+- Remise de combinaison de 10 % et découpage des modules entre les deux packs : **confirmés**.
+- Réservation de démo : même principe qu'ImmoTopia (calendrier Calendly dans la fenêtre « Demander une démo », via `NEXT_PUBLIC_BOOKING_URL`). Reste à fournir le lien Calendly de CliniquePro.
 
 **Encore à confirmer**
 
 | # | Hypothèse | Où la changer |
 | --- | --- | --- |
-| 1 | Découpage des modules : *Opérationnelle* = patients, agenda, réception, consultations, dossier médical, examens, ordonnances, assurances. *Financière et comptable* = facturation, caisse, honoraires, comptabilité SYSCOHADA. *Socle commun* = tableaux de bord, WhatsApp, administration. | `src/lib/features.ts` |
-| 2 | Adresse de connexion à l'application : `/login` sur le même domaine (valeur provisoire). | `NEXT_PUBLIC_APP_URL` |
+| 1 | (confirmé) Découpage des modules : *Opérationnelle* = patients, agenda, réception, consultations, dossier médical, examens, ordonnances, assurances. *Financière et comptable* = facturation, caisse, honoraires, comptabilité SYSCOHADA. *Socle commun* = tableaux de bord, WhatsApp, administration. | `src/lib/features.ts` |
 | 3 | Pas de frais de mise en route ni de facturation annuelle annoncés. | `src/lib/pricing.ts` |
 | 4 | Le multi-structure n'est pas présenté (pack inconnu). | `src/lib/features.ts` |
 | 5 | Les écrans animés du carrousel utilisent des données fictives. | `src/components/mockups.tsx` |

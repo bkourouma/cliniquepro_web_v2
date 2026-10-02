@@ -3,8 +3,8 @@
 
 export const SITE_NAME = "CliniquePro";
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://cliniquepro-web.allianceconsultants.net";
-// ⚠ Adresse de connexion à l'application : à confirmer (variable NEXT_PUBLIC_APP_URL)
-export const APP_LOGIN_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://cliniquepro-web.allianceconsultants.net/login";
+// Adresse de connexion à l'application (variable NEXT_PUBLIC_APP_URL pour la changer)
+export const APP_LOGIN_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://cliniquepro.allianceconsultants.net/demo-login";
 
 export const contact = {
   phone: "+225 01 01 51 01 36",
