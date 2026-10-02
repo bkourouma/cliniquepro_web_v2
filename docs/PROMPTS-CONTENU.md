@@ -18,7 +18,8 @@ Ce document liste **ce qui n'y figure pas** et donne, pour chaque point, un prom
 - Contact et éditeur repris de immotopia.cloud (Alliance Consultants, RCCM, compte contribuable, hébergeur Hostinger, téléphone, e-mail `support@immotopia.cloud`). Mentions légales et confidentialité calquées sur celles d'ImmoTopia.
 - Domaine du site : `https://cliniquepro-web.allianceconsultants.net`. Connexion à l'application : `https://cliniquepro.allianceconsultants.net/demo-login`.
 - Remise de combinaison de 10 % et découpage des modules entre les deux packs : **confirmés**.
-- Réservation de démo : même principe qu'ImmoTopia (calendrier Calendly dans la fenêtre « Demander une démo », via `NEXT_PUBLIC_BOOKING_URL`). Reste à fournir le lien Calendly de CliniquePro.
+- Réservation de démo : même principe qu'ImmoTopia (calendrier Calendly dans la fenêtre « Demander une démo », via `NEXT_PUBLIC_BOOKING_URL`). Lien Calendly : `https://calendly.com/immotopia/demo-cliniquepro` (valeur par défaut de `NEXT_PUBLIC_BOOKING_URL`).
+- Coordonnées d'ImmoTopia conservées ; sauvegarde quotidienne automatique confirmée en place.
 
 **Encore à confirmer**
 
