@@ -12,7 +12,9 @@ Ce document liste **ce qui n'y figure pas** et donne, pour chaque point, un prom
 **Confirmées par vous (2 octobre 2026)**
 
 - Les deux packs se cumulent avec une remise de combinaison ; le pourcentage n'a pas été précisé : **−10 % sur le moins cher** (règle d'ImmoTopia), soit 76 500 FCFA HT/mois pour les deux. À corriger dans `COMBO_DISCOUNT` (`src/lib/pricing.ts`) et dans `src/lib/faq.ts`.
-- Prix affichés **hors taxes**.
+- Prix affichés **hors taxes** ; **premier mois offert, sans engagement** ; aucune limite d'utilisateurs, de médecins ou de patients annoncée.
+- FAQ : sauvegarde automatique quotidienne (affirmée par vous : le code ne contient aujourd'hui qu'une sauvegarde manuelle, la sauvegarde nocturne y est seulement prévue — à garder vraie), récupération des données à la fin du contrat sur demande, utilisation mobile/tablette.
+- Photos du carrousel : vous les créez une par une avec les prompts de la section 2.
 - Contact et éditeur repris de immotopia.cloud (Alliance Consultants, RCCM, compte contribuable, hébergeur Hostinger, téléphone, e-mail `support@immotopia.cloud`). Mentions légales et confidentialité calquées sur celles d'ImmoTopia.
 - Domaine : `https://cliniquepro-web.allianceconsultants.net`.
 
@@ -22,7 +24,7 @@ Ce document liste **ce qui n'y figure pas** et donne, pour chaque point, un prom
 | --- | --- | --- |
 | 1 | Découpage des modules : *Opérationnelle* = patients, agenda, réception, consultations, dossier médical, examens, ordonnances, assurances. *Financière et comptable* = facturation, caisse, honoraires, comptabilité SYSCOHADA. *Socle commun* = tableaux de bord, WhatsApp, administration. | `src/lib/features.ts` |
 | 2 | Adresse de connexion à l'application : `/login` sur le même domaine (valeur provisoire). | `NEXT_PUBLIC_APP_URL` |
-| 3 | Pas d'essai gratuit, de frais de mise en route, de facturation annuelle ni de limite d'utilisateurs annoncés. | `src/lib/pricing.ts` |
+| 3 | Pas de frais de mise en route ni de facturation annuelle annoncés. | `src/lib/pricing.ts` |
 | 4 | Le multi-structure n'est pas présenté (pack inconnu). | `src/lib/features.ts` |
 | 5 | Les écrans animés du carrousel utilisent des données fictives. | `src/components/mockups.tsx` |
 | 6 | Mentions légales et confidentialité reprennent ImmoTopia (durée de conservation 3 ans, loi 2013-450, ARTCI) : à faire relire. | `src/app/mentions-legales`, `src/app/confidentialite` |
@@ -55,26 +57,44 @@ Renseignées dans `src/lib/site.ts` à partir de immotopia.cloud. Reste à déci
 
 Le carrousel fonctionne sans photo (fond dégradé + pictogramme). Pour ajouter une photo : déposer le fichier dans `public/images/hero/<id>.jpg` puis renseigner `image` et `imageAlt` dans `src/lib/content.ts`.
 
-**Prompt de base (à ajouter au début de chacun des 7 prompts)**
+Collez chaque prompt tel quel (un par image), format portrait 3:4 (ex. 1536 × 2048), puis enregistrez le fichier sous le nom indiqué dans `public/images/hero/`.
 
+**1. `agenda.jpg`**
 ```text
-Photographie éditoriale réaliste, format portrait 3:4, lumière naturelle douce,
-palette dominante bleu marine et vert, arrière-plan légèrement flou, personnes
-d'Afrique de l'Ouest, ambiance professionnelle et chaleureuse d'une clinique
-ophtalmologique moderne à Abidjan. Aucun texte, aucun logo, aucune marque visible.
-Mains et visages naturels, sans déformation. Espace libre dans le tiers inférieur
-(un titre sera superposé).
+Photographie éditoriale réaliste, format portrait 3:4, lumière naturelle douce, palette bleu marine et vert, arrière-plan légèrement flou. Dans une clinique ophtalmologique moderne à Abidjan, une secrétaire d'Afrique de l'Ouest souriante accueille une patiente à un comptoir de réception ; un écran d'ordinateur est visible de dos. Ambiance professionnelle et chaleureuse. Aucun texte, aucun logo, aucune marque visible. Visages et mains naturels. Laisser libre le tiers inférieur de l'image.
 ```
 
-| Fichier | Sujet à ajouter au prompt de base |
-| --- | --- |
-| `agenda.jpg` | Une secrétaire souriante accueille une patiente à un comptoir de réception, écran d'ordinateur visible de dos. |
-| `consultation.jpg` | Un ophtalmologue examine l'œil d'une patiente à la lampe à fente, regard attentif et rassurant. |
-| `examens.jpg` | Un technicien prépare un examen OCT, patient installé devant l'appareil, écran de résultats flou. |
-| `assurance.jpg` | Une assistante vérifie un dossier de prise en charge sur tablette, avec un patient en arrière-plan. |
-| `caisse.jpg` | Un caissier encaisse un paiement par téléphone mobile, tablette de caisse sur le comptoir. |
-| `comptabilite.jpg` | Une comptable analyse des tableaux sur deux écrans dans un bureau lumineux de clinique. |
-| `pilotage.jpg` | La directrice d'une clinique consulte un tableau de bord sur tablette, équipe médicale floue au fond. |
+**2. `consultation.jpg`**
+```text
+Photographie éditoriale réaliste, format portrait 3:4, lumière naturelle douce, palette bleu marine et vert, arrière-plan légèrement flou. Un ophtalmologue d'Afrique de l'Ouest examine l'œil d'une patiente à la lampe à fente, regard attentif et rassurant, cabinet moderne et lumineux. Aucun texte, aucun logo, aucune marque visible. Visages et mains naturels. Laisser libre le tiers inférieur de l'image.
+```
+
+**3. `examens.jpg`**
+```text
+Photographie éditoriale réaliste, format portrait 3:4, lumière naturelle douce, palette bleu marine et vert, arrière-plan légèrement flou. Un technicien d'Afrique de l'Ouest prépare un examen OCT ; le patient est installé devant l'appareil, l'écran de résultats est flou à l'arrière-plan. Clinique ophtalmologique moderne à Abidjan. Aucun texte, aucun logo, aucune marque visible. Visages et mains naturels. Laisser libre le tiers inférieur de l'image.
+```
+
+**4. `assurance.jpg`**
+```text
+Photographie éditoriale réaliste, format portrait 3:4, lumière naturelle douce, palette bleu marine et vert, arrière-plan légèrement flou. Une assistante administrative d'Afrique de l'Ouest vérifie un dossier de prise en charge sur une tablette, un patient attend en arrière-plan, accueil d'une clinique moderne. Aucun texte lisible, aucun logo, aucune marque visible. Visages et mains naturels. Laisser libre le tiers inférieur de l'image.
+```
+
+**5. `caisse.jpg`**
+```text
+Photographie éditoriale réaliste, format portrait 3:4, lumière naturelle douce, palette bleu marine et vert, arrière-plan légèrement flou. Un caissier d'Afrique de l'Ouest encaisse un paiement par téléphone mobile au comptoir d'une clinique, une tablette de caisse posée devant lui. Aucun texte lisible, aucun logo, aucune marque visible. Visages et mains naturels. Laisser libre le tiers inférieur de l'image.
+```
+
+**6. `comptabilite.jpg`**
+```text
+Photographie éditoriale réaliste, format portrait 3:4, lumière naturelle douce, palette bleu marine et vert, arrière-plan légèrement flou. Une comptable d'Afrique de l'Ouest analyse des tableaux sur deux écrans dans un bureau lumineux de clinique ; les écrans sont flous, sans texte lisible. Aucun logo, aucune marque visible. Visages et mains naturels. Laisser libre le tiers inférieur de l'image.
+```
+
+**7. `pilotage.jpg`**
+```text
+Photographie éditoriale réaliste, format portrait 3:4, lumière naturelle douce, palette bleu marine et vert, arrière-plan légèrement flou. La directrice d'une clinique ophtalmologique, d'Afrique de l'Ouest, consulte un tableau de bord sur une tablette ; l'équipe médicale en blouse est floue au fond. Aucun texte lisible, aucun logo, aucune marque visible. Visages et mains naturels. Laisser libre le tiers inférieur de l'image.
+```
+
+Une fois les fichiers déposés, dites-le-moi : je renseigne `image` et `imageAlt` dans `src/lib/content.ts`.
 
 Texte alternatif à fournir pour chaque image (`imageAlt`) : une phrase qui décrit la scène.
 

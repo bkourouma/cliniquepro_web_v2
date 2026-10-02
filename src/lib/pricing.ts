@@ -13,6 +13,8 @@ export type Pack = {
   featured?: boolean;
 };
 
+export const TRIAL_TEXT = "Premier mois offert, sans engagement";
+
 export const packs: Pack[] = [
   {
     id: "operationnel",
@@ -59,4 +61,4 @@ export function comboPrice(selected: Pack[]) {
 }
 
 export const pricingNote =
-  "Prix hors taxes, en FCFA par mois. Les deux packs sont complémentaires : souscrits ensemble, −10 % sur le moins cher. Demandez une démonstration pour valider le périmètre adapté à votre clinique.";
+  "Prix hors taxes, en FCFA par mois. Premier mois offert sur tous les packs, sans engagement. Les deux packs sont complémentaires : souscrits ensemble, −10 % sur le moins cher. Demandez une démonstration pour valider le périmètre adapté à votre clinique.";

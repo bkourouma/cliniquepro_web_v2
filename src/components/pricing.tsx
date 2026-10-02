@@ -1,15 +1,16 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Calculator, Check, ChevronDown, Globe, History, Layers, Minus, ShieldCheck, Sparkles } from "lucide-react";
+import { Calculator, Check, ChevronDown, Gift, Globe, History, Layers, Minus, ShieldCheck, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { features } from "@/lib/features";
 import { fcfa } from "@/lib/format";
-import { comboPrice, packs, pricingNote, type Pack, type PackId } from "@/lib/pricing";
+import { comboPrice, packs, pricingNote, TRIAL_TEXT, type Pack, type PackId } from "@/lib/pricing";
 import { useDemo } from "./providers";
 import { Eyebrow, MagneticButton, Reveal, trackSpotlight } from "./ui";
 
 const perks = [
+  { icon: Gift, text: TRIAL_TEXT },
   { icon: Globe, text: "Application web, sans installation" },
   { icon: ShieldCheck, text: "Rôles et permissions par métier" },
   { icon: History, text: "Journal d'audit des actions importantes" },
@@ -80,6 +81,9 @@ function PackCard({ pack, onCta }: { pack: Pack; onCta: () => void }) {
           <p className="font-display text-[2.4rem] leading-none font-bold tracking-tight tabular-nums">{fcfa(pack.monthly).replace(" FCFA", "")}</p>
           <p className={`mt-1.5 text-sm ${dark ? "text-white/50" : "text-ink-900/45"}`}>FCFA HT / mois</p>
         </div>
+        <p className={`mt-3 inline-flex w-fit items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold ${dark ? "bg-mint-400/15 text-mint-400" : "bg-emerald-50 text-emerald-700"}`}>
+          <Gift className="size-3.5" /> {TRIAL_TEXT}
+        </p>
         <p className={`mt-4 rounded-xl p-3 text-xs font-semibold ${dark ? "bg-white/[0.06] text-white/80" : "bg-brand-500/[0.06] text-ink-900/70"}`}>{pack.tagline}</p>
         <ul className="mt-6 flex-1 space-y-2.5">
           {pack.highlights.map((f) => (
@@ -232,7 +236,8 @@ function Combiner() {
             <MagneticButton onClick={open} strength={0.18} className="mt-8 w-full bg-white py-3.5 text-sm text-ink-950">
               Demander une démonstration
             </MagneticButton>
-            <p className="mt-4 text-xs text-white/60">Estimation indicative : la démonstration permet de valider le périmètre adapté à votre clinique.</p>
+            <p className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-mint-400"><Gift className="size-4" /> {TRIAL_TEXT}</p>
+            <p className="mt-2 text-xs text-white/60">Estimation indicative : la démonstration permet de valider le périmètre adapté à votre clinique.</p>
           </div>
         </div>
       </div>

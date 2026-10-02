@@ -16,6 +16,10 @@ export const faqGroups: FaqGroup[] = [
         a: "Oui. Les deux packs sont complémentaires : souscrits ensemble, vous bénéficiez de 10 % de remise sur le moins cher des deux, soit 76 500 FCFA HT par mois au lieu de 80 000.",
       },
       {
+        q: "Y a-t-il une période d'essai ?",
+        a: "Oui : le premier mois est offert sur tous les packs, sans engagement.",
+      },
+      {
         q: "Quel pack choisir pour démarrer ?",
         a: "Si votre priorité est d'organiser l'accueil, l'agenda, les consultations et les examens, commencez par la Gestion opérationnelle. Si votre priorité est de sécuriser la caisse, la facturation et la comptabilité, choisissez la Gestion financière et comptable. Une démonstration permet de valider le bon périmètre.",
       },
@@ -56,6 +60,18 @@ export const faqGroups: FaqGroup[] = [
       {
         q: "Faut-il installer un logiciel ?",
         a: "Non. CliniquePro est une application web moderne, accessible depuis un navigateur.",
+      },
+      {
+        q: "Puis-je l'utiliser sur tablette ou téléphone ?",
+        a: "Oui, l'application s'utilise depuis un navigateur et son interface s'adapte aux petits écrans, avec un menu dédié sur mobile.",
+      },
+      {
+        q: "Mes données sont-elles sauvegardées ?",
+        a: "Oui : une sauvegarde automatique quotidienne de la base de données est réalisée.",
+      },
+      {
+        q: "Puis-je récupérer mes données si je mets fin au contrat ?",
+        a: "Oui. Vous pouvez récupérer vos données à la fin du contrat, sur simple demande. L'application permet déjà d'exporter le dossier d'un patient (JSON, XML ou CSV) et plusieurs états de caisse et de comptabilité (CSV, PDF).",
       },
       {
         q: "Comment obtenir une démonstration ?",
