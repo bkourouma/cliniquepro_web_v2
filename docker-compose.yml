@@ -1,0 +1,20 @@
+services:
+  web:
+    build:
+      context: .
+      args:
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://cliniquepro.com}
+        NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:-https://app.cliniquepro.com/login}
+        NEXT_PUBLIC_BOOKING_URL: ${NEXT_PUBLIC_BOOKING_URL:-}
+    image: cliniquepro-site:latest
+    container_name: cliniquepro-site
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3030:3000"
+    environment:
+      N8N_WEBHOOK_URL: ${N8N_WEBHOOK_URL:-}
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/robots.txt"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
