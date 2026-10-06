@@ -124,7 +124,7 @@ export function Hero() {
           ))}
         </h1>
         <p className="hero-fade mx-auto mt-5 max-w-2xl text-base text-white/65 md:text-lg" style={{ animationDelay: "350ms" }}>
-          CliniquePro centralise patients, rendez-vous, consultations, examens, assurances, caisse, facturation, honoraires et comptabilité dans une interface web moderne, conçue pour les cliniques ophtalmologiques.
+          CliniquePro est un logiciel web de gestion de clinique ophtalmologique, édité à Abidjan (Côte d&apos;Ivoire). Il centralise patients, rendez-vous, consultations, examens, assurances, caisse, facturation, honoraires et comptabilité dans une seule interface.
         </p>
         <div className="hero-fade mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row" style={{ animationDelay: "500ms" }}>
           <MagneticButton
@@ -294,7 +294,7 @@ function Card({ card, active, near }: { card: HeroCard; active: boolean; near: b
             {card.eyebrow}
           </p>
           <p className="mt-1 text-[10px] font-semibold tracking-wide text-white/45 uppercase">Pack {card.pack}</p>
-          <h2 className="mt-2 font-display text-2xl leading-tight font-bold text-balance md:text-[2.1rem]">{card.title}</h2>
+          <p className="mt-2 font-display text-2xl leading-tight font-bold text-balance md:text-[2.1rem]">{card.title}</p>
           <p className="mt-3 line-clamp-2 text-sm text-white/70 sm:line-clamp-3 md:line-clamp-none md:text-[15px]">{card.description}</p>
           <button
             tabIndex={active ? 0 : -1}

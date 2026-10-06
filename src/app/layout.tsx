@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, Inter } from "next/font/google";
 import "./globals.css";
-import { OrganizationJsonLd } from "@/components/json-ld";
+import { SiteJsonLd } from "@/components/json-ld";
 import { Providers } from "@/components/providers";
-import { SITE_URL } from "@/lib/site";
+import { SITE_NAME, SITE_URL } from "@/lib/site";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 const bricolage = Bricolage_Grotesque({
@@ -12,20 +12,30 @@ const bricolage = Bricolage_Grotesque({
   weight: ["500", "600", "700", "800"],
 });
 
+const HOME_TITLE = "CliniquePro — Logiciel de gestion pour cliniques ophtalmologiques";
+const HOME_DESCRIPTION =
+  "CliniquePro est un logiciel web de gestion de clinique ophtalmologique, édité à Abidjan (Côte d'Ivoire) : patients, rendez-vous, consultations, examens, assurances, caisse, facturation, honoraires et comptabilité. Dès 35 000 FCFA HT par mois, premier mois offert.";
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
+  title: { default: HOME_TITLE, template: `%s — ${SITE_NAME}` },
+  description: HOME_DESCRIPTION,
+  applicationName: SITE_NAME,
   alternates: { canonical: "/" },
-  title: "CliniquePro — Logiciel de gestion pour cliniques ophtalmologiques",
-  description:
-    "CliniquePro centralise patients, rendez-vous, consultations, examens, assurances, caisse, facturation, honoraires et comptabilité dans une application web conçue pour les cliniques ophtalmologiques.",
   openGraph: {
     title: "CliniquePro — La plateforme tout-en-un pour piloter votre clinique",
-    description: "Gestion opérationnelle (35 000 FCFA HT/mois) et gestion financière et comptable (45 000 FCFA HT/mois) : choisissez votre pack.",
+    description: HOME_DESCRIPTION,
+    url: SITE_URL,
     locale: "fr_CI",
     type: "website",
-    siteName: "CliniquePro",
+    siteName: SITE_NAME,
   },
   twitter: { card: "summary_large_image" },
+  // Balises de vérification Search Console / Bing Webmaster : posées seulement si les variables sont renseignées
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION || undefined,
+    other: process.env.BING_SITE_VERIFICATION ? { "msvalidate.01": process.env.BING_SITE_VERIFICATION } : undefined,
+  },
 };
 
 export const viewport: Viewport = {
@@ -38,7 +48,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     // sans lui, la remontée en haut de la nouvelle page est interrompue et on arrive en bas.
     <html lang="fr" data-scroll-behavior="smooth" className={`${inter.variable} ${bricolage.variable} antialiased`}>
       <body className="min-h-dvh font-sans">
-        <OrganizationJsonLd />
+        <SiteJsonLd />
         <Providers>{children}</Providers>
       </body>
     </html>

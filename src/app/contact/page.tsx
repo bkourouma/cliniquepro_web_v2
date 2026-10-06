@@ -3,15 +3,17 @@ import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { BookingEmbed } from "@/components/booking-embed";
 import { DemoButton } from "@/components/demo-button";
 import { FinalCta } from "@/components/final-cta";
+import { BreadcrumbJsonLd } from "@/components/json-ld";
 import { Navbar } from "@/components/navbar";
 import { PageHero } from "@/components/page-hero";
+import { pageMetadata } from "@/lib/seo";
 import { contact, whatsappLink } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Contact — CliniquePro",
-  description: "Contactez l'équipe CliniquePro ou réservez une démonstration de 30 minutes.",
-  alternates: { canonical: "/contact" },
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Contact et démonstration",
+  description: "Contactez l'équipe CliniquePro à Abidjan (téléphone, WhatsApp, e-mail) ou réservez une démonstration de 30 minutes du logiciel de gestion de clinique.",
+  path: "/contact",
+});
 
 export default function ContactPage() {
   const cards = [
@@ -23,6 +25,7 @@ export default function ContactPage() {
   return (
     <>
       <Navbar />
+      <BreadcrumbJsonLd trail={[{ name: "Contact", path: "/contact" }]} />
       <main className="bg-paper">
         <PageHero eyebrow="Contact" title={<>Parlons de <span className="text-gradient">votre clinique.</span></>}>
           Une question, un besoin précis ? Échangeons 30 minutes pour voir CliniquePro appliqué à votre organisation.

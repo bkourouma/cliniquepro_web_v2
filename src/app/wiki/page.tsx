@@ -2,23 +2,25 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { FinalCta } from "@/components/final-cta";
+import { BreadcrumbJsonLd, WebPageJsonLd } from "@/components/json-ld";
 import { Navbar } from "@/components/navbar";
 import { PageHero } from "@/components/page-hero";
 import { Reveal } from "@/components/ui";
 import { WikiSearch } from "@/components/wiki/wiki-search";
 import { scopeLabel } from "@/lib/features";
-import { countItems, searchIndex, wikiDomains, wikiTotal, WIKI_UPDATED_ON } from "@/lib/wiki";
+import { pageMetadata } from "@/lib/seo";
+import { countItems, searchIndex, wikiDomains, wikiTotal, WIKI_UPDATED_ISO, WIKI_UPDATED_ON } from "@/lib/wiki";
 
-export const metadata: Metadata = {
-  title: "Wiki des fonctionnalités — CliniquePro",
-  description: `Toutes les actions de CliniquePro, domaine par domaine : patients, accueil, consultations, examens, assurances, caisse, facturation, comptabilité. ${wikiTotal} fonctionnalités détaillées.`,
-  alternates: { canonical: "/wiki" },
-};
+const description = `Toutes les actions du logiciel de clinique ophtalmologique CliniquePro, domaine par domaine : patients, accueil, consultations, examens, assurances, caisse, facturation, comptabilité. ${wikiTotal} fonctionnalités détaillées, mises à jour le ${WIKI_UPDATED_ON}.`;
+
+export const metadata: Metadata = pageMetadata({ title: "Wiki des fonctionnalités", description, path: "/wiki" });
 
 export default function WikiPage() {
   return (
     <>
       <Navbar />
+      <WebPageJsonLd path="/wiki" name="Wiki des fonctionnalités de CliniquePro" description={description} dateModified={WIKI_UPDATED_ISO} />
+      <BreadcrumbJsonLd trail={[{ name: "Wiki des fonctionnalités", path: "/wiki" }]} />
       <main className="bg-paper">
         <PageHero eyebrow="Wiki des fonctionnalités" title={<>Chaque action de l&apos;application, <span className="text-gradient">une par une.</span></>}>
           {wikiTotal} fonctionnalités détaillées, regroupées par domaine, avec les profils qui y ont accès. Mise à jour : {WIKI_UPDATED_ON}.
