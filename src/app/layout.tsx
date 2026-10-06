@@ -31,9 +31,10 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
   },
   twitter: { card: "summary_large_image" },
-  // Balises de vérification Search Console / Bing Webmaster : posées seulement si les variables sont renseignées
+  // Vérification Search Console (propriété « Préfixe d'URL » du site) : le code est public par nature, il figure dans le HTML.
+  // GOOGLE_SITE_VERIFICATION le remplace au besoin ; la balise Bing n'est posée que si BING_SITE_VERIFICATION est renseignée.
   verification: {
-    google: process.env.GOOGLE_SITE_VERIFICATION || undefined,
+    google: process.env.GOOGLE_SITE_VERIFICATION || "WCtsnzYFVt9ud_pN59hcfuJ4L-lZ1eOoUAKbVyPd6u8",
     other: process.env.BING_SITE_VERIFICATION ? { "msvalidate.01": process.env.BING_SITE_VERIFICATION } : undefined,
   },
 };
