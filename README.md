@@ -34,9 +34,18 @@ Les textes vivent dans `src/lib/`, pas dans les composants :
 
 Règle éditoriale : ne présenter que ce que l'application fait réellement ; aucune date de livraison, aucun chiffre ou témoignage inventé.
 
+## Référencement (SEO et moteurs de réponse IA)
+
+- `src/lib/seo.ts` : `pageMetadata()` pose titre, description, canonical, Open Graph (url et image) et Twitter pour chaque page. Les titres prennent le gabarit « … — CliniquePro » défini dans `layout.tsx`.
+- `src/components/json-ld.tsx` : données structurées (Organization, WebSite, SoftwareApplication avec prix mensuels HT, WebPage avec `dateModified`, BreadcrumbList, FAQPage). Elles se lisent dans `src/lib/` : un prix ou un module modifié se répercute partout.
+- `src/app/robots.ts` : accès explicite des robots d'IA (recherche et entraînement) ; la liste et la façon de la restreindre sont commentées dans le fichier.
+- `src/app/llms.txt/route.ts` : `/llms.txt`, résumé Markdown du site généré à partir des mêmes données.
+- `src/app/sitemap.ts` : `lastmod` seulement. **À chaque mise à jour réelle du contenu, changer `SITE_UPDATED` dans `src/lib/site.ts`** (et régénérer le wiki, dont la date alimente ses pages).
+- `GOOGLE_SITE_VERIFICATION` / `BING_SITE_VERIFICATION` (voir `.env.example`) : balises de vérification Search Console et Bing, posées seulement si renseignées.
+
 ## Pages
 
-`/` (accueil) · `/fonctionnalites` · `/tarifs` · `/faq` · `/contact` · `/mentions-legales` · `/confidentialite`
+`/` (accueil) · `/fonctionnalites` · `/tarifs` · `/faq` · `/a-propos` · `/contact` · `/mentions-legales` · `/confidentialite`
 
 ## Demande de démonstration
 

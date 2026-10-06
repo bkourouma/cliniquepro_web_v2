@@ -6,6 +6,8 @@ services:
         NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://cliniquepro-web.allianceconsultants.net}
         NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL:-https://cliniquepro.allianceconsultants.net/demo-login}
         NEXT_PUBLIC_BOOKING_URL: ${NEXT_PUBLIC_BOOKING_URL:-https://calendly.com/immotopia/demo-cliniquepro}
+        GOOGLE_SITE_VERIFICATION: ${GOOGLE_SITE_VERIFICATION:-}
+        BING_SITE_VERIFICATION: ${BING_SITE_VERIFICATION:-}
     image: cliniquepro-site:latest
     container_name: cliniquepro-site
     restart: unless-stopped

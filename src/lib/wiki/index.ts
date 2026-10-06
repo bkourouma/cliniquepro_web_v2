@@ -11,6 +11,16 @@ export type WikiModule = { slug: string; title: string; pack: ModuleScope; featu
 export type WikiDomain = { slug: string; title: string; summary: string; pack: ModuleScope; modules: WikiModule[] };
 
 export const WIKI_UPDATED_ON: string = raw.updatedOn;
+const FR_MONTHS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
+
+/** « 2 octobre 2026 » → « 2026-10-02 » (données structurées et sitemap) */
+function frenchDateToIso(text: string) {
+  const m = text.trim().toLowerCase().match(/^(\d{1,2})(?:er)? (\S+) (\d{4})$/);
+  const month = m ? FR_MONTHS.indexOf(m[2]) : -1;
+  return m && month >= 0 ? `${m[3]}-${String(month + 1).padStart(2, "0")}-${m[1].padStart(2, "0")}` : undefined;
+}
+export const WIKI_UPDATED_ISO = frenchDateToIso(WIKI_UPDATED_ON);
+
 export const wikiDomains = raw.domains as WikiDomain[];
 
 export const domainBySlug = (slug: string) => wikiDomains.find((d) => d.slug === slug);

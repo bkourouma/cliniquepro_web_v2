@@ -3,7 +3,7 @@
 import { ArrowRight, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import type { ReactNode } from "react";
 import { footerProductLinks } from "@/lib/content";
-import { contact, whatsappLink } from "@/lib/site";
+import { contact, social, whatsappLink } from "@/lib/site";
 import { useDemo } from "./providers";
 import { SmartLink } from "./smart-link";
 import { Logo, MagneticButton, Reveal } from "./ui";
@@ -48,6 +48,9 @@ export function FinalCta() {
             ))}
           </FooterCol>
           <FooterCol title="Entreprise">
+            <SmartLink href="/a-propos" className="transition-colors hover:text-ink-900">
+              À propos
+            </SmartLink>
             <SmartLink href="/contact" className="transition-colors hover:text-ink-900">
               Contact
             </SmartLink>
@@ -64,6 +67,12 @@ export function FinalCta() {
             </a>
             <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 transition-colors hover:text-ink-900">
               <MessageCircle className="size-4" /> WhatsApp
+            </a>
+            <a href={social.facebook} target="_blank" rel="noopener noreferrer me" className="inline-flex items-center gap-2 transition-colors hover:text-ink-900">
+              <svg viewBox="0 0 24 24" aria-hidden className="size-4 fill-current">
+                <path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 3.9v2.3H7.9v3h2.6V21h3Z" />
+              </svg>{" "}
+              Facebook
             </a>
             <a href={`mailto:${contact.email}`} className="inline-flex items-center gap-2 break-all transition-colors hover:text-ink-900">
               <Mail className="size-4 shrink-0" /> {contact.email}
