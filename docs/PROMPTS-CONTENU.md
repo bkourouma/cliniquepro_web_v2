@@ -11,7 +11,7 @@ Ce document liste **ce qui n'y figure pas** et donne, pour chaque point, un prom
 
 **Confirmées par vous (2 octobre 2026)**
 
-- Les deux packs se cumulent avec une remise de combinaison ; le pourcentage n'a pas été précisé : **−10 % sur le moins cher** (règle d'ImmoTopia), soit 76 500 FCFA HT/mois pour les deux. À corriger dans `COMBO_DISCOUNT` (`src/lib/pricing.ts`) et dans `src/lib/faq.ts`.
+- Les deux packs se cumulent avec une remise de combinaison ; le pourcentage n'a pas été précisé : **−10 % sur le moins cher** (règle d'ImmoTopia), soit 57 500 FCFA HT/mois pour les deux (25 000 + 35 000). À corriger dans `COMBO_DISCOUNT` (`src/lib/pricing.ts`) et dans `src/lib/faq.ts`.
 - Prix affichés **hors taxes** ; **premier mois offert, sans engagement** ; aucune limite d'utilisateurs, de médecins ou de patients annoncée.
 - FAQ : sauvegarde automatique quotidienne (affirmée par vous : le code ne contient aujourd'hui qu'une sauvegarde manuelle, la sauvegarde nocturne y est seulement prévue — à garder vraie), récupération des données à la fin du contrat sur demande, utilisation mobile/tablette.
 - Photos du carrousel : vous les créez une par une avec les prompts de la section 2.

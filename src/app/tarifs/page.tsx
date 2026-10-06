@@ -7,7 +7,7 @@ import { Pricing } from "@/components/pricing";
 
 export const metadata: Metadata = {
   title: "Tarifs — CliniquePro",
-  description: "Deux packs : Gestion opérationnelle (35 000 FCFA/mois) et Gestion financière et comptable (45 000 FCFA/mois). Comparez et composez votre offre.",
+  description: "Deux packs : Gestion opérationnelle (25 000 FCFA/mois) et Gestion financière et comptable (35 000 FCFA/mois). Comparez et composez votre offre.",
   alternates: { canonical: "/tarifs" },
 };
 
@@ -18,7 +18,7 @@ export default function TarifsPage() {
       <SoftwareJsonLd />
       <main>
         <PageHero eyebrow="Tarifs" title={<>Deux packs, <span className="text-gradient">un seul outil.</span></>}>
-          Gestion opérationnelle à 35 000 FCFA HT par mois, gestion financière et comptable à 45 000 FCFA HT par mois.
+          Gestion opérationnelle à 25 000 FCFA HT par mois, gestion financière et comptable à 35 000 FCFA HT par mois.
         </PageHero>
         <Pricing comparisonOpen />
       </main>

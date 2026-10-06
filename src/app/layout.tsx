@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     "CliniquePro centralise patients, rendez-vous, consultations, examens, assurances, caisse, facturation, honoraires et comptabilité dans une application web conçue pour les cliniques ophtalmologiques.",
   openGraph: {
     title: "CliniquePro — La plateforme tout-en-un pour piloter votre clinique",
-    description: "Gestion opérationnelle (35 000 FCFA HT/mois) et gestion financière et comptable (45 000 FCFA HT/mois) : choisissez votre pack.",
+    description: "Gestion opérationnelle (25 000 FCFA HT/mois) et gestion financière et comptable (35 000 FCFA HT/mois) : choisissez votre pack.",
     locale: "fr_CI",
     type: "website",
     siteName: "CliniquePro",

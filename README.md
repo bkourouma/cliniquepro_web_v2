@@ -17,8 +17,8 @@ npm run lint
 
 | Pack | Prix |
 | --- | --- |
-| Gestion opérationnelle | 35 000 FCFA / mois |
-| Gestion financière et comptable | 45 000 FCFA / mois |
+| Gestion opérationnelle | 25 000 FCFA / mois |
+| Gestion financière et comptable | 35 000 FCFA / mois |
 
 La grille tarifaire est dans `src/lib/pricing.ts` (source de vérité : cartes, tableau comparatif, total combiné).
 Le découpage des modules entre les deux packs est dans `src/lib/features.ts` (hypothèse à valider, voir `docs/PROMPTS-CONTENU.md`).
