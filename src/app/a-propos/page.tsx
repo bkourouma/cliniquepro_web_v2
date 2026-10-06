@@ -16,7 +16,7 @@ import { wikiDomains, wikiTotal } from "@/lib/wiki";
 const description =
   "CliniquePro est un logiciel web de gestion de clinique ophtalmologique édité par Alliance Consultants à Abidjan (Côte d'Ivoire). Qui nous sommes, à qui il s'adresse, ce qu'il couvre et ce qui est encore en développement.";
 
-export const metadata: Metadata = pageMetadata({ title: "À propos de CliniquePro", description, path: "/a-propos" });
+export const metadata: Metadata = pageMetadata({ title: "À propos : l'éditeur et le logiciel de clinique", description, path: "/a-propos" });
 
 // Actions du wiki signalées « en cours de développement » : annoncées telles quelles, jamais présentées comme disponibles.
 const inDevelopment = wikiDomains.reduce(
