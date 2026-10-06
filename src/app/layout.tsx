@@ -3,6 +3,8 @@ import { Bricolage_Grotesque, Inter } from "next/font/google";
 import "./globals.css";
 import { SiteJsonLd } from "@/components/json-ld";
 import { Providers } from "@/components/providers";
+import { fcfa } from "@/lib/format";
+import { packs } from "@/lib/pricing";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
@@ -13,8 +15,8 @@ const bricolage = Bricolage_Grotesque({
 });
 
 const HOME_TITLE = "CliniquePro — Logiciel de gestion pour cliniques ophtalmologiques";
-const HOME_DESCRIPTION =
-  "CliniquePro est un logiciel web de gestion de clinique ophtalmologique, édité à Abidjan (Côte d'Ivoire) : patients, rendez-vous, consultations, examens, assurances, caisse, facturation, honoraires et comptabilité. Dès 35 000 FCFA HT par mois, premier mois offert.";
+// Le prix vient de pricing.ts : un changement de tarif se répercute ici sans retouche
+const HOME_DESCRIPTION = `CliniquePro est un logiciel web de gestion de clinique ophtalmologique, édité à Abidjan (Côte d'Ivoire) : patients, rendez-vous, consultations, examens, assurances, caisse, facturation, honoraires et comptabilité. Dès ${fcfa(Math.min(...packs.map((p) => p.monthly)))} HT par mois, premier mois offert.`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
