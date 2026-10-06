@@ -39,7 +39,7 @@ export function Navbar() {
           {navLinks.map((l) => (
             <li
               key={l.href}
-              className="relative"
+              className={`relative ${l.xlOnly ? "hidden xl:block" : ""}`}
               onMouseEnter={() => setHovered(l.href)}
               onFocus={() => setHovered(l.href)}
               onBlur={(e) => !e.currentTarget.contains(e.relatedTarget) && setHovered(null)}

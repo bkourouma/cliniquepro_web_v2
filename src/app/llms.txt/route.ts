@@ -4,7 +4,7 @@
 import { features } from "@/lib/features";
 import { fcfa } from "@/lib/format";
 import { COMBO_DISCOUNT, packs, TRIAL_TEXT } from "@/lib/pricing";
-import { absoluteUrl, contact, legal, SITE_NAME, SITE_UPDATED } from "@/lib/site";
+import { absoluteUrl, contact, legal, SITE_NAME, SITE_UPDATED, social } from "@/lib/site";
 import { countItems, wikiDomains, wikiTotal } from "@/lib/wiki";
 
 export const dynamic = "force-static";
@@ -26,6 +26,7 @@ export function GET() {
     `- [Fonctionnalités](${absoluteUrl("/fonctionnalites")}): les ${features.length} modules et le pack qui les couvre`,
     `- [Tarifs](${absoluteUrl("/tarifs")}): détail et comparaison des deux packs`,
     `- [FAQ](${absoluteUrl("/faq")}): packs, essai, assurances, caisse, comptabilité, sécurité`,
+    `- [À propos](${absoluteUrl("/a-propos")}): qui édite CliniquePro, à qui il s'adresse, ce qu'il couvre et ce qui est encore en développement`,
     `- [Contact et démonstration](${absoluteUrl("/contact")}): démonstration de 30 minutes`,
     "",
     `## Wiki des fonctionnalités (${wikiTotal} actions détaillées)`,
@@ -37,6 +38,7 @@ export function GET() {
     `- [Mentions légales](${absoluteUrl("/mentions-legales")}) · [Confidentialité](${absoluteUrl("/confidentialite")})`,
     `- Éditeur : ${legal.publisher} (RCCM ${legal.rccm}), ${contact.city}`,
     `- Téléphone / WhatsApp : ${contact.phone} · E-mail : ${contact.email}`,
+    `- Page Facebook : ${social.facebook}`,
     `- Dernière mise à jour du contenu : ${SITE_UPDATED}`,
     "",
   ];

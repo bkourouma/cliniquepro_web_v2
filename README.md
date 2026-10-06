@@ -45,7 +45,7 @@ Règle éditoriale : ne présenter que ce que l'application fait réellement ; a
 
 ## Pages
 
-`/` (accueil) · `/fonctionnalites` · `/tarifs` · `/faq` · `/contact` · `/mentions-legales` · `/confidentialite`
+`/` (accueil) · `/fonctionnalites` · `/tarifs` · `/faq` · `/a-propos` · `/contact` · `/mentions-legales` · `/confidentialite`
 
 ## Demande de démonstration
 

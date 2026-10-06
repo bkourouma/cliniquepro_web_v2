@@ -1,5 +1,5 @@
 // Coordonnées et identité légale, centralisées ici (pied de page, contact, WhatsApp, mentions légales).
-// Éditeur et coordonnées repris de immotopia.cloud (même éditeur : Alliance Consultants).
+// Éditeur : Alliance Consultants (identité légale reprise de immotopia.cloud, même éditeur). Adresse e-mail dédiée à CliniquePro.
 
 export const SITE_NAME = "CliniquePro";
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://cliniquepro-web.allianceconsultants.net";
@@ -20,8 +20,13 @@ export const contact = {
   phoneHref: "tel:+2250101510136",
   whatsapp: "https://wa.me/2250101510136",
   whatsappMessage: "Bonjour CliniquePro, je souhaite en savoir plus sur votre logiciel de gestion de clinique.",
-  email: "support@immotopia.cloud",
+  email: "cliniquepro@allianceconsultants.net",
   city: "Abidjan, Côte d'Ivoire",
+};
+
+// Profils officiels de la marque (données structurées « sameAs » et pied de page)
+export const social = {
+  facebook: "https://www.facebook.com/profile.php?id=61590811132929",
 };
 
 export const legal = {

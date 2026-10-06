@@ -10,6 +10,7 @@ const pages: { path: string; lastModified: string }[] = [
   { path: "/faq", lastModified: SITE_UPDATED },
   { path: "/wiki", lastModified: WIKI_UPDATED_ISO ?? SITE_UPDATED },
   ...wikiDomains.map((d) => ({ path: `/wiki/${d.slug}`, lastModified: WIKI_UPDATED_ISO ?? SITE_UPDATED })),
+  { path: "/a-propos", lastModified: SITE_UPDATED },
   { path: "/contact", lastModified: SITE_UPDATED },
   { path: "/mentions-legales", lastModified: "2026-10-02" },
   { path: "/confidentialite", lastModified: "2026-10-02" },

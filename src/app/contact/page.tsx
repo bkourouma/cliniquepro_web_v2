@@ -3,17 +3,15 @@ import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { BookingEmbed } from "@/components/booking-embed";
 import { DemoButton } from "@/components/demo-button";
 import { FinalCta } from "@/components/final-cta";
-import { BreadcrumbJsonLd } from "@/components/json-ld";
+import { BreadcrumbJsonLd, WebPageJsonLd } from "@/components/json-ld";
 import { Navbar } from "@/components/navbar";
 import { PageHero } from "@/components/page-hero";
 import { pageMetadata } from "@/lib/seo";
 import { contact, whatsappLink } from "@/lib/site";
 
-export const metadata: Metadata = pageMetadata({
-  title: "Contact et démonstration",
-  description: "Contactez l'équipe CliniquePro à Abidjan (téléphone, WhatsApp, e-mail) ou réservez une démonstration de 30 minutes du logiciel de gestion de clinique.",
-  path: "/contact",
-});
+const description = "Contactez l'équipe CliniquePro à Abidjan (téléphone, WhatsApp, e-mail) ou réservez une démonstration de 30 minutes du logiciel de gestion de clinique.";
+
+export const metadata: Metadata = pageMetadata({ title: "Contact et démonstration", description, path: "/contact" });
 
 export default function ContactPage() {
   const cards = [
@@ -25,6 +23,7 @@ export default function ContactPage() {
   return (
     <>
       <Navbar />
+      <WebPageJsonLd path="/contact" type="ContactPage" name="Contacter CliniquePro" description={description} />
       <BreadcrumbJsonLd trail={[{ name: "Contact", path: "/contact" }]} />
       <main className="bg-paper">
         <PageHero eyebrow="Contact" title={<>Parlons de <span className="text-gradient">votre clinique.</span></>}>

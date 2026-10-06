@@ -1,4 +1,4 @@
-import { absoluteUrl, contact, legal, SITE_NAME, SITE_UPDATED, SITE_URL } from "@/lib/site";
+import { absoluteUrl, contact, legal, SITE_NAME, SITE_UPDATED, SITE_URL, social } from "@/lib/site";
 import { features } from "@/lib/features";
 import { packs } from "@/lib/pricing";
 import { faqGroups } from "@/lib/faq";
@@ -29,6 +29,7 @@ export function SiteJsonLd() {
             address: { "@type": "PostalAddress", addressLocality: "Abidjan", addressCountry: "CI" },
             parentOrganization: { "@type": "Organization", name: legal.publisher, url: legal.publisherSite },
             areaServed: "CI",
+            sameAs: [social.facebook],
             contactPoint: { "@type": "ContactPoint", telephone: contact.phone, email: contact.email, contactType: "sales", areaServed: "CI", availableLanguage: "fr" },
           },
           { "@type": "WebSite", "@id": WEBSITE_ID, url: SITE_URL, name: SITE_NAME, inLanguage: "fr", publisher: { "@id": ORGANIZATION_ID } },
@@ -92,12 +93,24 @@ export function BreadcrumbJsonLd({ trail }: { trail: { name: string; path: strin
 }
 
 /** Description d'une page (date de dernière modification comprise), rattachée au site et au logiciel. */
-export function WebPageJsonLd({ path, name, description, dateModified = SITE_UPDATED }: { path: string; name: string; description: string; dateModified?: string }) {
+export function WebPageJsonLd({
+  path,
+  name,
+  description,
+  dateModified = SITE_UPDATED,
+  type = "WebPage",
+}: {
+  path: string;
+  name: string;
+  description: string;
+  dateModified?: string;
+  type?: "WebPage" | "AboutPage" | "ContactPage";
+}) {
   return (
     <JsonLd
       data={{
         "@context": "https://schema.org",
-        "@type": "WebPage",
+        "@type": type,
         "@id": `${absoluteUrl(path)}#webpage`,
         url: absoluteUrl(path),
         name,

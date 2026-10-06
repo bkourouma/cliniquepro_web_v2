@@ -234,7 +234,7 @@ export const journey = [
 
 /* ---------------------------------------------------------------- navigation */
 
-export type NavLink = { label: string; href: string; children?: { label: string; text: string; href: string }[]; footer?: { label: string; href: string }; wide?: boolean };
+export type NavLink = { label: string; href: string; children?: { label: string; text: string; href: string }[]; footer?: { label: string; href: string }; wide?: boolean; /** Barre de menu : lien affiché seulement dès 1280 px (à 1024 px la barre déborde) ; toujours présent dans le menu mobile */ xlOnly?: boolean };
 
 export const navLinks: NavLink[] = [
   {
@@ -253,6 +253,7 @@ export const navLinks: NavLink[] = [
   { label: "Écosystème", href: "#ecosysteme" },
   { label: "Tarifs", href: "/tarifs" },
   { label: "FAQ", href: "/faq" },
+  { label: "À propos", href: "/a-propos", xlOnly: true },
   { label: "Contact", href: "/contact" },
 ];
 
