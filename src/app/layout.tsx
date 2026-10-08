@@ -15,6 +15,8 @@ const bricolage = Bricolage_Grotesque({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   alternates: { canonical: "/" },
+  // Balise de validation de la propriété Google Search Console (valeur publique, servie dans le HTML).
+  verification: { google: "WCtsnzYFVt9ud_pN59hcfuJ4L-lZ1eOoUAKbVyPd6u8" },
   title: "CliniquePro — Logiciel de gestion pour cliniques ophtalmologiques",
   description:
     "CliniquePro centralise patients, rendez-vous, consultations, examens, assurances, caisse, facturation, honoraires et comptabilité dans une application web conçue pour les cliniques ophtalmologiques.",
