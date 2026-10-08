@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, Inter } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@/components/analytics";
 import { OrganizationJsonLd } from "@/components/json-ld";
 import { Providers } from "@/components/providers";
 import { SITE_URL } from "@/lib/site";
@@ -42,6 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-dvh font-sans">
         <OrganizationJsonLd />
         <Providers>{children}</Providers>
+        <Analytics />
       </body>
     </html>
   );
