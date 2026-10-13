@@ -1,0 +1,124 @@
+# Déploiement automatique du site vitrine CliniquePro (https://cliniquepro-web.allianceconsultants.net),
+# sur le modèle de celui du site ImmoTopia.
+#
+# À chaque fusion dans main (ou à la main depuis l'onglet Actions) :
+#   1. les vérifications de ci.yml (types, lint, build) ;
+#   2. le déploiement sur le serveur « alliance », par un runner auto-hébergé
+#      (label cliniquepro-site, utilisateur deployer) : synchronisation du code
+#      dans /home/deployer/apps/cliniquepro-web-v2, « docker compose up -d --build »,
+#      puis contrôle de santé sur 127.0.0.1:3030.
+#
+# Aucun secret dans ce dépôt. Si un .env de production existe un jour dans le dossier
+# du serveur, il n'est jamais touché par le déploiement (exclu du rsync).
+# Procédure, retour arrière et secours manuel : README.md (section Déploiement).
+name: Déploiement
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Un seul déploiement à la fois ; un déploiement en cours n'est jamais
+# interrompu, les suivants attendent (le plus récent passe en dernier).
+concurrency:
+  group: deploiement-cliniquepro-site
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  verifier:
+    name: Vérifications
+    uses: ./.github/workflows/ci.yml
+
+  deployer:
+    name: Déployer sur alliance
+    needs: verifier
+    runs-on: [self-hosted, linux, x64, cliniquepro-site]
+    timeout-minutes: 25
+    env:
+      APP_DIR: /home/deployer/apps/cliniquepro-web-v2
+      APP_URL: http://127.0.0.1:3030
+      IMAGE: cliniquepro-site
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Synchroniser le code vers le serveur
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f package.json && test -f Dockerfile && test -f docker-compose.yml
+          test -d "$APP_DIR" || { echo "::error::$APP_DIR introuvable"; exit 1; }
+
+          # Image actuelle gardée sous une étiquette de retour arrière.
+          ROLLBACK_TAG="avant-ci-$(date +%Y%m%d-%H%M%S)-${GITHUB_SHA::7}"
+          if docker image inspect "$IMAGE:latest" >/dev/null 2>&1; then
+            docker tag "$IMAGE:latest" "$IMAGE:$ROLLBACK_TAG"
+            echo "ROLLBACK_TAG=$ROLLBACK_TAG" >> "$GITHUB_ENV"
+            echo "Image de retour arrière : $IMAGE:$ROLLBACK_TAG"
+          fi
+
+          # --delete retire les fichiers supprimés du dépôt ; les exclusions
+          # protègent aussi ces fichiers côté serveur (pas de --delete-excluded) :
+          # .env éventuel, dépôt git du dossier, dépendances, caches de build.
+          rsync -rlt --delete --stats \
+            --include='.env.example' \
+            --exclude='.env' --exclude='.env.*' \
+            --exclude='node_modules' --exclude='.next' --exclude='.git' \
+            --exclude='tsconfig.tsbuildinfo' \
+            --exclude='*.tgz' --exclude='deploy.log' \
+            ./ "$APP_DIR/"
+
+      - name: Reconstruire et relancer le conteneur
+        shell: bash
+        working-directory: /home/deployer/apps/cliniquepro-web-v2
+        run: |
+          set -euo pipefail
+          # Si la construction échoue, l'ancien conteneur reste en service.
+          docker compose up -d --build
+          docker compose ps
+
+      - name: Contrôle de santé
+        shell: bash
+        run: |
+          set +e
+          set -uo pipefail
+          check() {
+            for i in $(seq 1 30); do
+              if curl -fsS -o /dev/null --max-time 10 "$APP_URL$1"; then
+                echo "OK $1 (tentative $i)"
+                return 0
+              fi
+              sleep 5
+            done
+            return 1
+          }
+          if check /robots.txt && check /; then
+            echo "Déploiement de ${GITHUB_SHA::7} en ligne."
+            exit 0
+          fi
+
+          echo "::error::Contrôle de santé en échec après le déploiement de ${GITHUB_SHA::7}"
+          docker logs --tail 60 cliniquepro-site 2>&1 || true
+
+          # Retour arrière automatique sur l'image d'avant, si elle existe.
+          if [ -n "${ROLLBACK_TAG:-}" ] && docker image inspect "$IMAGE:$ROLLBACK_TAG" >/dev/null 2>&1; then
+            echo "Retour arrière sur $IMAGE:$ROLLBACK_TAG"
+            docker tag "$IMAGE:$ROLLBACK_TAG" "$IMAGE:latest"
+            (cd "$APP_DIR" && docker compose up -d --no-build)
+            sleep 10
+            curl -fsS -o /dev/null --max-time 10 "$APP_URL/" \
+              && echo "Ancienne version rétablie." \
+              || echo "::error::L'ancienne version ne répond pas non plus : intervention manuelle nécessaire."
+          fi
+          exit 1
+
+      - name: Nettoyer les images
+        if: always()
+        shell: bash
+        run: |
+          # Couches orphelines, puis on ne garde que les 5 dernières étiquettes de retour arrière.
+          docker image prune -f >/dev/null || true
+          docker image ls "$IMAGE" --format '{{.Tag}}' | grep '^avant-ci-' | sort -r | tail -n +6 \
+            | xargs -r -I{} docker rmi "$IMAGE:{}" || true
