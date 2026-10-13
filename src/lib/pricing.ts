@@ -49,8 +49,7 @@ export const packs: Pack[] = [
   },
 ];
 
-// Remise de combinaison : 10 % sur le moins cher des packs souscrits ensemble (même règle qu'ImmoTopia).
-// ⚠ Pourcentage repris par défaut, à confirmer.
+// Remise de combinaison : 10 % sur le moins cher des packs souscrits ensemble (même règle qu'ImmoTopia), confirmée le 13 octobre 2026.
 export const COMBO_DISCOUNT = 0.1;
 
 /** Total mensuel d'une sélection de packs, avec la remise de combinaison quand il y en a plusieurs */
