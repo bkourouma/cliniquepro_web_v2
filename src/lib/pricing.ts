@@ -20,7 +20,7 @@ export const packs: Pack[] = [
     id: "operationnel",
     name: "Gestion opérationnelle",
     audience: "Le parcours patient, de l'accueil à la prescription",
-    monthly: 35_000,
+    monthly: 25_000,
     tagline: "Tout ce qui fait tourner la clinique au quotidien.",
     highlights: [
       "Dossiers patients et dossier médical ophtalmologique",
@@ -35,7 +35,7 @@ export const packs: Pack[] = [
     id: "financier",
     name: "Gestion financière et comptable",
     audience: "Facturation, caisse, honoraires et comptabilité",
-    monthly: 45_000,
+    monthly: 35_000,
     tagline: "Sécurisez chaque franc encaissé, de la caisse au bilan.",
     featured: true,
     highlights: [
