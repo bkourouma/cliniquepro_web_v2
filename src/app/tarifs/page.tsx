@@ -23,7 +23,7 @@ export default function TarifsPage() {
       <BreadcrumbJsonLd trail={[{ name: "Tarifs", path: "/tarifs" }]} />
       <main>
         <PageHero eyebrow="Tarifs" title={<>Deux packs, <span className="text-gradient">un seul outil.</span></>}>
-          Gestion opérationnelle à 35 000 FCFA HT par mois, gestion financière et comptable à 45 000 FCFA HT par mois.
+          {operationnel.name} à {fcfa(operationnel.monthly)} HT par mois, {financier.name.toLowerCase()} à {fcfa(financier.monthly)} HT par mois.
         </PageHero>
         <Pricing comparisonOpen />
       </main>

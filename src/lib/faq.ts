@@ -1,6 +1,13 @@
 // Questions fréquentes. Réponses limitées à ce que l'application fait ; les points commerciaux ou techniques
 // non documentés (hébergement, essai, formation…) renvoient vers la démonstration (voir docs/PROMPTS-CONTENU.md).
 
+import { fcfa } from "@/lib/format";
+import { COMBO_DISCOUNT, comboPrice, packs } from "@/lib/pricing";
+
+// Les prix viennent de pricing.ts : un changement de tarif se répercute ici sans retouche.
+const [operationnel, financier] = packs;
+const combo = comboPrice(packs);
+
 export type FaqGroup = { title: string; items: { q: string; a: string }[] };
 
 export const faqGroups: FaqGroup[] = [
@@ -9,11 +16,11 @@ export const faqGroups: FaqGroup[] = [
     items: [
       {
         q: "Quels sont les packs CliniquePro ?",
-        a: "Deux packs : la Gestion opérationnelle (35 000 FCFA HT par mois) qui couvre le parcours patient, médical et assurance, et la Gestion financière et comptable (45 000 FCFA HT par mois) qui couvre la facturation, la caisse, les honoraires médecins et la comptabilité.",
+        a: `Deux packs : la ${operationnel.name} (${fcfa(operationnel.monthly)} HT par mois) qui couvre le parcours patient, médical et assurance, et la ${financier.name} (${fcfa(financier.monthly)} HT par mois) qui couvre la facturation, la caisse, les honoraires médecins et la comptabilité.`,
       },
       {
         q: "Puis-je prendre les deux packs ?",
-        a: "Oui. Les deux packs sont complémentaires : souscrits ensemble, vous bénéficiez de 10 % de remise sur le moins cher des deux, soit 76 500 FCFA HT par mois au lieu de 80 000.",
+        a: `Oui. Les deux packs sont complémentaires : souscrits ensemble, vous bénéficiez de ${Math.round(COMBO_DISCOUNT * 100)} % de remise sur le moins cher des deux, soit ${fcfa(combo.total)} HT par mois au lieu de ${fcfa(combo.subtotal)}.`,
       },
       {
         q: "Y a-t-il une période d'essai ?",

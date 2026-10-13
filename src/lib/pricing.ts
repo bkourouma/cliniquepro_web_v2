@@ -20,7 +20,7 @@ export const packs: Pack[] = [
     id: "operationnel",
     name: "Gestion opérationnelle",
     audience: "Le parcours patient, de l'accueil à la prescription",
-    monthly: 35_000,
+    monthly: 25_000,
     tagline: "Tout ce qui fait tourner la clinique au quotidien.",
     highlights: [
       "Dossiers patients et dossier médical ophtalmologique",
@@ -35,7 +35,7 @@ export const packs: Pack[] = [
     id: "financier",
     name: "Gestion financière et comptable",
     audience: "Facturation, caisse, honoraires et comptabilité",
-    monthly: 45_000,
+    monthly: 35_000,
     tagline: "Sécurisez chaque franc encaissé, de la caisse au bilan.",
     featured: true,
     highlights: [
@@ -49,8 +49,7 @@ export const packs: Pack[] = [
   },
 ];
 
-// Remise de combinaison : 10 % sur le moins cher des packs souscrits ensemble (même règle qu'ImmoTopia).
-// ⚠ Pourcentage repris par défaut, à confirmer.
+// Remise de combinaison : 10 % sur le moins cher des packs souscrits ensemble (même règle qu'ImmoTopia), confirmée le 13 octobre 2026.
 export const COMBO_DISCOUNT = 0.1;
 
 /** Total mensuel d'une sélection de packs, avec la remise de combinaison quand il y en a plusieurs */
