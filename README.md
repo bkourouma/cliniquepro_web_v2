@@ -1,6 +1,6 @@
 # CliniquePro — Site vitrine
 
-Site marketing de l'application [CliniquePro](https://github.com/bkourouma/cliniqueprosas) (gestion de clinique ophtalmologique).
+Site marketing de l'application [CliniquePro](https://github.com/bkourouma/cliniqueprosas) : logiciel de gestion pour cliniques privées, centres de santé privés et cabinets médicaux, toutes spécialités (l'ophtalmologie est la plus détaillée).
 Même layout que le site ImmoTopia (`immotopia_website_v2`) : Next.js 16 (App Router) · Tailwind CSS 4 · Framer Motion · GSAP.
 Thème tiré du logo : bleu marine, bleu hôpital et vert.
 
@@ -30,17 +30,19 @@ Les textes vivent dans `src/lib/`, pas dans les composants :
 - `content.ts` : cartes du carrousel (7), rôles (4 onglets), bandeau, problèmes résolus, journée type, navigation.
 - `features.ts` : les 14 modules et le pack qui les couvre.
 - `faq.ts` : questions fréquentes.
-- `site.ts` : coordonnées et mentions légales (**valeurs « À renseigner » à compléter**).
+- `site.ts` : coordonnées et mentions légales.
+- `positionnement.ts` : cible, phrase d'identité, hors-périmètre, offre de service et capacités confirmées. Titres, données structurées, `llms.txt`, FAQ et À propos s'en servent : **le positionnement se change là, pas page par page**.
+- `dates.ts` : date de dernière modification de chaque page (sitemap et `dateModified`).
 
 Règle éditoriale : ne présenter que ce que l'application fait réellement ; aucune date de livraison, aucun chiffre ou témoignage inventé.
 
 ## Référencement (SEO et moteurs de réponse IA)
 
-- `src/lib/seo.ts` : `pageMetadata()` pose titre, description, canonical, Open Graph (url et image) et Twitter pour chaque page. Les titres prennent le gabarit « … — CliniquePro » défini dans `layout.tsx`.
+- `src/lib/seo.ts` : `pageMetadata()` pose titre, description, canonical, Open Graph (url et image) et Twitter pour chaque page. Les titres prennent le gabarit « … | CliniquePro » défini dans `layout.tsx`. Viser un titre de page ≤ 47 caractères (60 avec le suffixe) et une description ≤ 155.
 - `src/components/json-ld.tsx` : données structurées (Organization, WebSite, SoftwareApplication avec prix mensuels HT, WebPage avec `dateModified`, BreadcrumbList, FAQPage). Elles se lisent dans `src/lib/` : un prix ou un module modifié se répercute partout.
 - `src/app/robots.ts` : accès explicite des robots d'IA (recherche et entraînement) ; la liste et la façon de la restreindre sont commentées dans le fichier.
 - `src/app/llms.txt/route.ts` : `/llms.txt`, résumé Markdown du site généré à partir des mêmes données.
-- `src/app/sitemap.ts` : `lastmod` seulement. **À chaque mise à jour réelle du contenu, changer `SITE_UPDATED` dans `src/lib/site.ts`** (et régénérer le wiki, dont la date alimente ses pages).
+- `src/app/sitemap.ts` : `lastmod` seulement, **une date par page** lue dans `src/lib/dates.ts`. À chaque mise à jour réelle d'une page, changer sa date ; une nouvelle page s'ajoute à `dates.ts` et à `sitemap.ts`. `SITE_UPDATED` (`site.ts`) ne sert que de repli et de date de `llms.txt`.
 - `GOOGLE_SITE_VERIFICATION` / `BING_SITE_VERIFICATION` (voir `.env.example`) : balises de vérification Search Console et Bing, posées seulement si renseignées.
 
 ## Pages

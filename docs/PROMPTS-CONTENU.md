@@ -7,7 +7,29 @@ Ce document liste **ce qui n'y figure pas** et donne, pour chaque point, un prom
 
 ---
 
-## 0. Décisions prises et hypothèses restantes
+## 0. Positionnement et décisions du 13 octobre 2026
+
+CliniquePro n'est plus présenté comme « le logiciel des cliniques ophtalmologiques » mais comme **le logiciel de gestion des cliniques privées, des centres de santé privés et des cabinets médicaux, toutes spécialités**. L'ophtalmologie reste la spécialité la plus détaillée et sert d'exemple. Les phrases de positionnement vivent dans `src/lib/positionnement.ts` (titres, données structurées, `llms.txt`, FAQ et À propos s'en servent) : on les change là.
+
+Décisions de l'éditeur, à respecter dans tout texte :
+
+- **Cible** : cliniques privées, centres de santé **privés**, cabinets médicaux, toutes spécialités. Ne pas cibler les centres publics ou communautaires. Côte d'Ivoire d'abord (Abidjan) ; l'Afrique francophone peut être citée, sans page par pays.
+- **Spécialités** : modèles de consultation **paramétrables pour toutes les spécialités** ; l'ophtalmologie est la plus détaillée. Ne pas écrire « prêt à l'emploi pour la cardiologie / la pédiatrie… ».
+- **Hors connexion** : **saisie hors ligne puis synchronisation** au retour du réseau. Ne pas écrire que toute l'application fonctionne sans Internet, ni qu'on peut tout consulter hors ligne.
+- **Hébergement** : **au choix du client** (cloud ou serveur local dans la clinique). Ne pas écrire « en Côte d'Ivoire ».
+- **Fonctions affirmables** : prise en charge assurance (assureurs et mutuelles restent **génériques**, aucun nom), multi-sites / multi-cabinets, Mobile Money intégré (paiement intégré), fonctions d'IA **optionnelles** (service tiers, une aide, aucun diagnostic ni promesse médicale).
+- **Hors périmètre, écrit noir sur blanc** (FAQ « Que ne fait pas CliniquePro ? ») : hospitalisation, laboratoire, pharmacie.
+- **MedicPro est un autre produit** (gestion réglementaire pharmaceutique) : ne jamais le confondre avec CliniquePro.
+- **Conformité** : respect de la loi ivoirienne n° 2013-450. Ne pas écrire « conforme RGPD » ni annoncer de certification.
+- **Offre publiable** : formation incluse, import des données existantes, support WhatsApp, abonnement sans engagement. Prix : uniquement `pricing.ts`. Pas de prix TTC, pas de frais de mise en route, pas de délai.
+- **Éditeur** : « CliniquePro, édité par Alliance Consultants (Abidjan) » (lève la confusion avec les logiciels de nom proche). Auteur des futurs guides : « L'équipe CliniquePro — Alliance Consultants ».
+- **Adresse** : celle d'Alliance Consultants publiée sur allianceconsultants.net, soit « Abidjan, Côte d'Ivoire » (ni rue ni quartier). Pas de `LocalBusiness` tant qu'aucune adresse de rue ni bureau ouvert au public n'est publié.
+
+**Règle de contenu** : toute page cite sa source (module de `features.ts`, domaine du wiki ou décision ci-dessus). Une fonction absente de ces sources est marquée « à confirmer » et n'est pas publiée. Aucune page ne cite un chiffre, un client, un avis ou un témoignage non fourni et prouvé.
+
+---
+
+## 0 bis. Décisions antérieures et hypothèses restantes
 
 **Confirmées par vous (2 octobre 2026)**
 
@@ -27,7 +49,7 @@ Ce document liste **ce qui n'y figure pas** et donne, pour chaque point, un prom
 | --- | --- | --- |
 | 1 | (confirmé) Découpage des modules : *Opérationnelle* = patients, agenda, réception, consultations, dossier médical, examens, ordonnances, assurances. *Financière et comptable* = facturation, caisse, honoraires, comptabilité SYSCOHADA. *Socle commun* = tableaux de bord, WhatsApp, administration. | `src/lib/features.ts` |
 | 3 | Pas de frais de mise en route ni de facturation annuelle annoncés. | `src/lib/pricing.ts` |
-| 4 | Le multi-structure n'est pas présenté (pack inconnu). | `src/lib/features.ts` |
+| 4 | Multi-sites / multi-cabinets : affirmé depuis le 13 octobre 2026 (socle commun, sans pack précis). Le pack qui le porte reste à confirmer. | `src/lib/features.ts` |
 | 5 | Les écrans animés du carrousel utilisent des données fictives. | `src/components/mockups.tsx` |
 | 6 | Mentions légales et confidentialité reprennent ImmoTopia (durée de conservation 3 ans, loi 2013-450, ARTCI) : à faire relire. | `src/app/mentions-legales`, `src/app/confidentialite` |
 
@@ -63,7 +85,7 @@ Collez chaque prompt tel quel (un par image), format portrait 3:4 (ex. 1536 × 2
 
 **1. `agenda.jpg`**
 ```text
-Photographie éditoriale réaliste, format portrait 3:4, lumière naturelle douce, palette bleu marine et vert, arrière-plan légèrement flou. Dans une clinique ophtalmologique moderne à Abidjan, une secrétaire d'Afrique de l'Ouest souriante accueille une patiente à un comptoir de réception ; un écran d'ordinateur est visible de dos. Ambiance professionnelle et chaleureuse. Aucun texte, aucun logo, aucune marque visible. Visages et mains naturels. Laisser libre le tiers inférieur de l'image.
+Photographie éditoriale réaliste, format portrait 3:4, lumière naturelle douce, palette bleu marine et vert, arrière-plan légèrement flou. Dans une clinique moderne à Abidjan, une secrétaire d'Afrique de l'Ouest souriante accueille une patiente à un comptoir de réception ; un écran d'ordinateur est visible de dos. Ambiance professionnelle et chaleureuse. Aucun texte, aucun logo, aucune marque visible. Visages et mains naturels. Laisser libre le tiers inférieur de l'image.
 ```
 
 **2. `consultation.jpg`**
@@ -93,7 +115,7 @@ Photographie éditoriale réaliste, format portrait 3:4, lumière naturelle douc
 
 **7. `pilotage.jpg`**
 ```text
-Photographie éditoriale réaliste, format portrait 3:4, lumière naturelle douce, palette bleu marine et vert, arrière-plan légèrement flou. La directrice d'une clinique ophtalmologique, d'Afrique de l'Ouest, consulte un tableau de bord sur une tablette ; l'équipe médicale en blouse est floue au fond. Aucun texte lisible, aucun logo, aucune marque visible. Visages et mains naturels. Laisser libre le tiers inférieur de l'image.
+Photographie éditoriale réaliste, format portrait 3:4, lumière naturelle douce, palette bleu marine et vert, arrière-plan légèrement flou. La directrice d'une clinique, d'Afrique de l'Ouest, consulte un tableau de bord sur une tablette ; l'équipe médicale en blouse est floue au fond. Aucun texte lisible, aucun logo, aucune marque visible. Visages et mains naturels. Laisser libre le tiers inférieur de l'image.
 ```
 
 Une fois les fichiers déposés, dites-le-moi : je renseigne `image` et `imageAlt` dans `src/lib/content.ts`.
@@ -125,13 +147,13 @@ dans la capture. Écris aussi le texte alternatif (une phrase) pour l'accessibil
 
 Questions auxquelles le site ne peut pas répondre aujourd'hui. À poser à l'équipe technique avec le prompt ci-dessous, puis à intégrer dans `src/lib/faq.ts` :
 
-- Hébergement des données (pays, prestataire), sauvegardes, chiffrement, disponibilité (SLA)
+- Hébergement : décidé (au choix du client, cloud ou serveur local). Restent à documenter : sauvegardes selon le mode d'hébergement, chiffrement, disponibilité (SLA)
 - Durée de conservation, export des données en fin de contrat, réversibilité
 - Utilisation de l'assistant analytique IA : quelles données sont envoyées à quel fournisseur ?
-- Utilisation sur mobile / tablette, fonctionnement avec connexion instable
-- Formation, mise en route, support (horaires, canaux), migration depuis un logiciel existant
+- Utilisation sur mobile / tablette ; connexion instable : décidé (saisie hors ligne puis synchronisation), périmètre exact à documenter
+- Formation incluse, import des données et support WhatsApp : décidés. Restent à documenter : délais de mise en route, horaires du support
 - Nombre d'utilisateurs inclus, limites de patients ou de médecins par pack
-- Essai gratuit, durée d'engagement, mode de paiement de l'abonnement, TVA
+- Premier mois offert et abonnement sans engagement : décidés. Restent à documenter : mode de paiement de l'abonnement, TVA
 
 **Prompt pour la session Claude Code ouverte sur `cliniqueprosas`**
 
@@ -183,7 +205,7 @@ n'ait pas dit, et un chiffre mis en avant uniquement s'il figure dans la citatio
 
 ```text
 Écris le script d'une vidéo de démonstration de 90 secondes pour CliniquePro, destinée
-à des directeurs de cliniques ophtalmologiques en Afrique francophone. Structure :
+à des directeurs de cliniques, de centres de santé et de cabinets médicaux en Côte d'Ivoire. Structure :
 accroche (10 s) sur un problème réel (dossiers dispersés, caisse non rapprochée),
 puis un parcours patient en 5 écrans (accueil, consultation, examen, caisse,
 comptabilité), puis appel à l'action « Demandez une démonstration ». Phrases courtes,
@@ -198,9 +220,9 @@ absente de cette liste : [coller la liste des modules de src/lib/features.ts].
 Le site de référence avait des pages thématiques (`landings.ts`). Pour en créer pour CliniquePro :
 
 ```text
-Propose 8 pages d'atterrissage SEO pour un logiciel de gestion de clinique
-ophtalmologique en Côte d'Ivoire (ex. « logiciel clinique ophtalmologique Abidjan »,
-« facturation tiers payant assurance clinique »). Pour chaque page : slug, balise title
+Propose 8 pages d'atterrissage SEO pour un logiciel de gestion de clinique, de centre
+de santé et de cabinet médical en Côte d'Ivoire (ex. « logiciel cabinet médical Abidjan »,
+« facturation tiers payant assurance clinique », une page de niche « logiciel ophtalmologie »). Pour chaque page : slug, balise title
 (60 caractères max), meta description (155 max), H1, 3 sections avec intertitres,
 3 questions de FAQ. Utilise uniquement les fonctions listées ici : [coller
 src/lib/features.ts]. Aucune statistique de marché inventée.

@@ -1,21 +1,23 @@
 import type { MetadataRoute } from "next";
-import { absoluteUrl, SITE_UPDATED } from "@/lib/site";
-import { WIKI_UPDATED_ISO, wikiDomains } from "@/lib/wiki";
+import { pageUpdated } from "@/lib/dates";
+import { absoluteUrl } from "@/lib/site";
+import { wikiDomains } from "@/lib/wiki";
 
 // Seul <lastmod> est exploité par Google (changefreq et priority sont ignorés) : on ne renseigne que lui.
-const pages: { path: string; lastModified: string }[] = [
-  { path: "/", lastModified: SITE_UPDATED },
-  { path: "/fonctionnalites", lastModified: SITE_UPDATED },
-  { path: "/tarifs", lastModified: SITE_UPDATED },
-  { path: "/faq", lastModified: SITE_UPDATED },
-  { path: "/wiki", lastModified: WIKI_UPDATED_ISO ?? SITE_UPDATED },
-  ...wikiDomains.map((d) => ({ path: `/wiki/${d.slug}`, lastModified: WIKI_UPDATED_ISO ?? SITE_UPDATED })),
-  { path: "/a-propos", lastModified: SITE_UPDATED },
-  { path: "/contact", lastModified: SITE_UPDATED },
-  { path: "/mentions-legales", lastModified: "2026-10-02" },
-  { path: "/confidentialite", lastModified: "2026-10-02" },
+// Chaque page a sa propre date (src/lib/dates.ts), changée seulement quand son contenu change vraiment.
+const paths = [
+  "/",
+  "/fonctionnalites",
+  "/tarifs",
+  "/faq",
+  "/wiki",
+  ...wikiDomains.map((d) => `/wiki/${d.slug}`),
+  "/a-propos",
+  "/contact",
+  "/mentions-legales",
+  "/confidentialite",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return pages.map((p) => ({ url: absoluteUrl(p.path), lastModified: p.lastModified }));
+  return paths.map((path) => ({ url: absoluteUrl(path), lastModified: pageUpdated(path) }));
 }

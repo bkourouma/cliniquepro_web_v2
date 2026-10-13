@@ -2,9 +2,11 @@
 
 import { AnimatePresence, motion, type PanInfo } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowRight, CalendarDays, ChevronLeft, ChevronRight, CircleDollarSign, FileText, Glasses, LayoutDashboard, Play, ShieldCheck, Stethoscope, type LucideIcon } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { heroCards, type HeroCard, type MockupKind } from "@/lib/content";
+import { AUDIENCE } from "@/lib/positionnement";
 import { goTo } from "@/lib/nav";
 import { Mockup } from "./mockups";
 import { useDemo } from "./providers";
@@ -72,7 +74,7 @@ export function Hero() {
     setTimeout(() => (dragging.current = false), 0);
   }
 
-  const title = "La plateforme tout-en-un pour piloter votre clinique ophtalmologique.";
+  const title = "Le logiciel de gestion pour cliniques, centres de santé et cabinets médicaux.";
   // Index du premier mot mis en dégradé
   const gradientFrom = 4;
   const accent = cards[active].accent;
@@ -124,7 +126,11 @@ export function Hero() {
           ))}
         </h1>
         <p className="hero-fade mx-auto mt-5 max-w-2xl text-base text-white/65 md:text-lg" style={{ animationDelay: "350ms" }}>
-          CliniquePro est un logiciel web de gestion de clinique ophtalmologique, édité à Abidjan (Côte d&apos;Ivoire). Il centralise patients, rendez-vous, consultations, examens, assurances, caisse, facturation, honoraires et comptabilité dans une seule interface.
+          CliniquePro est un logiciel web de gestion pour {AUDIENCE}, toutes spécialités. Il est édité à Abidjan (Côte d&apos;Ivoire) par{" "}
+          <Link href="/a-propos" className="font-semibold text-white underline decoration-white/30 underline-offset-4 hover:decoration-white">
+            Alliance Consultants
+          </Link>
+          . Patients, rendez-vous, consultations, assurance, caisse, facturation et comptabilité tiennent dans une seule interface.
         </p>
         <div className="hero-fade mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row" style={{ animationDelay: "500ms" }}>
           <MagneticButton

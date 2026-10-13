@@ -10,7 +10,7 @@ import { pageMetadata } from "@/lib/seo";
 
 // Les prix viennent de pricing.ts : titre, description et page restent cohérents (toujours « HT par mois »).
 const [operationnel, financier] = packs;
-const description = `Deux packs, prix hors taxes par mois : ${operationnel.name} ${fcfa(operationnel.monthly)} HT, ${financier.name} ${fcfa(financier.monthly)} HT. Premier mois offert, sans engagement. Comparez et composez votre offre.`;
+const description = `${operationnel.name} ${fcfa(operationnel.monthly)} HT/mois, ${financier.name.toLowerCase()} ${fcfa(financier.monthly)} HT/mois. Premier mois offert, sans engagement.`;
 
 export const metadata: Metadata = pageMetadata({ title: `Tarifs : dès ${fcfa(operationnel.monthly)} HT par mois`, description, path: "/tarifs" });
 

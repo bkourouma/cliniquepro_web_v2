@@ -15,18 +15,19 @@ const bricolage = Bricolage_Grotesque({
   weight: ["500", "600", "700", "800"],
 });
 
-const HOME_TITLE = "CliniquePro — Logiciel de gestion pour cliniques ophtalmologiques";
-// Le prix vient de pricing.ts : un changement de tarif se répercute ici sans retouche
-const HOME_DESCRIPTION = `CliniquePro est un logiciel web de gestion de clinique ophtalmologique, édité à Abidjan (Côte d'Ivoire) : patients, rendez-vous, consultations, examens, assurances, caisse, facturation, honoraires et comptabilité. Dès ${fcfa(Math.min(...packs.map((p) => p.monthly)))} HT par mois, premier mois offert.`;
+// Titre ≤ 60 caractères, description ≤ 155 (au-delà, Google les tronque). Le prix vient de pricing.ts : un changement de tarif
+// se répercute ici sans retouche (vérifier alors que la description reste sous 155 caractères).
+const HOME_TITLE = "CliniquePro : logiciel de clinique, cabinet, centre de santé";
+const HOME_DESCRIPTION = `Logiciel web pour cliniques, centres de santé et cabinets médicaux : dossier patient, rendez-vous, assurance, caisse, facturation. Dès ${fcfa(Math.min(...packs.map((p) => p.monthly)))} HT/mois.`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: { default: HOME_TITLE, template: `%s — ${SITE_NAME}` },
+  title: { default: HOME_TITLE, template: `%s | ${SITE_NAME}` },
   description: HOME_DESCRIPTION,
   applicationName: SITE_NAME,
   alternates: { canonical: "/" },
   openGraph: {
-    title: "CliniquePro — La plateforme tout-en-un pour piloter votre clinique",
+    title: "CliniquePro : logiciel de gestion de clinique, centre de santé et cabinet médical",
     description: HOME_DESCRIPTION,
     url: SITE_URL,
     locale: "fr_CI",

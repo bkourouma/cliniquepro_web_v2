@@ -7,12 +7,12 @@ import { BreadcrumbJsonLd, WebPageJsonLd } from "@/components/json-ld";
 import { Navbar } from "@/components/navbar";
 import { PageHero } from "@/components/page-hero";
 import { Reveal } from "@/components/ui";
-import { features, scopeLabel, type ModuleScope } from "@/lib/features";
+import { featureWiki, features, scopeLabel, type ModuleScope } from "@/lib/features";
 import { pageMetadata } from "@/lib/seo";
 
-const description = `Patients, agenda, réception, consultations, examens, ordonnances, assurances, facturation, caisse, honoraires et comptabilité : les ${features.length} modules du logiciel de clinique ophtalmologique CliniquePro.`;
+const description = `Dossier patient, rendez-vous, consultations, assurance, facturation, caisse, honoraires, comptabilité : les ${features.length} modules de CliniquePro, par pack.`;
 
-export const metadata: Metadata = pageMetadata({ title: "Fonctionnalités du logiciel de clinique ophtalmologique", description, path: "/fonctionnalites" });
+export const metadata: Metadata = pageMetadata({ title: "Fonctionnalités du logiciel de clinique", description, path: "/fonctionnalites" });
 
 const scopeStyle: Record<ModuleScope, string> = {
   operationnel: "bg-brand-500/10 text-brand-600",
@@ -30,7 +30,7 @@ export default function FonctionnalitesPage() {
       <BreadcrumbJsonLd trail={[{ name: "Fonctionnalités", path: "/fonctionnalites" }]} />
       <main className="bg-paper">
         <PageHero eyebrow="Fonctionnalités" title={<>Tous les modules, <span className="text-gradient">de l&apos;accueil au bilan.</span></>}>
-          Chaque module précise le pack qui le couvre : Gestion opérationnelle, Gestion financière et comptable, ou socle commun aux deux.
+          CliniquePro est un logiciel de gestion de clinique, de centre de santé et de cabinet médical. Chaque module précise le pack qui le couvre : Gestion opérationnelle, Gestion financière et comptable, ou socle commun aux deux.
         </PageHero>
 
         <div className="mx-auto max-w-6xl px-5 py-16">
@@ -57,6 +57,11 @@ export default function FonctionnalitesPage() {
                           ))}
                         </ul>
                         <p className="mt-5 rounded-xl bg-paper p-3 text-sm font-medium text-ink-900/70">{f.value}</p>
+                        {featureWiki[f.id] && (
+                          <Link href={featureWiki[f.id]} className="mt-4 inline-block text-sm font-semibold text-brand-600 hover:underline">
+                            Voir le détail action par action →
+                          </Link>
+                        )}
                       </article>
                     </Reveal>
                   ))}
@@ -64,7 +69,8 @@ export default function FonctionnalitesPage() {
             </section>
           ))}
           <p className="mb-8 text-center text-ink-900/70">
-            Besoin du détail, action par action ? Consultez le <Link href="/wiki" className="font-semibold text-brand-600 hover:underline">wiki des fonctionnalités</Link>.
+            Besoin du détail, action par action ? Consultez le <Link href="/wiki" className="font-semibold text-brand-600 hover:underline">wiki des fonctionnalités</Link>, les{" "}
+            <Link href="/tarifs" className="font-semibold text-brand-600 hover:underline">tarifs</Link> ou la <Link href="/faq" className="font-semibold text-brand-600 hover:underline">FAQ</Link>.
           </p>
           <div className="text-center">
             <DemoButton className="rounded-full bg-gradient-to-r from-brand-500 to-leaf-500 px-8 py-4 font-semibold text-white shadow-[0_10px_40px_-10px_rgba(18,196,106,0.7)]">

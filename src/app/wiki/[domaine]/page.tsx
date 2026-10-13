@@ -5,9 +5,9 @@ import { FinalCta } from "@/components/final-cta";
 import { BreadcrumbJsonLd, WebPageJsonLd } from "@/components/json-ld";
 import { Navbar } from "@/components/navbar";
 import { PageHero } from "@/components/page-hero";
-import { scopeLabel } from "@/lib/features";
+import { features, scopeLabel } from "@/lib/features";
 import { pageMetadata } from "@/lib/seo";
-import { countItems, domainBySlug, wikiDomains, WIKI_UPDATED_ISO, WIKI_UPDATED_ON } from "@/lib/wiki";
+import { countItems, domainBySlug, domainEditorial, wikiDomains, WIKI_UPDATED_ON } from "@/lib/wiki";
 
 export function generateStaticParams() {
   return wikiDomains.map((d) => ({ domaine: d.slug }));
@@ -17,18 +17,20 @@ export async function generateMetadata({ params }: PageProps<"/wiki/[domaine]">)
   const { domaine } = await params;
   const d = domainBySlug(domaine);
   if (!d) return {};
-  return pageMetadata({ title: `${d.title} : wiki des fonctionnalités`, description: `${d.summary} ${countItems(d)} actions détaillées du logiciel CliniquePro.`, path: `/wiki/${d.slug}` });
+  return pageMetadata({ title: domainEditorial[d.slug]?.seoTitle ?? `${d.title} : wiki des fonctionnalités`, description: `${d.summary} ${countItems(d)} actions détaillées du logiciel CliniquePro.`, path: `/wiki/${d.slug}` });
 }
 
 export default async function WikiDomainPage({ params }: PageProps<"/wiki/[domaine]">) {
   const { domaine } = await params;
   const d = domainBySlug(domaine);
   if (!d) notFound();
+  const editorial = domainEditorial[d.slug];
+  const related = editorial ? features.filter((f) => editorial.featureIds.includes(f.id)) : [];
 
   return (
     <>
       <Navbar />
-      <WebPageJsonLd path={`/wiki/${d.slug}`} name={`${d.title} : wiki CliniquePro`} description={d.summary} dateModified={WIKI_UPDATED_ISO} />
+      <WebPageJsonLd path={`/wiki/${d.slug}`} name={`${d.title} : wiki CliniquePro`} description={d.summary} />
       <BreadcrumbJsonLd
         trail={[
           { name: "Wiki des fonctionnalités", path: "/wiki" },
@@ -38,8 +40,37 @@ export default async function WikiDomainPage({ params }: PageProps<"/wiki/[domai
       <main className="bg-paper">
         <PageHero eyebrow={scopeLabel[d.pack]} title={d.title}>
           {d.summary}
-          <span className="mt-2 block text-sm text-white/45">Mise à jour : {WIKI_UPDATED_ON}</span>
+          <span className="mt-2 block text-sm text-white/45">Inventaire arrêté au {WIKI_UPDATED_ON}</span>
         </PageHero>
+        {editorial && (
+          <section className="mx-auto max-w-6xl px-5 pt-14">
+            <div className="rounded-[22px] border border-ink-900/[0.07] bg-white p-6 text-ink-900/75 shadow-sm md:p-8 [&_p]:mb-3 [&_p:last-child]:mb-0">
+              <p className="text-lg text-ink-900/85">{editorial.intro}</p>
+              {editorial.more?.map((t) => <p key={t}>{t}</p>)}
+              <p>
+                Ce domaine regroupe {d.modules.length} module{d.modules.length > 1 ? "s" : ""} et {countItems(d)} actions :{" "}
+                {d.modules.map((m, i) => (
+                  <span key={m.slug}>
+                    {i > 0 && ", "}
+                    <a href={`#${m.slug}`} className="font-semibold text-brand-600 hover:underline">{m.title}</a>
+                  </span>
+                ))}
+                .
+              </p>
+              <p>
+                Pour les fonctions décrites ici, voir aussi{" "}
+                {related.map((f, i) => (
+                  <span key={f.id}>
+                    {i > 0 && (i === related.length - 1 ? " et " : ", ")}
+                    <Link href={`/fonctionnalites#${f.id}`} className="font-semibold text-brand-600 hover:underline">{f.title.toLowerCase()}</Link>
+                  </span>
+                ))}
+                {related.length > 0 && " dans les fonctionnalités, "}le <Link href="/tarifs" className="font-semibold text-brand-600 hover:underline">pack {scopeLabel[d.pack]}</Link> sur la page des tarifs et la{" "}
+                <Link href="/faq" className="font-semibold text-brand-600 hover:underline">FAQ</Link>.
+              </p>
+            </div>
+          </section>
+        )}
         <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 lg:grid-cols-[240px_1fr]">
           <aside className="lg:sticky lg:top-24 lg:self-start">
             <Link href="/wiki" className="text-sm font-semibold text-brand-600 hover:underline">

@@ -94,7 +94,7 @@ export function Logo({ className = "", onLight = false, large = false }: { class
   return (
     <Image
       src={onLight ? "/images/logo/logo-cliniquepro.png" : "/images/logo/logo-cliniquepro-inverse.png"}
-      alt="CliniquePro"
+      alt="CliniquePro, logiciel de gestion de clinique"
       width={1970}
       height={480}
       // Affiché à ~150 px (230 px en grand) : sans « sizes », Next servait la version 2 048 px (91 Ko pour 6 Ko utiles)

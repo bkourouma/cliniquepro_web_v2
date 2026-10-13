@@ -53,7 +53,7 @@ export function DemoModal({ open, onClose }: { open: boolean; onClose: () => voi
               <div>
                 <p className="text-xs font-bold tracking-[0.16em] text-mint-400 uppercase">Démonstration personnalisée · 30 min</p>
                 <h2 id="demo-title" className="mt-1 font-display text-2xl font-bold md:text-3xl">
-                  Voyez CliniquePro appliqué à votre clinique.
+                  Voyez CliniquePro appliqué à votre clinique, centre ou cabinet.
                 </h2>
               </div>
               <button
@@ -80,10 +80,11 @@ export function DemoModal({ open, onClose }: { open: boolean; onClose: () => voi
 
 type Option = { value: string };
 const structures: Option[] = [
-  { value: "Clinique ophtalmologique" },
-  { value: "Cabinet spécialisé" },
-  { value: "Centre médical" },
-  { value: "Autre structure de santé" },
+  { value: "Clinique" },
+  { value: "Centre de santé" },
+  { value: "Cabinet médical" },
+  { value: "Cabinet d'ophtalmologie" },
+  { value: "Autre structure" },
 ];
 const volumes: Option[] = [
   { value: "1 à 2 médecins" },
@@ -134,7 +135,7 @@ function ContactOptions() {
   return (
     <div className="p-6">
       <p className="text-white/75">
-        Dites-nous votre nom, le nom de votre clinique et vos disponibilités : un expert CliniquePro vous recontacte sous 24 h ouvrées
+        Dites-nous votre nom, le nom de votre structure et vos disponibilités : un expert CliniquePro vous recontacte sous 24 h ouvrées
         pour fixer votre démonstration.
       </p>
       <div className="mt-5 grid gap-3 sm:grid-cols-3">
@@ -195,7 +196,7 @@ function LeadForm({ onDone, onUnavailable }: { onDone: () => void; onUnavailable
       <Choice name="need" label="Pack qui vous intéresse" options={needs} />
       <Choice name="role" label="Votre fonction" options={roles} />
       <Field name="name" label="Nom complet" autoComplete="name" required />
-      <Field name="company" label="Clinique / Cabinet" autoComplete="organization" required />
+      <Field name="company" label="Nom de la structure" autoComplete="organization" required />
       <Field name="email" label="E-mail professionnel" type="email" autoComplete="email" required />
       <Field name="phone" label="Téléphone / WhatsApp" type="tel" autoComplete="tel" placeholder="+225 07 00 00 00 00" required />
       {/* Champ piège anti-robots, invisible pour les humains */}

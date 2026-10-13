@@ -17,7 +17,7 @@
        "items": [
         {
          "title": "Liste paginée avec filtres",
-         "goal": "Rechercher par nom, prénom, numéro, téléphone ; filtres sexe, statut, régime, années de naissance, ville ; tri et pagination (20 par défaut, 100 max) ; les patients ARCHIVED sont masqués.",
+         "goal": "Rechercher par nom, prénom, numéro, téléphone ; filtres sexe, statut, régime, années de naissance, ville ; tri et pagination (20 par défaut, 100 max) ; les patients archivés sont masqués.",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -60,7 +60,7 @@
        "items": [
         {
          "title": "Alerte « patients potentiellement similaires »",
-         "goal": "Si un patient de même n° de sécurité sociale, ou de mêmes prénom + nom + date de naissance, existe : afficher la liste et exiger une confirmation (force=true) pour créer quand même.",
+         "goal": "Si un patient de même n° de sécurité sociale, ou de mêmes prénom + nom + date de naissance, existe : afficher la liste et exiger une confirmation pour créer quand même.",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -89,7 +89,7 @@
        "items": [
         {
          "title": "Bouton « Supprimer » + confirmation + raison",
-         "goal": "Suppression logique : statut ARCHIVED, raison obligatoire, audit ; le patient disparaît de la liste standard.",
+         "goal": "Suppression logique : statut « archivé », raison obligatoire, audit ; le patient disparaît de la liste standard.",
          "status": "disponible",
          "menu": "Soins › Patients › Modifier"
         }
@@ -125,7 +125,7 @@
        "items": [
         {
          "title": "Liste filtrable paginée",
-         "goal": "Afficher les réceptions avec statut ; filtre statut (Brouillon, Envoyé, Approuvé, Rejeté, Partiellement approuvé), pagination ; un compte INSURANCE ne voit que celles de sa compagnie.",
+         "goal": "Afficher les réceptions avec statut ; filtre statut (Brouillon, Envoyé, Approuvé, Rejeté, Partiellement approuvé), pagination ; un compte assureur ne voit que celles de sa compagnie.",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -140,7 +140,7 @@
        "items": [
         {
          "title": "Cartes « Demandes du jour, En attente, Acceptées, Rejetées »",
-         "goal": "Compter les réceptions du jour par statut (DRAFT, SENT, APPROVED, REJECTED).",
+         "goal": "Compter les réceptions du jour par statut (brouillon, envoyé, approuvé, rejeté).",
          "status": "disponible",
          "profiles": [
           "Administrateur"
@@ -154,7 +154,7 @@
        "items": [
         {
          "title": "Formulaire « Nouvelle réception »",
-         "goal": "Ouvrir un dossier d'accueil : patient, assurance (ou paiement direct), prestations avec médecin assigné, quantités, notes ; génère un code et un jeton assureur (48 h) et calcule le total ; sans assurance la réception est APPROVED d'office.",
+         "goal": "Ouvrir un dossier d'accueil : patient, assurance (ou paiement direct), prestations avec médecin assigné, quantités, notes ; génère un code et un jeton assureur (48 h) et calcule le total ; sans assurance la réception est approuvée d'office.",
          "status": "disponible",
          "profiles": [
           "Administrateur"
@@ -168,7 +168,7 @@
        "items": [
         {
          "title": "Règle des 15 jours",
-         "goal": "Mettre à 0 le prix d'une consultation si le patient a eu la même consultation dans les 15 derniers jours, et l'approuver automatiquement avec justification ; désactivable par =false.",
+         "goal": "Mettre à 0 le prix d'une consultation si le patient a eu la même consultation dans les 15 derniers jours, et l'approuver automatiquement avec justification ; désactivable.",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -183,7 +183,7 @@
        "items": [
         {
          "title": "Bouton « Envoyer » + confirmation",
-         "goal": "Passer la réception de DRAFT à SENT et envoyer un email à l'assureur avec le lien de validation (un échec d'email n'annule pas l'envoi).",
+         "goal": "Passer la réception de « brouillon » à « envoyé » et envoyer un email à l'assureur avec le lien de validation (un échec d'email n'annule pas l'envoi).",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -298,7 +298,7 @@
        "title": "Sélecteur de prestations par type",
        "items": [
         {
-         "title": "Composant PrestationSelector",
+         "title": "Sélecteur de prestations",
          "goal": "Choix de prestation avec types de prestations.",
          "status": "developpement",
          "profiles": [
@@ -329,7 +329,7 @@
        "items": [
         {
          "title": "Consultations en cours du médecin",
-         "goal": "Afficher au médecin ses consultations IN_PROGRESS (file « mes patients »)",
+         "goal": "Afficher au médecin ses consultations en cours (file « mes patients »)",
          "status": "disponible",
          "menu": "Soins › Consultation"
         },
@@ -379,7 +379,7 @@
        "items": [
         {
          "title": "Charger une consultation par identifiant",
-         "goal": "Rouvrir une consultation connue par son ID",
+         "goal": "Rouvrir une consultation connue par son identifiant",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -418,7 +418,7 @@
         },
         {
          "title": "Créer le dossier de consultation",
-         "goal": "Ouvrir une consultation IN_PROGRESS pour un patient, une spécialité et un médecin",
+         "goal": "Ouvrir une consultation en cours pour un patient, une spécialité et un médecin",
          "status": "disponible",
          "profiles": [
           "Administrateur"
@@ -449,7 +449,7 @@
         },
         {
          "title": "Enregistrer le dossier (mise à jour)",
-         "goal": "Mettre à jour le contenu déjà enregistré ; refusé si la consultation est COMPLETED",
+         "goal": "Mettre à jour le contenu déjà enregistré ; refusé si la consultation est terminée",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -469,7 +469,7 @@
         },
         {
          "title": "Clôturer la consultation",
-         "goal": "Passer la consultation à COMPLETED après enregistrement (idempotent)",
+         "goal": "Marquer la consultation comme terminée après enregistrement (sans effet si elle l'est déjà)",
          "status": "disponible",
          "profiles": [
           "Administrateur"
@@ -478,7 +478,7 @@
         },
         {
          "title": "Clôturer sans consultation",
-         "goal": "Annuler une consultation en cours (CANCELLED) pour sortir le patient de la file",
+         "goal": "Annuler une consultation en cours pour sortir le patient de la file",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -488,7 +488,7 @@
         },
         {
          "title": "Clôture automatique nocturne",
-         "goal": "Clôturer en COMPLETED les consultations IN_PROGRESS sans activité depuis plus de 48 h (job vers minuit, par cabinet)",
+         "goal": "Clôturer (statut « terminée ») les consultations en cours sans activité depuis plus de 48 h (traitement planifié vers minuit, par cabinet)",
          "status": "disponible"
         },
         {
@@ -640,7 +640,7 @@
        "items": [
         {
          "title": "Motif et histoire de la maladie",
-         "goal": "Saisir le motif et l'histoire dans un champ fusionné (enregistré dans chiefComplaint et hpi)",
+         "goal": "Saisir le motif et l'histoire dans un champ fusionné (enregistré comme motif et histoire de la maladie)",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -817,7 +817,7 @@
        "items": [
         {
          "title": "Lister les spécialités",
-         "goal": "Afficher les spécialités de consultation (actives, ou toutes avec includeInactive)",
+         "goal": "Afficher les spécialités de consultation (actives, ou toutes, y compris inactives)",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -830,7 +830,7 @@
         },
         {
          "title": "Créer une spécialité",
-         "goal": "Ajouter une spécialité (code technique MAJUSCULES + nom affiché)",
+         "goal": "Ajouter une spécialité (code technique en majuscules + nom affiché)",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -870,7 +870,7 @@
        "items": [
         {
          "title": "Lister les modèles (gestion)",
-         "goal": "Afficher toutes les versions de modèles (DRAFT, PUBLISHED, ARCHIVED) par spécialité",
+         "goal": "Afficher toutes les versions de modèles (brouillon, publié, archivé) par spécialité",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -946,7 +946,7 @@
         },
         {
          "title": "Aide « Un template définit le formulaire »",
-         "goal": "Aide contextuelle expliquant schemaJson et uiJson",
+         "goal": "Aide contextuelle expliquant la structure et l'affichage d'un modèle",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -998,7 +998,7 @@
        "items": [
         {
          "title": "Continuer un examen en cours",
-         "goal": "Rouvrir l'examen IN_PROGRESS pour saisie",
+         "goal": "Rouvrir l'examen en cours pour saisie",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -1020,7 +1020,7 @@
         },
         {
          "title": "Sauvegarder et terminer",
-         "goal": "Enregistrer puis passer l'examen en COMPLETED (démarrage automatique si nécessaire)",
+         "goal": "Enregistrer puis marquer l'examen comme terminé (démarrage automatique si nécessaire)",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -1127,7 +1127,7 @@
         },
         {
          "title": "Supprimer un modèle d'examen",
-         "goal": "Supprimer un modèle non utilisé",
+         "goal": "Supprimer un modèle non utilisé (refusé sinon)",
          "status": "disponible",
          "profiles": [
           "Administrateur"
@@ -1180,7 +1180,7 @@
         },
         {
          "title": "Lire un bulletin",
-         "goal": "Consulter un bulletin par ID",
+         "goal": "Consulter un bulletin par identifiant",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -1206,7 +1206,7 @@
         },
         {
          "title": "Changer le statut d'un bulletin",
-         "goal": "Faire évoluer PENDING, APPROVED, REJECTED, COMPLETED, CANCELLED selon les transitions autorisées",
+         "goal": "Faire évoluer le statut (en attente, approuvé, rejeté, terminé, annulé) selon les transitions autorisées",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -1267,7 +1267,7 @@
        "items": [
         {
          "title": "Choisir un patient",
-         "goal": "Rechercher et sélectionner un patient pour afficher son dossier (patientId en URL ou depuis la fiche patient)",
+         "goal": "Rechercher et sélectionner un patient pour afficher son dossier (ou ouvrir directement depuis la fiche patient)",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -1340,7 +1340,7 @@
         },
         {
          "title": "Supprimer un dossier (suppression logique)",
-         "goal": "Marquer un dossier supprimé (deletedAt)",
+         "goal": "Marquer un dossier comme supprimé (suppression logique)",
          "status": "disponible",
          "profiles": [
           "Administrateur"
@@ -1459,7 +1459,7 @@
         },
         {
          "title": "Examens terminés dans la liste",
-         "goal": "Afficher les examens COMPLETED du patient mélangés aux dossiers avec résultats",
+         "goal": "Afficher les examens terminés du patient mélangés aux dossiers avec résultats",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -1590,7 +1590,7 @@
        "title": "Choisir le patient depuis la file du jour",
        "items": [
         {
-         "title": "Composant FileDuJour",
+         "title": "File du jour",
          "goal": "Éviter de retaper un patient arrivé à l'accueil",
          "status": "disponible",
          "profiles": [
@@ -1620,7 +1620,7 @@
        "title": "Afficher le contexte patient",
        "items": [
         {
-         "title": "PatientContextBar (nom, âge, sexe, arrivée, « Changer patient », retour Accueil)",
+         "title": "Bandeau patient (nom, âge, sexe, arrivée, « Changer patient », retour Accueil)",
          "goal": "Dire à qui seront attribuées les mesures",
          "status": "disponible",
          "profiles": [
@@ -1753,7 +1753,7 @@
          "menu": "Soins › Dossiers médicaux › Ordonnance médicale"
         },
         {
-         "title": "Lire une ordonnance par ID",
+         "title": "Lire une ordonnance par identifiant",
          "goal": "Récupérer une ordonnance",
          "status": "developpement"
         },
@@ -1789,7 +1789,7 @@
          "menu": "Soins › Dossiers médicaux › Ordonnance médicale"
         },
         {
-         "title": "Gestionnaire de médicaments (MedicineManager)",
+         "title": "Gestionnaire de médicaments",
          "goal": "Composant de gestion de liste de médicaments",
          "status": "developpement"
         }
@@ -1877,7 +1877,7 @@
          "menu": "Soins › Dossiers médicaux › Ordonnance de vision"
         },
         {
-         "title": "Fenêtre VisionPrescriptionModal",
+         "title": "Fenêtre de l'ordonnance de lunettes",
          "goal": "Ancien conteneur modal de l'ordonnance de vision",
          "status": "developpement"
         }
@@ -1987,7 +1987,7 @@
        "items": [
         {
          "title": "Enregistrer une impression au guichet",
-         "goal": "Marquer le certificat imprimé",
+         "goal": "Marquer le certificat comme imprimé (avec compteur d'impressions)",
          "status": "disponible",
          "profiles": [
           "Médecin",
@@ -2066,7 +2066,7 @@
         },
         {
          "title": "Ajouter un médicament au catalogue",
-         "goal": "Créer un médicament saisi librement (code USR-hash) ; renvoie l'existant si le nom est déjà présent",
+         "goal": "Créer un médicament saisi librement ; renvoie l'existant si le nom est déjà présent",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -2115,7 +2115,7 @@
        "items": [
         {
          "title": "Rendez-vous d'un médecin sur une plage",
-         "goal": "Lister les rendez-vous actifs (SCHEDULED, CONFIRMED, IN_PROGRESS, RESCHEDULED) d'un médecin entre deux dates (62 jours max) avec heure de fin",
+         "goal": "Lister les rendez-vous actifs (planifié, confirmé, en cours, reporté) d'un médecin entre deux dates (62 jours max) avec heure de fin",
          "status": "disponible",
          "menu": "Agenda › Planning"
         },
@@ -2132,7 +2132,7 @@
         },
         {
          "title": "Replanifier / modifier un rendez-vous",
-         "goal": "Déplacer, changer la durée, les notes ou la prestation ; statut RESCHEDULED ; contrôle des conflits et des transitions",
+         "goal": "Déplacer, changer la durée, les notes ou la prestation ; statut « reporté » ; contrôle des conflits et des transitions",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -2143,7 +2143,7 @@
         },
         {
          "title": "Annuler un rendez-vous",
-         "goal": "Annulation logique (CANCELLED) ; un suivi annulé rouvre la consultation liée s'il n'y a pas d'autre suivi actif",
+         "goal": "Annulation logique (statut « annulé ») ; un suivi annulé rouvre la consultation liée s'il n'y a pas d'autre suivi actif",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -2154,7 +2154,7 @@
         },
         {
          "title": "Choisir médecin, patient et prestation",
-         "goal": "Sélectionner le médecin (recherche), le patient et la prestation (durée par défaut) avant de réserver ; médecin et patient passables par l'URL",
+         "goal": "Sélectionner le médecin (recherche), le patient et la prestation (durée par défaut) avant de réserver ; médecin et patient pouvant être préremplis",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -2179,7 +2179,7 @@
         },
         {
          "title": "Messages d'erreur traduits",
-         "goal": "Traduire les codes en français",
+         "goal": "Afficher les erreurs en français",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -2254,7 +2254,7 @@
         },
         {
          "title": "Statistiques et statuts",
-         "goal": "Afficher les statuts de rendez-vous via des étiquettes (SCHEDULED, CONFIRMED, IN_PROGRESS, RESCHEDULED, COMPLETED, CANCELLED, NO_SHOW)",
+         "goal": "Afficher les statuts de rendez-vous via des étiquettes (planifié, confirmé, en cours, reporté, terminé, annulé, absent)",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -2283,7 +2283,7 @@
        "items": [
         {
          "title": "Transitions de statut des rendez-vous",
-         "goal": "Interdire les transitions invalides (COMPLETED, CANCELLED, NO_SHOW sont terminaux)",
+         "goal": "Interdire les transitions invalides (terminé, annulé et absent sont des statuts finaux)",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -2298,7 +2298,7 @@
        "items": [
         {
          "title": "Horaires de travail du médecin",
-         "goal": "Respecter les plages actives du médecin (DoctorSchedule) pour accepter ou refuser un créneau",
+         "goal": "Respecter les plages actives du médecin pour accepter ou refuser un créneau",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -2418,8 +2418,8 @@
        "title": "Créer un compte assureur",
        "items": [
         {
-         "title": "Compte utilisateur INSURANCE rattaché",
-         "goal": "Créer un utilisateur de rôle INSURANCE lié à une compagnie active, avec mot de passe fourni ou temporaire généré.",
+         "title": "Compte utilisateur assureur rattaché",
+         "goal": "Créer un utilisateur de rôle assureur lié à une compagnie active, avec mot de passe fourni ou temporaire généré.",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -2433,8 +2433,8 @@
        "title": "Récupérer / créer « AUCUNE ASSURANCE »",
        "items": [
         {
-         "title": "Assurance spéciale NO_INS",
-         "goal": "Obtenir (ou créer) la compagnie système NO_INS pour les patients sans assurance.",
+         "title": "Assurance « sans assurance »",
+         "goal": "Obtenir (ou créer) la compagnie système « sans assurance » pour les patients sans assurance.",
          "status": "disponible"
         }
        ]
@@ -2451,7 +2451,7 @@
        "items": [
         {
          "title": "Bouton « Valider la demande »",
-         "goal": "Pour chaque prestation, approuver ou rejeter avec justification ; toutes les prestations doivent être traitées ; le statut devient APPROVED, REJECTED ou PARTIAL ; des notifications partent ensuite.",
+         "goal": "Pour chaque prestation, approuver ou rejeter avec justification ; toutes les prestations doivent être traitées ; le statut devient approuvé, rejeté ou partiellement approuvé ; des notifications partent ensuite.",
          "status": "disponible"
         }
        ]
@@ -2545,7 +2545,7 @@
        "items": [
         {
          "title": "Bouton « Téléverser » (photo)",
-         "goal": "Importer la photo (jpeg, png, webp ; 5 Mo) et mettre à jour photoUrl.",
+         "goal": "Importer la photo (jpeg, png, webp ; 5 Mo) et l'associer au profil du médecin.",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -2711,7 +2711,7 @@
        "title": "Modèles de consultation par spécialité",
        "items": [
         {
-         "title": "Onglet Modèles (schemaJson, uiJson, statut, version)",
+         "title": "Onglet Modèles (structure, affichage, statut, version)",
          "goal": "Créer des modèles de formulaire par spécialité (Brouillon, Publié, Archivé) avec aperçu ; détaillé dans le domaine Consultations.",
          "status": "disponible",
          "profiles": [
@@ -2797,7 +2797,7 @@
         },
         {
          "title": "Ouvrir la session",
-         "goal": "Créer une session de caisse OPEN pour la caissière connectée",
+         "goal": "Créer une session de caisse ouverte pour la caissière connectée",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -2817,7 +2817,7 @@
         },
         {
          "title": "Consulter la session courante",
-         "goal": "Récupérer la session OPEN du caissier connecté",
+         "goal": "Récupérer la session ouverte du caissier connecté",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -2951,8 +2951,8 @@
          "menu": "Argent › Caisse › Encaissement"
         },
         {
-         "title": "Méthodes CARD,, CHECK, à l'écran",
-         "goal": "Proposer les 4 autres méthodes dans l'écran d'encaissement (référence, banque, n° de chèque, 4 derniers chiffres de carte)",
+         "title": "Autres moyens de paiement à l'écran d'encaissement",
+         "goal": "Proposer les 4 autres moyens (carte, virement, chèque, paiement direct par l'assurance) dans l'écran d'encaissement (référence, banque, n° de chèque, 4 derniers chiffres de carte)",
          "status": "developpement",
          "profiles": [
           "Administrateur",
@@ -2961,8 +2961,8 @@
          "menu": "Argent › Caisse › Encaissement"
         },
         {
-         "title": "Mise à jour de paiement (schéma)",
-         "goal": "Schéma PaymentUpdateSchema défini (statut, notes)",
+         "title": "Mise à jour d'un paiement",
+         "goal": "Statut et notes modifiables sur un paiement",
          "status": "developpement"
         }
        ]
@@ -2992,7 +2992,7 @@
         },
         {
          "title": "Ajouter un mouvement manuel (hors prestation)",
-         "goal": "Enregistrer une entrée (IN) ou sortie (OUT) d'espèces ou de mobile money",
+         "goal": "Enregistrer une entrée ou une sortie d'espèces ou de mobile money",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -3057,7 +3057,7 @@
         },
         {
          "title": "Filtrer par période, méthode, statut",
-         "goal": "Appliquer des filtres avancés dans l'URL (« Appliquer »)",
+         "goal": "Appliquer des filtres avancés (« Appliquer »)",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -3192,7 +3192,7 @@
         },
         {
          "title": "Filtrer par période",
-         "goal": "Date de début / date de fin dans l'URL",
+         "goal": "Date de début / date de fin",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -3236,7 +3236,7 @@
         },
         {
          "title": "Marquer des prestations Facturé / Payé (en lot)",
-         "goal": "Passer des lignes en INVOICED (n° facture, date de facturation) ou PAID (date de paiement)",
+         "goal": "Marquer des lignes comme facturées (n° facture, date de facturation) ou payées (date de paiement)",
          "status": "disponible",
          "profiles": [
           "Administrateur"
@@ -3245,7 +3245,7 @@
         },
         {
          "title": "Changer le statut d'une prestation (unitaire)",
-         "goal": "Passer une prestation en INVOICED ou PAID",
+         "goal": "Marquer une prestation comme facturée ou payée",
          "status": "disponible",
          "profiles": [
           "Administrateur"
@@ -3254,7 +3254,7 @@
         },
         {
          "title": "Valider ou refuser le paiement (côté assureur)",
-         "goal": "L'utilisateur INSURANCE valide ou refuse le paiement de lignes ; l'objection est obligatoire en cas de refus",
+         "goal": "L'utilisateur assureur valide ou refuse le paiement de lignes ; l'objection est obligatoire en cas de refus",
          "status": "disponible",
          "profiles": [
           "Assureur"
@@ -3301,7 +3301,7 @@
         },
         {
          "title": "Approuver une prestation",
-         "goal": "Marquer insuranceApproved = true sur la prestation de réception",
+         "goal": "Marquer la prestation de réception comme approuvée par l'assurance",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -3651,8 +3651,8 @@
          "menu": "Finances › Comptabilité › Contrôles"
         },
         {
-         "title": "Contrôle",
-         "goal": "Encaissements sans écriture comptable (gravité high)",
+         "title": "Contrôle des encaissements sans écriture",
+         "goal": "Encaissements sans écriture comptable (gravité élevée)",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -3663,8 +3663,8 @@
          "menu": "Finances › Comptabilité › Contrôles"
         },
         {
-         "title": "Contrôle",
-         "goal": "Remboursements sans écriture comptable (gravité high)",
+         "title": "Contrôle des remboursements sans écriture",
+         "goal": "Remboursements sans écriture comptable (gravité élevée)",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -3675,8 +3675,8 @@
          "menu": "Finances › Comptabilité › Contrôles"
         },
         {
-         "title": "Contrôle",
-         "goal": "Écarts de caisse sans écriture comptable (gravité high)",
+         "title": "Contrôle des écarts de caisse sans écriture",
+         "goal": "Écarts de caisse sans écriture comptable (gravité élevée)",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -3687,8 +3687,8 @@
          "menu": "Finances › Comptabilité › Contrôles"
         },
         {
-         "title": "Contrôle",
-         "goal": "Honoraires médecins sans écriture comptable (gravité medium)",
+         "title": "Contrôle des honoraires sans écriture",
+         "goal": "Honoraires médecins sans écriture comptable (gravité moyenne)",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -3699,8 +3699,8 @@
          "menu": "Finances › Comptabilité › Contrôles"
         },
         {
-         "title": "Contrôle",
-         "goal": "Dépenses sans écriture comptable (gravité high)",
+         "title": "Contrôle des dépenses sans écriture",
+         "goal": "Dépenses sans écriture comptable (gravité élevée)",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -3711,8 +3711,8 @@
          "menu": "Finances › Comptabilité › Contrôles"
         },
         {
-         "title": "Contrôle",
-         "goal": "Dépenses approuvées par leur saisisseur (gravité high)",
+         "title": "Contrôle des dépenses approuvées par leur saisisseur",
+         "goal": "Dépenses approuvées par leur saisisseur (gravité élevée)",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -3723,8 +3723,8 @@
          "menu": "Finances › Comptabilité › Contrôles"
         },
         {
-         "title": "Contrôle",
-         "goal": "Dépenses en double suspectées (gravité medium)",
+         "title": "Contrôle des dépenses en double",
+         "goal": "Dépenses en double suspectées (gravité moyenne)",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -3735,8 +3735,8 @@
          "menu": "Finances › Comptabilité › Contrôles"
         },
         {
-         "title": "Contrôle",
-         "goal": "Dépenses approuvées non payées depuis plus de 60 jours (gravité info)",
+         "title": "Contrôle des dépenses approuvées non payées",
+         "goal": "Dépenses approuvées non payées depuis plus de 60 jours (gravité d'information)",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -3747,8 +3747,8 @@
          "menu": "Finances › Comptabilité › Contrôles"
         },
         {
-         "title": "Contrôle",
-         "goal": "Rapprochement dettes fournisseurs / compte 401 (gravité medium)",
+         "title": "Contrôle du rapprochement des dettes fournisseurs",
+         "goal": "Rapprochement dettes fournisseurs / compte 401 (gravité moyenne)",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -3759,8 +3759,8 @@
          "menu": "Finances › Comptabilité › Contrôles"
         },
         {
-         "title": "Contrôle",
-         "goal": "Écritures dont la pièce d'origine a disparu (gravité high)",
+         "title": "Contrôle des écritures orphelines",
+         "goal": "Écritures dont la pièce d'origine a disparu (gravité élevée)",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -3771,8 +3771,8 @@
          "menu": "Finances › Comptabilité › Contrôles"
         },
         {
-         "title": "Contrôle",
-         "goal": "Trous dans la numérotation du journal (gravité critical)",
+         "title": "Contrôle de la numérotation du journal",
+         "goal": "Trous dans la numérotation du journal (gravité critique)",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -3783,8 +3783,8 @@
          "menu": "Finances › Comptabilité › Contrôles"
         },
         {
-         "title": "Contrôle",
-         "goal": "Écritures déséquilibrées ou incomplètes (gravité critical)",
+         "title": "Contrôle des écritures déséquilibrées",
+         "goal": "Écritures déséquilibrées ou incomplètes (gravité critique)",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -3795,8 +3795,8 @@
          "menu": "Finances › Comptabilité › Contrôles"
         },
         {
-         "title": "Contrôle",
-         "goal": "Périodes clôturées modifiées depuis leur clôture (gravité critical)",
+         "title": "Contrôle de l'intégrité des périodes clôturées",
+         "goal": "Périodes clôturées modifiées depuis leur clôture (gravité critique)",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -3807,8 +3807,8 @@
          "menu": "Finances › Comptabilité › Contrôles"
         },
         {
-         "title": "Contrôle",
-         "goal": "Rapprochement encaissements / trésorerie comptable (gravité high)",
+         "title": "Contrôle du rapprochement de trésorerie",
+         "goal": "Rapprochement encaissements / trésorerie comptable (gravité élevée)",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -3819,8 +3819,8 @@
          "menu": "Finances › Comptabilité › Contrôles"
         },
         {
-         "title": "Contrôle",
-         "goal": "Remboursements sans séparation des tâches (gravité high)",
+         "title": "Contrôle des remboursements sans séparation des tâches",
+         "goal": "Remboursements sans séparation des tâches (gravité élevée)",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -3831,8 +3831,8 @@
          "menu": "Finances › Comptabilité › Contrôles"
         },
         {
-         "title": "Contrôle",
-         "goal": "Écritures contre-passées par leur auteur (gravité medium)",
+         "title": "Contrôle des contre-passations faites par leur auteur",
+         "goal": "Écritures contre-passées par leur auteur (gravité moyenne)",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -3843,8 +3843,8 @@
          "menu": "Finances › Comptabilité › Contrôles"
         },
         {
-         "title": "Contrôle",
-         "goal": "Paiements supprimés (gravité medium)",
+         "title": "Contrôle des paiements supprimés",
+         "goal": "Paiements supprimés (gravité moyenne)",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -3855,8 +3855,8 @@
          "menu": "Finances › Comptabilité › Contrôles"
         },
         {
-         "title": "Contrôle",
-         "goal": "Écarts de caisse à la clôture (gravité medium)",
+         "title": "Contrôle des écarts de caisse à la clôture",
+         "goal": "Écarts de caisse à la clôture (gravité moyenne)",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -3867,8 +3867,8 @@
          "menu": "Finances › Comptabilité › Contrôles"
         },
         {
-         "title": "Contrôle",
-         "goal": "Écarts de caisse faussés par la monnaie rendue (clôtures antérieures au correctif) (gravité high)",
+         "title": "Contrôle des écarts faussés par la monnaie rendue",
+         "goal": "Écarts de caisse faussés par la monnaie rendue (clôtures antérieures au correctif) (gravité élevée)",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -3879,8 +3879,8 @@
          "menu": "Finances › Comptabilité › Contrôles"
         },
         {
-         "title": "Contrôle",
-         "goal": "Caisses restées ouvertes (gravité medium)",
+         "title": "Contrôle des caisses restées ouvertes",
+         "goal": "Caisses restées ouvertes (gravité moyenne)",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -3891,8 +3891,8 @@
          "menu": "Finances › Comptabilité › Contrôles"
         },
         {
-         "title": "Contrôle",
-         "goal": "Encaissements hors horaires (gravité info)",
+         "title": "Contrôle des encaissements hors horaires",
+         "goal": "Encaissements hors horaires (gravité d'information)",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -3903,8 +3903,8 @@
          "menu": "Finances › Comptabilité › Contrôles"
         },
         {
-         "title": "Contrôle",
-         "goal": "Écritures manuelles (gravité info)",
+         "title": "Contrôle des écritures manuelles",
+         "goal": "Écritures manuelles (gravité d'information)",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -4016,7 +4016,7 @@
         },
         {
          "title": "Devise de la comptabilité",
-         "goal": "Lire la devise (défaut XOF)",
+         "goal": "Lire la devise (défaut : franc CFA)",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -4337,7 +4337,7 @@
         },
         {
          "title": "Modifier un brouillon",
-         "goal": "Modifier les champs tant que DRAFT",
+         "goal": "Modifier les champs tant qu'il est en brouillon",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -4369,7 +4369,7 @@
         },
         {
          "title": "Payer une dépense",
-         "goal": "Mode, date (pas antérieure à la dépense), référence",
+         "goal": "Mode (espèces, mobile money, carte, virement, chèque), date (pas antérieure à la dépense), référence",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -4400,7 +4400,7 @@
        "items": [
         {
          "title": "Masquage des actions selon le rôle",
-         "goal": "Masquer boutons d'écriture (ADMIN, COMPTA), d'approbation (ADMIN, OWNER, COMPTA, hors saisisseur) et de réouverture (ADMIN)",
+         "goal": "Masquer boutons d'écriture (administrateur, comptabilité), d'approbation (administrateur, direction, comptabilité, hors saisisseur) et de réouverture (administrateur)",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -4411,7 +4411,7 @@
          "menu": "Finances › Comptabilité"
         },
         {
-         "title": "Lecture seule pour OWNER et AUDITOR",
+         "title": "Lecture seule pour la direction et l'auditeur",
          "goal": "Consulter sans écrire",
          "status": "disponible",
          "profiles": [
@@ -4691,7 +4691,7 @@
        "title": "Gabarit commun des documents imprimés",
        "items": [
         {
-         "title": "printableDocument (en-tête, bandeau, titre + référence, cartes, corps, consigne, signature, pied)",
+         "title": "Document imprimable (en-tête, bandeau, titre + référence, cartes, corps, consigne, signature, pied)",
          "goal": "Donner la même apparence à tous les documents HTML remis au patient",
          "status": "disponible",
          "menu": "Documents imprimés"
@@ -4966,7 +4966,7 @@
        ]
       },
       {
-       "title": "Indicateurs ADMIN",
+       "title": "Indicateurs de l'administrateur",
        "items": [
         {
          "title": "8 cartes",
@@ -4980,7 +4980,7 @@
        ]
       },
       {
-       "title": "Widgets ADMIN",
+       "title": "Widgets de l'administrateur",
        "items": [
         {
          "title": "Notifications, rendez-vous, activité récente, tendance des recettes, consultations par médecin",
@@ -4994,7 +4994,7 @@
        ]
       },
       {
-       "title": "Indicateurs MÉDECIN",
+       "title": "Indicateurs du médecin",
        "items": [
         {
          "title": "4 cartes + files",
@@ -5008,7 +5008,7 @@
        ]
       },
       {
-       "title": "Indicateurs SECRÉTAIRE",
+       "title": "Indicateurs de la secrétaire",
        "items": [
         {
          "title": "4 cartes",
@@ -5022,11 +5022,11 @@
        ]
       },
       {
-       "title": "Indicateurs INFIRMIER / ORTHOPTISTE / TECHNICIEN LABO",
+       "title": "Indicateurs de l'infirmier, de l'orthoptiste et du technicien d'examens",
        "items": [
         {
          "title": "Cartes et file d'examens",
-         "goal": "NURSE : patients actifs, examens en attente, rendez-vous ; ORTHOPTIST et : examens en attente et file des examens.",
+         "goal": "Infirmier(ère) : patients actifs, examens en attente, rendez-vous ; orthoptiste et technicien d'examens : examens en attente et file des examens.",
          "status": "disponible",
          "profiles": [
           "Infirmier(ère)",
@@ -5038,7 +5038,7 @@
        ]
       },
       {
-       "title": "Indicateurs CAISSIÈRE",
+       "title": "Indicateurs du caissier",
        "items": [
         {
          "title": "4 cartes + paiements récents + factures à régler",
@@ -5052,7 +5052,7 @@
        ]
       },
       {
-       "title": "Indicateurs COMPTA",
+       "title": "Indicateurs de la comptabilité",
        "items": [
         {
          "title": "4 cartes + graphique",
@@ -5066,7 +5066,7 @@
        ]
       },
       {
-       "title": "Indicateurs PROPRIÉTAIRE",
+       "title": "Indicateurs de la direction",
        "items": [
         {
          "title": "7 cartes + 10 graphiques",
@@ -5080,7 +5080,7 @@
        ]
       },
       {
-       "title": "Indicateurs STAFF",
+       "title": "Indicateurs du personnel",
        "items": [
         {
          "title": "2 cartes",
@@ -5094,16 +5094,16 @@
        ]
       },
       {
-       "title": "Tableau de bord AUDITOR",
+       "title": "Tableau de bord de l'auditeur",
        "items": [
         {
          "title": "Aucun contenu",
-         "goal": "Le rôle AUDITOR a une configuration vide (aucune métrique, aucun widget) et n'a pas accès à la section Tableau de bord.",
+         "goal": "Le rôle d'auditeur a une configuration vide (aucune métrique, aucun widget) et n'a pas accès à la section Tableau de bord.",
          "status": "developpement",
          "profiles": [
           "Auditeur (lecture seule)"
          ],
-         "menu": "Tableau de bord (non visible pour AUDITOR)"
+         "menu": "Tableau de bord (non visible pour auditeur)"
         }
        ]
       }
@@ -5147,7 +5147,7 @@
        "items": [
         {
          "title": "Bouton « Exporter PDF » + aperçu",
-         "goal": "Générer un PDF (jsPDF) du détail avec aperçu d'impression.",
+         "goal": "Générer un PDF du détail avec aperçu d'impression.",
          "status": "disponible",
          "profiles": [
           "Direction"
@@ -5169,22 +5169,6 @@
         {
          "title": "5 questions suggérées",
          "goal": "Lancer une question prédéfinie (CA par médecin, évolution des consultations, encaissements par mode, 10 patients les plus actifs, factures assurance par compagnie).",
-         "status": "disponible",
-         "profiles": [
-          "Administrateur",
-          "Direction",
-          "Comptabilité"
-         ],
-         "menu": "Analyse IA"
-        }
-       ]
-      },
-      {
-       "title": "Assistant non configuré",
-       "items": [
-        {
-         "title": "Message sans",
-         "goal": "Sans clé côté backend, l'assistant répond qu'il n'est pas configuré.",
          "status": "disponible",
          "profiles": [
           "Administrateur",
@@ -5229,7 +5213,7 @@
        "items": [
         {
          "title": "Liste annexe",
-         "goal": "Choisir la compagnie d'un compte INSURANCE",
+         "goal": "Choisir la compagnie d'un compte assureur",
          "status": "disponible",
          "profiles": [
           "Administrateur"
@@ -5347,7 +5331,7 @@
        "title": "Purge de l'audit ancien",
        "items": [
         {
-         "title": "cleanupOldAuditTrails (plus d'un an)",
+         "title": "Purge du journal d'audit ancien (plus d'un an)",
          "goal": "Conserver l'audit un temps limité",
          "status": "developpement"
         }
@@ -5364,7 +5348,7 @@
        "title": "Paramètres système et conservation des données",
        "items": [
         {
-         "title": "Politiques de conservation (DataRetentionPolicy) créées à l'amorçage",
+         "title": "Politiques de conservation des données",
          "goal": "Régler la conservation des données",
          "status": "developpement",
          "profiles": [

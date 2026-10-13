@@ -7,9 +7,9 @@ import { PageHero } from "@/components/page-hero";
 import { faqGroups } from "@/lib/faq";
 import { pageMetadata } from "@/lib/seo";
 
-const description = "Tarifs, packs, essai gratuit, assurances, caisse, comptabilité : les réponses aux questions fréquentes sur le logiciel de gestion de clinique CliniquePro.";
+const description = "Réponses sur CliniquePro : packs, prise en charge assurance, caisse, saisie hors ligne, hébergement des données, formation et démonstration.";
 
-export const metadata: Metadata = pageMetadata({ title: "FAQ : packs, assurances, caisse et comptabilité", description, path: "/faq" });
+export const metadata: Metadata = pageMetadata({ title: "FAQ : assurance, caisse, hors ligne et tarifs", description, path: "/faq" });
 
 export default function FaqPage() {
   return (
@@ -20,7 +20,7 @@ export default function FaqPage() {
       <BreadcrumbJsonLd trail={[{ name: "FAQ", path: "/faq" }]} />
       <main className="bg-paper">
         <PageHero eyebrow="FAQ" title="Vos questions sur CliniquePro">
-          Packs, fonctionnalités, sécurité, démarrage : les réponses aux questions les plus fréquentes.
+          Structures concernées, spécialités, hors connexion, hébergement, assurance, caisse, tarifs, mise en route et ce que CliniquePro ne fait pas : les réponses aux questions les plus fréquentes.
         </PageHero>
         <div className="mx-auto max-w-3xl px-5 py-16">
           <FaqList groups={faqGroups} />
