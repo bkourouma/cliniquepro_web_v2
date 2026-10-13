@@ -15,6 +15,15 @@ export function absoluteUrl(path = "/") {
   return path === "/" ? SITE_URL : `${SITE_URL}${path}`;
 }
 
+// Mesure d'audience : Umami, hébergé par Alliance Consultants (sans cookie, sans adresse IP conservée). L'identifiant du site
+// est public (il figure dans le HTML servi) ; `domains` limite le comptage au vrai site : ni le développement local ni un aperçu
+// ne gonflent les chiffres. Si le site change d'adresse, `domains` doit changer avec elle (sinon plus rien n'est compté).
+export const analytics = {
+  scriptUrl: "https://analytics.allianceconsultants.net/script.js",
+  websiteId: "a6623f9b-ed4b-4dc8-816e-32c25460f57d",
+  domains: "cliniquepro-web.allianceconsultants.net",
+};
+
 export const contact = {
   phone: "+225 01 01 51 01 36",
   phoneHref: "tel:+2250101510136",
