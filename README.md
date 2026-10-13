@@ -56,7 +56,7 @@ Copiez `.env.example` en `.env.local` :
 | `NEXT_PUBLIC_SITE_URL` | Adresse publique du site (sitemap, données structurées). |
 | `NEXT_PUBLIC_APP_URL` | Lien du bouton « Connexion ». |
 | `NEXT_PUBLIC_BOOKING_URL` | Lien Calendly (par défaut `https://calendly.com/immotopia/demo-cliniquepro`). Rempli : la fenêtre de démo affiche le calendrier. Vide : formulaire intégré. |
-| `N8N_WEBHOOK_URL` | Webhook (n8n, Zapier, Make…) qui reçoit le formulaire intégré. Lu côté serveur uniquement. |
+| `N8N_WEBHOOK_URL` | Webhook (n8n, Zapier, Make…) qui reçoit le formulaire intégré. Lu côté serveur uniquement, à chaque requête. **Sans webhook, le formulaire est masqué** (la fenêtre de démo propose l'e-mail, WhatsApp et le téléphone) et `POST /api/lead` répond 503. |
 
 ## Images
 

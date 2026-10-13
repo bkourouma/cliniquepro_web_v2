@@ -1,12 +1,14 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { CalendarCheck, Loader2, X } from "lucide-react";
+import { CalendarCheck, Loader2, Mail, MessageCircle, Phone, X } from "lucide-react";
 import { useEffect, useRef, useState, type FormEvent } from "react";
+import { contact, whatsappLink } from "@/lib/site";
 import { BookingFrame, Thanks } from "./booking-frame";
 
 // Lien public de réservation Calendly ou Cal.com (ex. https://calendly.com/cliniquepro).
-// S'il est absent, un formulaire de qualification intégré est affiché à la place.
+// S'il est absent, un formulaire de qualification intégré est affiché à la place, à condition que le serveur ait un webhook
+// pour le recevoir (N8N_WEBHOOK_URL) ; sinon, on propose seulement l'e-mail, WhatsApp et le téléphone.
 const BOOKING_URL = process.env.NEXT_PUBLIC_BOOKING_URL;
 
 export function DemoModal({ open, onClose }: { open: boolean; onClose: () => void }) {
@@ -66,7 +68,7 @@ export function DemoModal({ open, onClose }: { open: boolean; onClose: () => voi
               {BOOKING_URL ? (
                 <BookingFrame url={BOOKING_URL} onDone={onClose} />
               ) : (
-                <LeadForm onDone={onClose} />
+                <LeadOrContact onDone={onClose} />
               )}
             </div>
           </motion.div>
@@ -103,7 +105,60 @@ const roles: Option[] = [
   { value: "Autre" },
 ];
 
-function LeadForm({ onDone }: { onDone: () => void }) {
+// Le serveur dit à l'exécution si le formulaire peut recevoir des demandes (GET /api/lead). En cas de doute (réponse
+// absente ou en erreur), on choisit la voie sûre : les coordonnées, jamais un formulaire qui perdrait la demande.
+function LeadOrContact({ onDone }: { onDone: () => void }) {
+  const [formulaire, setFormulaire] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    let annule = false;
+    fetch("/api/lead", { cache: "no-store" })
+      .then((res) => (res.ok ? res.json() : { formulaire: false }))
+      .then((data) => !annule && setFormulaire(data?.formulaire === true))
+      .catch(() => !annule && setFormulaire(false));
+    return () => {
+      annule = true;
+    };
+  }, []);
+
+  if (formulaire === null) return <div className="h-72 animate-pulse bg-white/5" aria-busy="true" />;
+  return formulaire ? <LeadForm onDone={onDone} onUnavailable={() => setFormulaire(false)} /> : <ContactOptions />;
+}
+
+function ContactOptions() {
+  const options = [
+    { icon: MessageCircle, label: "WhatsApp", value: "Écrire sur WhatsApp", href: whatsappLink() },
+    { icon: Mail, label: "E-mail", value: contact.email, href: `mailto:${contact.email}` },
+    { icon: Phone, label: "Téléphone", value: contact.phone, href: contact.phoneHref },
+  ];
+  return (
+    <div className="p-6">
+      <p className="text-white/75">
+        Dites-nous votre nom, le nom de votre clinique et vos disponibilités : un expert CliniquePro vous recontacte sous 24 h ouvrées
+        pour fixer votre démonstration.
+      </p>
+      <div className="mt-5 grid gap-3 sm:grid-cols-3">
+        {options.map(({ icon: Icon, label, value, href }) => (
+          <a
+            key={label}
+            href={href}
+            className="flex flex-col gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 transition hover:bg-white/10"
+          >
+            <span className="grid size-10 place-items-center rounded-xl bg-gradient-to-br from-brand-500 to-leaf-500">
+              <Icon className="size-5" />
+            </span>
+            <span>
+              <span className="block text-xs font-semibold tracking-wide text-white/50 uppercase">{label}</span>
+              <span className="block font-semibold break-all">{value}</span>
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function LeadForm({ onDone, onUnavailable }: { onDone: () => void; onUnavailable: () => void }) {
   const [state, setState] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
   async function submit(e: FormEvent<HTMLFormElement>) {
@@ -116,6 +171,8 @@ function LeadForm({ onDone }: { onDone: () => void }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
+      // 503 : le webhook a disparu entre l'affichage et l'envoi, on bascule sur les coordonnées
+      if (res.status === 503) return onUnavailable();
       setState(res.ok ? "sent" : "error");
     } catch {
       setState("error");
