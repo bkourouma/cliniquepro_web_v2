@@ -1,0 +1,57 @@
+# Intégration continue du site vitrine CliniquePro (https://cliniquepro-web.allianceconsultants.net),
+# sur le modèle de celle du site ImmoTopia.
+# Aucun secret : le formulaire lit N8N_WEBHOOK_URL à l'exécution et les variables NEXT_PUBLIC_*
+# ont des valeurs par défaut dans le code, le build n'a donc besoin de rien.
+# Pas de tests automatisés dans ce projet (pas de script « test ») : types, lint et build.
+#
+# Ce workflow tourne sur chaque pull request, et il est aussi appelé par
+# deploy.yml (workflow_call) à chaque poussée sur main : les vérifications
+# passent donc toujours avant un déploiement, sans être jouées deux fois.
+name: CI
+
+on:
+  pull_request:
+  workflow_call:
+
+# Une PR mise à jour annule sa vérification précédente. Appelé par deploy.yml,
+# le workflow ne s'annule jamais (la concurrence du déploiement s'en charge).
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Vérifications
+    runs-on: ubuntu-latest
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      # Même version majeure que l'image de production (Dockerfile : node:24-alpine).
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+
+      # « npm install » plutôt que « npm ci », comme le Dockerfile : un lockfile généré
+      # sous Windows peut omettre des dépendances optionnelles propres à Linux.
+      - name: Installer les dépendances
+        run: npm install --no-audit --no-fund
+
+      # Sur un checkout neuf, tsc échoue sans les types de routes de Next 16
+      # (PageProps, LayoutProps), générés et ignorés par git.
+      - name: Générer les types de routes
+        run: npx next typegen
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build

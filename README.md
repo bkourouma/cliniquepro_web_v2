@@ -55,8 +55,46 @@ Le logo est dans `public/images/logo/`. Les cartes du carrousel acceptent une ph
 (`image` dans `src/lib/content.ts`, format 3:4, à déposer dans `public/images/hero/`) ; sans photo, un fond dégradé est affiché.
 Les prompts pour générer ces images sont dans `docs/PROMPTS-CONTENU.md`.
 
-## Déploiement
+## Déploiement (serveur `alliance`)
 
-```bash
-docker compose up -d --build   # écoute sur 127.0.0.1:3030, à placer derrière nginx
-```
+Le site tourne dans le conteneur Docker `cliniquepro-site` (image `cliniquepro-site:latest`, port local `127.0.0.1:3030`),
+derrière nginx (`/etc/nginx/sites-available/cliniquepro-web.allianceconsultants.net`). Dossier sur le serveur :
+`/home/deployer/apps/cliniquepro-web-v2` (utilisateur `deployer`).
+
+### Déploiement automatique (procédure normale)
+
+Chaque fusion d'une pull request dans la branche `main` (branche par défaut) déploie le site :
+
+1. `.github/workflows/deploy.yml` lance d'abord les vérifications de `ci.yml` (types, lint, build) sur GitHub.
+   Les mêmes vérifications tournent sur chaque pull request ;
+2. si elles passent, le job « Déployer sur alliance » tourne sur le runner auto-hébergé `cliniquepro-site`
+   (utilisateur `deployer`, service systemd `actions.runner.bkourouma-cliniquepro_web_v2.cliniquepro-site-runner`) :
+   il garde l'image actuelle sous l'étiquette `cliniquepro-site:avant-ci-<date>-<commit>`, synchronise le code dans
+   `/home/deployer/apps/cliniquepro-web-v2` (`rsync`, sans toucher à un éventuel `.env` ni au dépôt `.git` du dossier),
+   lance `docker compose up -d --build`, puis vérifie `http://127.0.0.1:3030/robots.txt` et `/`
+   (30 tentatives, 5 s d'écart) ;
+3. si le contrôle de santé échoue, le job remet automatiquement l'image précédente et se termine en échec (visible
+   dans l'onglet Actions). Si la construction elle-même échoue, l'ancien conteneur reste en service.
+
+Un seul déploiement à la fois (`concurrency`). On peut aussi relancer un déploiement sans nouveau commit :
+onglet Actions, « Déploiement », « Run workflow », branche `main`. Aucun secret GitHub n'est nécessaire.
+
+Les variables d'environnement du conteneur (`N8N_WEBHOOK_URL`, `NEXT_PUBLIC_*`) viennent de `docker-compose.yml`
+(valeurs par défaut) ou d'un `.env` placé dans le dossier du serveur ; il n'y en a pas aujourd'hui.
+
+### Retour arrière et secours manuel
+
+- Retour arrière automatique : voir ci-dessus (contrôle de santé en échec).
+- Retour arrière à la main sur une version précédente (sur le serveur, utilisateur `deployer`) :
+  `docker image ls cliniquepro-site` pour repérer l'étiquette `avant-ci-…`, puis
+  `docker tag cliniquepro-site:avant-ci-… cliniquepro-site:latest && cd ~/apps/cliniquepro-web-v2 && docker compose up -d --no-build`.
+  (Le dossier du serveur contient le code déployé en dernier : un redéploiement du `main` précédent via
+  « Run workflow » sur le bon commit est l'autre voie.)
+- Secours si GitHub Actions est indisponible : copier le dépôt dans le dossier du serveur puis
+  `docker compose up -d --build`.
+
+### Installation du runner
+
+`deploy/install-runner.sh` (une seule fois, en une connexion SSH ; le jeton vient de
+`gh api -X POST repos/bkourouma/cliniquepro_web_v2/actions/runners/registration-token --jq .token`).
+Le runner `cliniquepro-site-runner` est installé dans `~/actions-runner-cliniquepro-site`, avec le label `cliniquepro-site`.
