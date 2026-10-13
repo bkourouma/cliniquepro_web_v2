@@ -15,7 +15,7 @@ Ce document liste **ce qui n'y figure pas** et donne, pour chaque point, un prom
 - Prix affichés **hors taxes** ; **premier mois offert, sans engagement** ; aucune limite d'utilisateurs, de médecins ou de patients annoncée.
 - FAQ : sauvegarde automatique quotidienne (affirmée par vous : le code ne contient aujourd'hui qu'une sauvegarde manuelle, la sauvegarde nocturne y est seulement prévue — à garder vraie), récupération des données à la fin du contrat sur demande, utilisation mobile/tablette.
 - Photos du carrousel : vous les créez une par une avec les prompts de la section 2.
-- Contact et éditeur repris de immotopia.cloud (Alliance Consultants, RCCM, compte contribuable, hébergeur Hostinger, téléphone, e-mail `support@immotopia.cloud`). Mentions légales et confidentialité calquées sur celles d'ImmoTopia.
+- Contact et éditeur repris de immotopia.cloud (Alliance Consultants, RCCM, compte contribuable, hébergeur Hostinger, téléphone, e-mail, depuis remplacé par `cliniquepro@allianceconsultants.net`). Mentions légales et confidentialité calquées sur celles d'ImmoTopia.
 - Domaine du site : `https://cliniquepro-web.allianceconsultants.net`. Connexion à l'application : `https://cliniquepro.allianceconsultants.net/demo-login`.
 - Remise de combinaison de 10 % et découpage des modules entre les deux packs : **confirmés**.
 - Réservation de démo : même principe qu'ImmoTopia (calendrier Calendly dans la fenêtre « Demander une démo », via `NEXT_PUBLIC_BOOKING_URL`). Lien Calendly : `https://calendly.com/immotopia/demo-cliniquepro` (valeur par défaut de `NEXT_PUBLIC_BOOKING_URL`).
@@ -51,7 +51,7 @@ N'invente rien : si le code ne permet pas de trancher, écris « à décider ».
 
 ## 1. Informations légales et coordonnées
 
-Renseignées dans `src/lib/site.ts` à partir de immotopia.cloud. Reste à décider : un numéro WhatsApp / une adresse e-mail dédiés à CliniquePro (actuellement ceux d'ImmoTopia), un lien Calendly (`NEXT_PUBLIC_BOOKING_URL`) et le webhook de réception des demandes (`N8N_WEBHOOK_URL`).
+Renseignées dans `src/lib/site.ts` à partir de immotopia.cloud. L'adresse e-mail est désormais dédiée à CliniquePro (`cliniquepro@allianceconsultants.net`). Reste à décider : un numéro WhatsApp dédié (actuellement celui d'ImmoTopia), un lien Calendly (`NEXT_PUBLIC_BOOKING_URL`) et le webhook de réception des demandes (`N8N_WEBHOOK_URL`).
 
 ---
 

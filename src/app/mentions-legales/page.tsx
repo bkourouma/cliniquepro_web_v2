@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { LegalPage } from "@/components/legal-page";
+import { pageMetadata } from "@/lib/seo";
 import { contact, legal, SITE_URL } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Mentions légales — CliniquePro",
-  description: "Éditeur, hébergeur et conditions d'utilisation du site CliniquePro.",
-  alternates: { canonical: "/mentions-legales" },
-};
+export const metadata: Metadata = pageMetadata({ title: "Mentions légales", description: "Éditeur, hébergeur et conditions d'utilisation du site CliniquePro.", path: "/mentions-legales" });
 
 export default function MentionsLegalesPage() {
   return (

@@ -3,16 +3,16 @@ import { Check } from "lucide-react";
 import Link from "next/link";
 import { DemoButton } from "@/components/demo-button";
 import { FinalCta } from "@/components/final-cta";
+import { BreadcrumbJsonLd, WebPageJsonLd } from "@/components/json-ld";
 import { Navbar } from "@/components/navbar";
 import { PageHero } from "@/components/page-hero";
 import { Reveal } from "@/components/ui";
 import { features, scopeLabel, type ModuleScope } from "@/lib/features";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Fonctionnalités — CliniquePro",
-  description: "Patients, agenda, réception, consultations, examens, ordonnances, assurances, facturation, caisse, honoraires et comptabilité : tous les modules de CliniquePro.",
-  alternates: { canonical: "/fonctionnalites" },
-};
+const description = `Patients, agenda, réception, consultations, examens, ordonnances, assurances, facturation, caisse, honoraires et comptabilité : les ${features.length} modules du logiciel de clinique ophtalmologique CliniquePro.`;
+
+export const metadata: Metadata = pageMetadata({ title: "Fonctionnalités du logiciel de clinique ophtalmologique", description, path: "/fonctionnalites" });
 
 const scopeStyle: Record<ModuleScope, string> = {
   operationnel: "bg-brand-500/10 text-brand-600",
@@ -26,6 +26,8 @@ export default function FonctionnalitesPage() {
   return (
     <>
       <Navbar />
+      <WebPageJsonLd path="/fonctionnalites" name="Fonctionnalités de CliniquePro" description={description} />
+      <BreadcrumbJsonLd trail={[{ name: "Fonctionnalités", path: "/fonctionnalites" }]} />
       <main className="bg-paper">
         <PageHero eyebrow="Fonctionnalités" title={<>Tous les modules, <span className="text-gradient">de l&apos;accueil au bilan.</span></>}>
           Chaque module précise le pack qui le couvre : Gestion opérationnelle, Gestion financière et comptable, ou socle commun aux deux.

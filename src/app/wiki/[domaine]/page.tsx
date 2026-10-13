@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FinalCta } from "@/components/final-cta";
+import { BreadcrumbJsonLd, WebPageJsonLd } from "@/components/json-ld";
 import { Navbar } from "@/components/navbar";
 import { PageHero } from "@/components/page-hero";
 import { scopeLabel } from "@/lib/features";
-import { countItems, domainBySlug, wikiDomains } from "@/lib/wiki";
+import { pageMetadata } from "@/lib/seo";
+import { countItems, domainBySlug, wikiDomains, WIKI_UPDATED_ISO, WIKI_UPDATED_ON } from "@/lib/wiki";
 
 export function generateStaticParams() {
   return wikiDomains.map((d) => ({ domaine: d.slug }));
@@ -15,7 +17,7 @@ export async function generateMetadata({ params }: PageProps<"/wiki/[domaine]">)
   const { domaine } = await params;
   const d = domainBySlug(domaine);
   if (!d) return {};
-  return { title: `${d.title} — Wiki CliniquePro`, description: `${d.summary} ${countItems(d)} actions détaillées.`, alternates: { canonical: `/wiki/${d.slug}` } };
+  return pageMetadata({ title: `${d.title} : wiki des fonctionnalités`, description: `${d.summary} ${countItems(d)} actions détaillées du logiciel CliniquePro.`, path: `/wiki/${d.slug}` });
 }
 
 export default async function WikiDomainPage({ params }: PageProps<"/wiki/[domaine]">) {
@@ -26,9 +28,17 @@ export default async function WikiDomainPage({ params }: PageProps<"/wiki/[domai
   return (
     <>
       <Navbar />
+      <WebPageJsonLd path={`/wiki/${d.slug}`} name={`${d.title} : wiki CliniquePro`} description={d.summary} dateModified={WIKI_UPDATED_ISO} />
+      <BreadcrumbJsonLd
+        trail={[
+          { name: "Wiki des fonctionnalités", path: "/wiki" },
+          { name: d.title, path: `/wiki/${d.slug}` },
+        ]}
+      />
       <main className="bg-paper">
         <PageHero eyebrow={scopeLabel[d.pack]} title={d.title}>
           {d.summary}
+          <span className="mt-2 block text-sm text-white/45">Mise à jour : {WIKI_UPDATED_ON}</span>
         </PageHero>
         <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 lg:grid-cols-[240px_1fr]">
           <aside className="lg:sticky lg:top-24 lg:self-start">
@@ -55,7 +65,7 @@ export default async function WikiDomainPage({ params }: PageProps<"/wiki/[domai
                   {m.features.map((f) => (
                     <details key={f.title} className="group rounded-[22px] border border-ink-900/[0.07] bg-white p-6 shadow-sm" open={m.features.length === 1}>
                       <summary className="cursor-pointer list-none marker:hidden">
-                        <span className="flex items-center justify-between gap-4 font-display text-xl font-bold">
+                        <h3 className="flex items-center justify-between gap-4 font-display text-xl font-bold">
                           {f.title}
                           <span className="flex shrink-0 items-center gap-3 text-sm font-medium text-ink-900/50">
                             {f.items.length} action{f.items.length > 1 ? "s" : ""}
@@ -63,7 +73,7 @@ export default async function WikiDomainPage({ params }: PageProps<"/wiki/[domai
                               +
                             </span>
                           </span>
-                        </span>
+                        </h3>
                       </summary>
                       <ul className="mt-5 space-y-4">
                         {f.items.map((it, i) => (

@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { LegalPage } from "@/components/legal-page";
+import { pageMetadata } from "@/lib/seo";
 import { contact, legal } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Confidentialité — CliniquePro",
+export const metadata: Metadata = pageMetadata({
+  title: "Confidentialité",
   description: "Données collectées, finalités, durée de conservation et droits des personnes sur le site CliniquePro.",
-  alternates: { canonical: "/confidentialite" },
-};
+  path: "/confidentialite",
+});
 
 export default function ConfidentialitePage() {
   return (

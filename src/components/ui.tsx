@@ -97,6 +97,8 @@ export function Logo({ className = "", onLight = false, large = false }: { class
       alt="CliniquePro"
       width={1970}
       height={480}
+      // Affiché à ~150 px (230 px en grand) : sans « sizes », Next servait la version 2 048 px (91 Ko pour 6 Ko utiles)
+      sizes={large ? "240px" : "160px"}
       priority={!large}
       className={`w-auto shrink-0 ${large ? "h-14" : "h-9"} ${className}`}
     />
