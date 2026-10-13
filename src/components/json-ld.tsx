@@ -1,9 +1,12 @@
-import { absoluteUrl, contact, legal, SITE_NAME, SITE_UPDATED, SITE_URL, social } from "@/lib/site";
+import { absoluteUrl, contact, legal, SITE_NAME, SITE_URL, social } from "@/lib/site";
+import { pageUpdated } from "@/lib/dates";
 import { features } from "@/lib/features";
 import { packs } from "@/lib/pricing";
 import { faqGroups } from "@/lib/faq";
+import { AUDIENCE, EXTRA_CAPABILITIES, SOFTWARE_CATEGORY, SOFTWARE_DESCRIPTION } from "@/lib/positionnement";
 
 const ORGANIZATION_ID = `${SITE_URL}/#organization`;
+const PUBLISHER_ID = `${SITE_URL}/#publisher`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
 const SOFTWARE_ID = `${SITE_URL}/#software`;
 
@@ -11,6 +14,15 @@ const SOFTWARE_ID = `${SITE_URL}/#software`;
 function JsonLd({ data }: { data: Record<string, unknown> }) {
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }} />;
 }
+
+/** Adresse postale d'Alliance Consultants, telle que publiée sur allianceconsultants.net (ville et pays ; rue seulement si site.ts en contient une). */
+const postalAddress = {
+  "@type": "PostalAddress",
+  ...(contact.address.streetAddress ? { streetAddress: contact.address.streetAddress } : {}),
+  addressLocality: contact.address.locality,
+  ...(contact.address.postalCode ? { postalCode: contact.address.postalCode } : {}),
+  addressCountry: contact.address.country,
+};
 
 /** Organisation et site, déclarés une fois pour toutes dans le layout (les autres blocs s'y réfèrent par @id). */
 export function SiteJsonLd() {
@@ -25,12 +37,23 @@ export function SiteJsonLd() {
             name: SITE_NAME,
             url: SITE_URL,
             logo: `${SITE_URL}/images/logo/logo-cliniquepro.png`,
-            description: "Éditeur du logiciel web de gestion de clinique ophtalmologique CliniquePro.",
-            address: { "@type": "PostalAddress", addressLocality: "Abidjan", addressCountry: "CI" },
-            parentOrganization: { "@type": "Organization", name: legal.publisher, url: legal.publisherSite },
+            description: `CliniquePro est un logiciel web de gestion pour ${AUDIENCE}, édité par ${legal.publisher} à Abidjan (Côte d'Ivoire).`,
+            address: postalAddress,
+            parentOrganization: { "@id": PUBLISHER_ID },
             areaServed: "CI",
             sameAs: [social.facebook],
             contactPoint: { "@type": "ContactPoint", telephone: contact.phone, email: contact.email, contactType: "sales", areaServed: "CI", availableLanguage: "fr" },
+          },
+          {
+            // L'éditeur : mêmes coordonnées que sur allianceconsultants.net. Pas de « LocalBusiness » : aucune rue ni
+            // horaire d'ouverture publics (la fiche locale supposerait un bureau ouvert au public).
+            "@type": "Organization",
+            "@id": PUBLISHER_ID,
+            name: legal.publisher,
+            url: legal.publisherSite,
+            address: postalAddress,
+            areaServed: "CI",
+            brand: { "@id": ORGANIZATION_ID },
           },
           { "@type": "WebSite", "@id": WEBSITE_ID, url: SITE_URL, name: SITE_NAME, inLanguage: "fr", publisher: { "@id": ORGANIZATION_ID } },
         ],
@@ -50,12 +73,12 @@ export function SoftwareJsonLd() {
         name: SITE_NAME,
         url: SITE_URL,
         applicationCategory: "BusinessApplication",
-        applicationSubCategory: "Logiciel de gestion de clinique ophtalmologique",
+        applicationSubCategory: SOFTWARE_CATEGORY,
         operatingSystem: "Web",
         inLanguage: "fr",
-        description:
-          "Application web de gestion de clinique ophtalmologique : patients, rendez-vous, consultations, examens, assurances, facturation, caisse, honoraires médecins et comptabilité.",
-        featureList: features.map((f) => f.title),
+        description: SOFTWARE_DESCRIPTION,
+        audience: { "@type": "BusinessAudience", audienceType: AUDIENCE },
+        featureList: [...features.map((f) => f.title), ...EXTRA_CAPABILITIES],
         publisher: { "@id": ORGANIZATION_ID },
         offers: packs.map((p) => ({
           "@type": "Offer",
@@ -97,7 +120,7 @@ export function WebPageJsonLd({
   path,
   name,
   description,
-  dateModified = SITE_UPDATED,
+  dateModified,
   type = "WebPage",
 }: {
   path: string;
@@ -116,7 +139,7 @@ export function WebPageJsonLd({
         name,
         description,
         inLanguage: "fr",
-        dateModified,
+        dateModified: dateModified ?? pageUpdated(path),
         isPartOf: { "@id": WEBSITE_ID },
         about: { "@id": SOFTWARE_ID },
       }}

@@ -23,12 +23,12 @@ export const packs: Pack[] = [
     monthly: 25_000,
     tagline: "Tout ce qui fait tourner la clinique au quotidien.",
     highlights: [
-      "Dossiers patients et dossier médical ophtalmologique",
+      "Dossiers patients et dossier médical, toutes spécialités",
       "Agenda partagé, rendez-vous et disponibilités médecins",
       "Réception, prestations du jour et prise en charge assurance",
-      "Consultations structurées avec modèles par spécialité",
-      "Examens (OCT, champ visuel, fond d'œil…) et rapports",
-      "Ordonnances, ordonnances de lunettes, bulletins d'examens",
+      "Consultations structurées avec modèles paramétrables par spécialité",
+      "Examens, résultats et rapports (modules d'ophtalmologie inclus)",
+      "Ordonnances, bulletins d'examens (et ordonnances de lunettes)",
     ],
   },
   {
@@ -60,4 +60,4 @@ export function comboPrice(selected: Pack[]) {
 }
 
 export const pricingNote =
-  "Prix hors taxes, en FCFA par mois. Premier mois offert sur tous les packs, sans engagement. Les deux packs sont complémentaires : souscrits ensemble, −10 % sur le moins cher. Demandez une démonstration pour valider le périmètre adapté à votre clinique.";
+  "Prix hors taxes, en FCFA par mois. Premier mois offert sur tous les packs, sans engagement. Les deux packs sont complémentaires : souscrits ensemble, −10 % sur le moins cher. Demandez une démonstration pour valider le périmètre adapté à votre structure.";

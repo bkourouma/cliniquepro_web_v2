@@ -69,13 +69,141 @@ ENUM = re.compile(r"\b[A-Z][A-Z0-9]{2,}(?:_[A-Z0-9]+)+\b")
 ENUM_PAREN = re.compile(r"\s*\([^()]*\b[A-Z][A-Z0-9]{2,}(?:_[A-Z0-9]+)+[^()]*\)")
 
 
+# --- Libellés français à la place des codes techniques --------------------------------------------------------
+# L'inventaire source est écrit pour les développeurs : statuts (IN_PROGRESS), champs (deletedAt), composants, etc.
+# Ces règles les remplacent par des mots français AVANT la suppression générique des codes en majuscules (ENUM),
+# qui sinon laisserait des phrases trouées. Les règles précises passent d'abord, puis la table des statuts.
+PHRASES = [
+    (r"\s*\(force=true\)", ""),
+    (r"; désactivable par \w+=false", "; désactivable"),
+    (r"\s*\((?:tag )?AUTO_CANCELLED_72H\)", ""),
+    (r"\(409 TEMPLATE_IN_USE sinon\)", "(refusé sinon)"),
+    (r"Marquer le certificat imprimé \(PENDING_PRINT vers PRINTED, compteur d'impressions\)", "Marquer le certificat comme imprimé (avec compteur d'impressions)"),
+    (r"Traduire les codes \([^)]*\) en français", "Afficher les erreurs en français"),
+    (r"Méthodes CARD, BANK_TRANSFER, CHECK, INSURANCE_DIRECT à l'écran", "Autres moyens de paiement à l'écran d'encaissement"),
+    (r"Proposer les 4 autres méthodes dans", "Proposer les 4 autres moyens (carte, virement, chèque, paiement direct par l'assurance) dans"),
+    (r"Mode \(CASH, MOBILE_MONEY, CARD, BANK_TRANSFER, CHECK\)", "Mode (espèces, mobile money, carte, virement, chèque)"),
+    (r"NURSE : ([^;]*); ORTHOPTIST et LAB_TECHNICIAN :", r"Infirmier(ère) : \1; orthoptiste et technicien d'examens :"),
+    (r"\s*\(gravité high\)", " (gravité élevée)"),
+    (r"\s*\(gravité medium\)", " (gravité moyenne)"),
+    (r"\s*\(gravité critical\)", " (gravité critique)"),
+    (r"\s*\(gravité info\)", " (gravité d'information)"),
+    (r"les patients ARCHIVED sont masqués", "les patients archivés sont masqués"),
+    (r"statut ARCHIVED", "statut « archivé »"),
+    (r"la réception est APPROVED d'office", "la réception est approuvée d'office"),
+    (r"de DRAFT à SENT", "de « brouillon » à « envoyé »"),
+    (r"tant que DRAFT", "tant qu'il est en brouillon"),
+    (r"refusé si la consultation est COMPLETED", "refusé si la consultation est terminée"),
+    (r"Passer la consultation à COMPLETED après enregistrement \(idempotent\)", "Marquer la consultation comme terminée après enregistrement (sans effet si elle l'est déjà)"),
+    (r"Clôturer en COMPLETED les consultations IN_PROGRESS", "Clôturer (statut « terminée ») les consultations en cours"),
+    (r"\(job vers minuit", "(traitement planifié vers minuit"),
+    (r"Annuler une consultation en cours \(CANCELLED\)", "Annuler une consultation en cours"),
+    (r"Annulation logique \(CANCELLED\)", "Annulation logique (statut « annulé »)"),
+    (r"passer l'examen en COMPLETED", "marquer l'examen comme terminé"),
+    (r"les examens COMPLETED du patient", "les examens terminés du patient"),
+    (r"Faire évoluer PENDING, APPROVED, REJECTED, COMPLETED, CANCELLED selon", "Faire évoluer le statut (en attente, approuvé, rejeté, terminé, annulé) selon"),
+    (r"\(COMPLETED, CANCELLED, NO_SHOW sont terminaux\)", "(terminé, annulé et absent sont des statuts finaux)"),
+    (r"statut RESCHEDULED", "statut « reporté »"),
+    (r"Passer des lignes en INVOICED \(", "Marquer des lignes comme facturées ("),
+    (r"ou PAID \(date de paiement\)", "ou payées (date de paiement)"),
+    (r"Passer une prestation en INVOICED ou PAID", "Marquer une prestation comme facturée ou payée"),
+    (r"Assurance spéciale NO_INS", "Assurance « sans assurance »"),
+    (r"la compagnie système NO_INS", "la compagnie système « sans assurance »"),
+    (r"\s*\(code USR-hash\)", ""),
+    (r"une entrée \(IN\) ou sortie \(OUT\)", "une entrée ou une sortie"),
+    (r"\(défaut XOF\)", "(défaut : franc CFA)"),
+    (r"\s*\(HTML\.xls\)", ""),
+    (r"\s*\(jsPDF\)", ""),
+    (r"\bpar ID\b", "par identifiant"),
+    (r"\bson ID\b", "son identifiant"),
+    (r"\(patientId en URL ou depuis la fiche patient\)", "(ou ouvrir directement depuis la fiche patient)"),
+    (r" dans l'URL", ""),
+    (r"passables par l'URL", "pouvant être préremplis"),
+    (r"Marquer un dossier supprimé \(deletedAt\)", "Marquer un dossier comme supprimé (suppression logique)"),
+    (r"\(enregistré dans chiefComplaint et hpi\)", "(enregistré comme motif et histoire de la maladie)"),
+    (r"\(actives, ou toutes avec includeInactive\)", "(actives, ou toutes, y compris inactives)"),
+    (r"Aide contextuelle expliquant schemaJson et uiJson", "Aide contextuelle expliquant la structure et l'affichage d'un modèle"),
+    (r"Onglet Modèles \(schemaJson, uiJson, statut, version\)", "Onglet Modèles (structure, affichage, statut, version)"),
+    (r"Composant PrestationSelector", "Sélecteur de prestations"),
+    (r"Composant FileDuJour", "File du jour"),
+    (r"PatientContextBar \(", "Bandeau patient ("),
+    (r"\s*\(MedicineManager\)", ""),
+    (r"Fenêtre VisionPrescriptionModal", "Fenêtre de l'ordonnance de lunettes"),
+    (r"printableDocument \(", "Document imprimable ("),
+    (r"\s*\(DoctorSchedule\)", ""),
+    (r"et mettre à jour photoUrl", "et l'associer au profil du médecin"),
+    (r"Schéma PaymentUpdateSchema défini \(statut, notes\)", "Statut et notes modifiables sur un paiement"),
+    (r"Mise à jour de paiement \(schéma\)", "Mise à jour d'un paiement"),
+    (r"Marquer insuranceApproved = true sur la prestation de réception", "Marquer la prestation de réception comme approuvée par l'assurance"),
+    (r"\s*\(DataRetentionPolicy\) créées à l'amorçage", " des données"),
+    (r"cleanupOldAuditTrails \(plus d'un an\)", "Purge du journal d'audit ancien (plus d'un an)"),
+    (r"code technique MAJUSCULES", "code technique en majuscules"),
+    (r"Indicateurs MÉDECIN", "Indicateurs du médecin"),
+    (r"Indicateurs SECRÉTAIRE", "Indicateurs de la secrétaire"),
+    (r"Indicateurs INFIRMIER / ORTHOPTISTE / TECHNICIEN LABO", "Indicateurs de l'infirmier, de l'orthoptiste et du technicien d'examens"),
+    (r"Indicateurs CAISSIÈRE", "Indicateurs du caissier"),
+    (r"Indicateurs PROPRIÉTAIRE", "Indicateurs de la direction"),
+    (r"Indicateurs ADMIN", "Indicateurs de l'administrateur"),
+    (r"Widgets ADMIN", "Widgets de l'administrateur"),
+    (r"Indicateurs COMPTA", "Indicateurs de la comptabilité"),
+    (r"Indicateurs STAFF", "Indicateurs du personnel"),
+    (r"Tableau de bord AUDITOR", "Tableau de bord de l'auditeur"),
+    (r"Le rôle AUDITOR a", "Le rôle d'auditeur a"),
+    (r"Lecture seule pour OWNER et AUDITOR", "Lecture seule pour la direction et l'auditeur"),
+]
+CONTROLS = {
+    "MISSING_PAYMENT_ENTRIES": "des encaissements sans écriture",
+    "MISSING_REFUND_ENTRIES": "des remboursements sans écriture",
+    "MISSING_CASH_DISCREPANCY_ENTRIES": "des écarts de caisse sans écriture",
+    "MISSING_DOCTOR_PAYMENT_ENTRIES": "des honoraires sans écriture",
+    "MISSING_EXPENSE_ENTRIES": "des dépenses sans écriture",
+    "EXPENSES_SELF_APPROVED": "des dépenses approuvées par leur saisisseur",
+    "EXPENSES_DUPLICATE_SUSPECTED": "des dépenses en double",
+    "EXPENSES_UNPAID_OLD": "des dépenses approuvées non payées",
+    "PAYABLES_RECONCILIATION": "du rapprochement des dettes fournisseurs",
+    "ORPHAN_ENTRIES": "des écritures orphelines",
+    "JOURNAL_NUMBER_GAPS": "de la numérotation du journal",
+    "UNBALANCED_ENTRIES": "des écritures déséquilibrées",
+    "PERIOD_INTEGRITY": "de l'intégrité des périodes clôturées",
+    "TREASURY_RECONCILIATION": "du rapprochement de trésorerie",
+    "REFUNDS_SELF_APPROVED": "des remboursements sans séparation des tâches",
+    "ENTRY_REVERSED_BY_CREATOR": "des contre-passations faites par leur auteur",
+    "PAYMENTS_DELETED": "des paiements supprimés",
+    "CASH_DISCREPANCIES": "des écarts de caisse à la clôture",
+    "CASH_CHANGE_NOT_DEDUCTED": "des écarts faussés par la monnaie rendue",
+    "STALE_OPEN_CASH_SESSIONS": "des caisses restées ouvertes",
+    "PAYMENTS_OFF_HOURS": "des encaissements hors horaires",
+    "MANUAL_ENTRIES": "des écritures manuelles",
+}
+# Statuts et rôles restants : mot français équivalent (les plus longs d'abord).
+TOKENS = {
+    "IN_PROGRESS": "en cours", "NO_SHOW": "absent", "COMPLETED": "terminé", "CANCELLED": "annulé", "SCHEDULED": "planifié",
+    "CONFIRMED": "confirmé", "RESCHEDULED": "reporté", "DRAFT": "brouillon", "SENT": "envoyé", "APPROVED": "approuvé",
+    "REJECTED": "rejeté", "PARTIAL": "partiellement approuvé", "PENDING": "en attente", "PUBLISHED": "publié",
+    "ARCHIVED": "archivé", "OPEN": "ouverte", "INVOICED": "facturé", "PAID": "payé", "INSURANCE": "assureur",
+    "ADMIN": "administrateur", "COMPTA": "comptabilité", "OWNER": "direction", "AUDITOR": "auditeur", "STAFF": "personnel",
+    "NURSE": "infirmier(ère)", "ORTHOPTIST": "orthoptiste", "MAJUSCULES": "majuscules", "CHECK": "chèque",
+}
+TOKEN_RE = re.compile(r"(?<![A-Za-z_])(" + "|".join(sorted(TOKENS, key=len, reverse=True)) + r")(?![A-Za-z_])")
+
+
+def humanize(s):
+    """Remplace les codes techniques par des libellés français (voir PHRASES, CONTROLS, TOKENS)."""
+    m = re.match(r"^Contrôle ([A-Z_]+)$", s)
+    if m and m.group(1) in CONTROLS:
+        return "Contrôle " + CONTROLS[m.group(1)]
+    for pat, rep in PHRASES:
+        s = re.sub(pat, rep, s)
+    return TOKEN_RE.sub(lambda t: TOKENS[t.group(1)], s)
+
+
 def slug(s):
     s = unicodedata.normalize("NFKD", s).encode("ascii", "ignore").decode()
     return re.sub(r"[^a-z0-9]+", "-", s.lower()).strip("-")
 
 
 def clean(s):
-    s = (s or "").strip()
+    s = humanize((s or "").strip())
     s = ENUM_PAREN.sub("", s)
     s = ENUM.sub("", s)
     s = s.replace("(tenant)", "").replace("tenant", "clinique")
@@ -110,11 +238,14 @@ for r in rows:
         continue
     module, feature, title, goal = clean(r[2]), clean(r[3]), clean(r[4]), clean(r[5])
     module = MODULE_RENAME.get(module, module)
+    if re.search(r"ANTHROPIC|backend", (r[4] or "") + " " + (r[5] or "")):
+        dropped += 1
+        continue
     if not (title and goal) or TECH.search(title + " " + goal) or "/api" in (r[11] or "") and not portal.startswith("Clinique"):
         dropped += 1
         continue
     status = "developpement" if (r[13] or "").startswith("En développement") else "disponible"
-    menu = (r[14] or "").strip()
+    menu = humanize((r[14] or "").strip())
     menu = "" if menu.startswith(("(", "/", "Aucun")) or "hors menu" in menu or "hors groupe" in menu else menu.replace(" > ", " › ")
     mods = data[dom].setdefault(module, OrderedDict())
     feats = mods.setdefault(feature, [])

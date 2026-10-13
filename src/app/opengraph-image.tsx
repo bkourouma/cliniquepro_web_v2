@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "CliniquePro — Logiciel de gestion pour cliniques ophtalmologiques";
+export const alt = "CliniquePro — Le logiciel de gestion de votre clinique, centre de santé ou cabinet médical";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -24,11 +24,12 @@ export default function OpengraphImage() {
           <span style={{ color: "#3ddc84" }}>Pro</span>
         </div>
         <div style={{ marginTop: 32, fontSize: 56, fontWeight: 700, lineHeight: 1.1, maxWidth: 900 }}>
-          La plateforme tout-en-un pour piloter votre clinique ophtalmologique
+          Le logiciel de gestion de votre clinique, centre de santé ou cabinet médical
         </div>
         <div style={{ marginTop: 36, fontSize: 28, color: "#a9cdff" }}>
-          Gestion opérationnelle · Gestion financière et comptable
+          Toutes spécialités · Gestion opérationnelle · Gestion financière et comptable
         </div>
+        <div style={{ marginTop: 14, fontSize: 24, color: "#6f9bd6" }}>Édité à Abidjan par Alliance Consultants</div>
       </div>
     ),
     size,

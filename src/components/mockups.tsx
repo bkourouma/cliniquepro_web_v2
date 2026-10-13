@@ -176,7 +176,7 @@ function ConsultationMockup({ active }: { active: boolean }) {
   // les lignes se remplissent une à une, puis l'ordonnance de lunettes apparaît
   const step = useLoop(active, 6, 1100);
   return (
-    <Window title="Consultation · Dossier ophtalmologique" badge={<Pill tone="green">Modèle ophtalmo</Pill>}>
+    <Window title="Consultation · Exemple en ophtalmologie" badge={<Pill tone="green">Modèle de consultation</Pill>}>
       <div className="flex items-center gap-3 rounded-xl bg-white/[0.04] p-3 ring-1 ring-white/[0.06]">
         <Avatar name="Awa Koné" />
         <div className="flex-1">
@@ -295,8 +295,8 @@ function ExamensMockup({ active }: { active: boolean }) {
 /* ---------------------------------------------------------------- 4. Assurance */
 
 const lines = [
-  { name: "Consultation spécialisée", amount: 25000 },
-  { name: "OCT maculaire", amount: 35000 },
+  { name: "Consultation spécialisée", amount: 20000 },
+  { name: "OCT maculaire", amount: 40000 },
   { name: "Champ visuel", amount: 30000 },
 ];
 

@@ -24,7 +24,7 @@ export function FinalCta() {
             Passez à une gestion plus fluide, <span className="text-gradient">plus fiable, plus visible.</span>
           </h2>
           <p className="mx-auto mt-5 max-w-xl text-lg text-white/65">
-            30 minutes pour voir CliniquePro appliqué à l&apos;organisation de votre clinique. Sans engagement.
+            30 minutes pour voir CliniquePro appliqué à l&apos;organisation de votre clinique, de votre centre ou de votre cabinet. Sans engagement.
           </p>
           <MagneticButton onClick={open} className="mt-9 bg-white px-8 py-4 text-base text-ink-950 shadow-[0_0_50px_-8px_rgba(255,255,255,0.6)]">
             Planifier une démonstration <ArrowRight className="size-5" />
@@ -37,7 +37,10 @@ export function FinalCta() {
           <div>
             <Logo onLight large />
             <p className="mt-4 max-w-xs">
-              La plateforme tout-en-un pour piloter votre clinique ophtalmologique : patients, consultations, examens, assurances, caisse, honoraires et comptabilité.
+              Le logiciel de gestion de votre clinique, de votre centre de santé ou de votre cabinet médical : patients, consultations, assurance, caisse, honoraires et comptabilité.
+            </p>
+            <p className="mt-3 max-w-xs">
+              CliniquePro est édité par <SmartLink href="/a-propos" className="font-semibold text-ink-900/80 hover:underline">Alliance Consultants</SmartLink> à Abidjan (Côte d&apos;Ivoire).
             </p>
           </div>
           <FooterCol title="Produit">

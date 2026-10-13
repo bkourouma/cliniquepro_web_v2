@@ -5,13 +5,15 @@
 import type { Metadata } from "next";
 import { absoluteUrl, SITE_NAME } from "./site";
 
+export const OG_IMAGE_ALT = "CliniquePro — Le logiciel de gestion de votre clinique, centre de santé ou cabinet médical";
+
 // Un « openGraph » explicite remplace l'image issue du fichier opengraph-image.tsx : on la redéclare ici.
-const OG_IMAGE = { url: "/opengraph-image", width: 1200, height: 630, alt: "CliniquePro — Logiciel de gestion pour cliniques ophtalmologiques" };
+const OG_IMAGE = { url: "/opengraph-image", width: 1200, height: 630, alt: OG_IMAGE_ALT };
 
 export function pageMetadata({ title, description, path }: { title: string; description: string; path: string }): Metadata {
-  const fullTitle = `${title} — ${SITE_NAME}`;
+  const fullTitle = `${title} | ${SITE_NAME}`;
   return {
-    title, // complété par le gabarit « %s — CliniquePro » du layout
+    title, // complété par le gabarit « %s | CliniquePro » du layout
     description,
     alternates: { canonical: path },
     openGraph: { type: "website", siteName: SITE_NAME, locale: "fr_CI", url: absoluteUrl(path), title: fullTitle, description, images: [OG_IMAGE] },

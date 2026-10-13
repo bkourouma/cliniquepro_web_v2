@@ -30,17 +30,17 @@ export const heroCards: HeroCard[] = [
     cta: "Voir l'accueil patient",
     href: "#roles-accueil",
     image: "/images/hero/agenda.jpg",
-    imageAlt: "Hôtesse d'accueil souriante recevant une patiente au comptoir d'une clinique ophtalmologique",
+    imageAlt: "Hôtesse d'accueil souriante recevant une patiente au comptoir d'une clinique",
     imageClass: "object-[center_12%]",
     accent: "#5FA3FF",
     pack: "Gestion opérationnelle",
   },
   {
     id: "consultation",
-    eyebrow: "Consultation ophtalmologique",
-    title: "Un dossier médical pensé pour l'ophtalmologie.",
+    eyebrow: "Consultation par spécialité",
+    title: "Un dossier médical adapté à chaque spécialité.",
     description:
-      "Motif, antécédents, acuité visuelle de loin et de près, pression intraoculaire, réfraction, diagnostic et prescription : des modèles de consultation structurés pour gagner du temps et standardiser vos comptes rendus.",
+      "Motif, antécédents, diagnostic et prescription dans des modèles de consultation paramétrables pour toutes les spécialités, pour gagner du temps et standardiser vos comptes rendus. L'ophtalmologie, la plus détaillée : acuité visuelle, pression intraoculaire, réfraction.",
     cta: "Voir l'espace médecin",
     href: "#roles-medecin",
     image: "/images/hero/consultation.jpg",
@@ -54,11 +54,11 @@ export const heroCards: HeroCard[] = [
     eyebrow: "Examens et prescriptions",
     title: "Chaque examen suivi, chaque résultat retrouvé.",
     description:
-      "Planification, démarrage et suivi des examens (OCT, champ visuel, rétinographie, biométrie, fond d'œil…), modèles configurables, rapports, puis ordonnances médicales et de lunettes prêtes à imprimer.",
+      "Planification, démarrage et suivi des examens, modèles configurables, rapports, puis ordonnances prêtes à imprimer. En ophtalmologie : OCT, champ visuel, rétinographie, biométrie, fond d'œil et ordonnances de lunettes.",
     cta: "Découvrir les examens",
     href: "#ecosysteme",
     image: "/images/hero/examens.jpg",
-    imageAlt: "Technicien réalisant un examen OCT sur une patiente dans une clinique ophtalmologique moderne",
+    imageAlt: "Technicien réalisant un examen OCT (exemple en ophtalmologie) sur une patiente dans une clinique moderne",
     imageClass: "object-[center_8%]",
     accent: "#7DD3FC",
     pack: "Gestion opérationnelle",
@@ -68,7 +68,7 @@ export const heroCards: HeroCard[] = [
     eyebrow: "Assurances et prise en charge",
     title: "Les accords assurance, sans échanges à la main.",
     description:
-      "Associez l'assurance au patient, envoyez la demande de prise en charge, suivez les validations ou rejets prestation par prestation, avec un portail assurance accessible par lien sécurisé.",
+      "Associez l'assurance ou la mutuelle au patient, envoyez la demande de prise en charge, suivez les validations ou rejets prestation par prestation, avec un portail assurance accessible par lien sécurisé.",
     cta: "Voir la prise en charge",
     href: "#ecosysteme",
     image: "/images/hero/assurance.jpg",
@@ -82,7 +82,7 @@ export const heroCards: HeroCard[] = [
     eyebrow: "Facturation et caisse",
     title: "Chaque paiement encaissé, tracé et rapproché.",
     description:
-      "Factures par prestation, part patient et part assurance, sessions de caisse avec fond de caisse, paiements en espèces, carte, mobile money, virement ou chèque, monnaie rendue et remboursements encadrés.",
+      "Factures par prestation, part patient et part assurance, sessions de caisse avec fond de caisse, paiements en espèces, carte, virement, chèque ou Mobile Money intégré, monnaie rendue et remboursements encadrés.",
     cta: "Voir la caisse",
     href: "#roles-caisse",
     image: "/images/hero/caisse.jpg",
@@ -110,7 +110,7 @@ export const heroCards: HeroCard[] = [
     eyebrow: "Pilotage et honoraires",
     title: "Toute l'activité de la clinique, d'un coup d'œil.",
     description:
-      "Tableaux de bord direction, chiffre d'affaires, encaissements, statistiques par période, honoraires médecins calculés automatiquement et assistant analytique pour interroger vos données en langage naturel.",
+      "Tableaux de bord direction, chiffre d'affaires, encaissements, statistiques par période, honoraires médecins calculés automatiquement et assistant analytique (IA optionnelle) pour interroger vos données en langage naturel.",
     cta: "Découvrir le pilotage",
     href: "#roles-direction",
     image: "/images/hero/pilotage.jpg",
@@ -125,7 +125,7 @@ export const heroCards: HeroCard[] = [
 
 export type Partner = { name: string; color: string; badge?: boolean };
 
-export const marqueeLabel = "Pensé pour les parcours ophtalmologiques";
+export const marqueeLabel = "Exemple de modèle de consultation : l'ophtalmologie, la spécialité la plus détaillée";
 export const marqueeItems: Partner[] = [
   { name: "Acuité visuelle", color: "#5FA3FF" },
   { name: "Pression intraoculaire", color: "#34E39A" },
@@ -174,9 +174,9 @@ export const roles: Role[] = [
     pitch:
       "Le médecin retrouve le dossier complet du patient, saisit les données cliniques dans un modèle adapté, demande des examens et produit ses ordonnances depuis le même écran.",
     features: [
-      { title: "Dossier ophtalmologique", text: "Antécédents, acuité, PIO, réfraction, historique." },
-      { title: "Modèles de consultation", text: "Données cliniques dynamiques selon le type de consultation." },
-      { title: "Prescriptions", text: "Ordonnances, lunettes, bulletins d'examens imprimables." },
+      { title: "Dossier par spécialité", text: "Antécédents, constantes, historique. Exemple en ophtalmologie : acuité, PIO, réfraction." },
+      { title: "Modèles de consultation", text: "Paramétrables pour toutes les spécialités, selon le type de consultation." },
+      { title: "Prescriptions", text: "Ordonnances, bulletins d'examens et, en ophtalmologie, ordonnances de lunettes, imprimables." },
     ],
     cta: { label: "Voir les fonctionnalités", href: "/fonctionnalites" },
     mockup: "consultation",

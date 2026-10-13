@@ -8,6 +8,7 @@ import { Marquee } from "@/components/marquee";
 import { Navbar } from "@/components/navbar";
 import { Pricing } from "@/components/pricing";
 import { Roles } from "@/components/roles";
+import { SOFTWARE_DESCRIPTION } from "@/lib/positionnement";
 
 export default function Home() {
   return (
@@ -16,8 +17,8 @@ export default function Home() {
       <SoftwareJsonLd />
       <WebPageJsonLd
         path="/"
-        name="CliniquePro — Logiciel de gestion pour cliniques ophtalmologiques"
-        description="Logiciel web de gestion de clinique ophtalmologique : patients, consultations, examens, assurances, caisse, facturation, honoraires et comptabilité."
+        name="CliniquePro : logiciel de gestion de clinique, centre de santé et cabinet médical"
+        description={SOFTWARE_DESCRIPTION}
       />
       <main>
         <Hero />
