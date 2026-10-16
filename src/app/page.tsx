@@ -2,6 +2,7 @@ import { Ecosystem } from "@/components/ecosystem";
 import { FinalCta } from "@/components/final-cta";
 import { Hero } from "@/components/hero";
 import { HomeFaq } from "@/components/home-faq";
+import { HomeSolutions } from "@/components/home-solutions";
 import { SoftwareJsonLd, WebPageJsonLd } from "@/components/json-ld";
 import { Journey } from "@/components/journey";
 import { Marquee } from "@/components/marquee";
@@ -26,6 +27,7 @@ export default function Home() {
         <Roles />
         <Ecosystem />
         <Journey />
+        <HomeSolutions />
         <Pricing />
         <HomeFaq />
       </main>

@@ -8,6 +8,7 @@ import { PageHero } from "@/components/page-hero";
 import { Reveal } from "@/components/ui";
 import { WikiSearch } from "@/components/wiki/wiki-search";
 import { scopeLabel } from "@/lib/features";
+import { functionRoutes } from "@/lib/intent-routes";
 import { pageMetadata } from "@/lib/seo";
 import { countItems, searchIndex, wikiDomains, wikiTotal, WIKI_UPDATED_ON } from "@/lib/wiki";
 
@@ -26,6 +27,16 @@ export default function WikiPage() {
           {wikiTotal} fonctionnalités détaillées du logiciel de gestion de clinique, regroupées par domaine, avec les profils qui y ont accès. Inventaire arrêté au {WIKI_UPDATED_ON}. Pour une vue d&apos;ensemble par module, voir les <Link href="/fonctionnalites" className="underline decoration-white/30 underline-offset-4 hover:decoration-white">fonctionnalités</Link> et les <Link href="/tarifs" className="underline decoration-white/30 underline-offset-4 hover:decoration-white">tarifs</Link>.
         </PageHero>
         <div className="mx-auto max-w-6xl px-5 py-14">
+          <p className="mb-10 text-ink-900/70">
+            Le wiki est un inventaire détaillé. Pour une présentation par besoin, voir les pages{" "}
+            {functionRoutes.map((r, i) => (
+              <span key={r.slug}>
+                {i > 0 && (i === functionRoutes.length - 1 ? " et " : ", ")}
+                <Link href={r.path} className="font-semibold text-brand-600 hover:underline">{r.label.toLowerCase()}</Link>
+              </span>
+            ))}
+            .
+          </p>
           <WikiSearch entries={searchIndex} />
           <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {wikiDomains.map((d, i) => (

@@ -2,6 +2,9 @@
 // Généré depuis les mêmes données que les pages (prix, modules, wiki, positionnement) : il ne peut pas diverger du site.
 
 import { features } from "@/lib/features";
+import { guides, guidePath } from "@/lib/guides";
+import { intentRoutes } from "@/lib/intent-routes";
+import { intentPageBySlug } from "@/lib/intent-pages";
 import { fcfa } from "@/lib/format";
 import { COMBO_DISCOUNT, packs, TRIAL_TEXT } from "@/lib/pricing";
 import { AUDIENCE, DATA_LAW, EXTRA_CAPABILITIES, NOT_COVERED, PUBLISHED_BY, SERVICE_POINTS } from "@/lib/positionnement";
@@ -27,7 +30,7 @@ export function GET() {
     "",
     ...features.map((f) => `- ${f.title} : ${f.summary}`),
     ...EXTRA_CAPABILITIES.map((c) => `- ${c}`),
-    "- Les fonctions d'intelligence artificielle sont optionnelles, reposent sur un service tiers et servent d'aide : elles ne posent aucun diagnostic.",
+    "- Trois fonctions d'intelligence artificielle, optionnelles : poser des questions en langage naturel sur ses données, extraire des informations d'un PDF de résultats, obtenir une synthèse du dossier patient. Elles reposent sur un service tiers et servent d'aide : elles ne posent aucun diagnostic.",
     "",
     "## Ce que CliniquePro ne fait pas",
     "",
@@ -39,6 +42,7 @@ export function GET() {
     `- ${TRIAL_TEXT}. Les deux packs sont complémentaires : souscrits ensemble, ${Math.round(COMBO_DISCOUNT * 100)} % de remise sur le moins cher des deux.`,
     `- ${SERVICE_POINTS.join(" ; ")}.`,
     "- Prix hors taxes, en FCFA, par mois. Seul le devis ou le contrat signé fait foi.",
+    "- Sauvegarde quotidienne assurée par Alliance Consultants, que l'hébergement soit dans le cloud ou sur un serveur local.",
     "",
     "## Données et conformité",
     "",
@@ -51,8 +55,14 @@ export function GET() {
     `- [Fonctionnalités](${absoluteUrl("/fonctionnalites")}): les ${features.length} modules et le pack qui les couvre`,
     `- [Tarifs](${absoluteUrl("/tarifs")}): détail et comparaison des deux packs`,
     `- [FAQ](${absoluteUrl("/faq")}): packs, structures concernées, spécialités, hors connexion, hébergement, assurance, caisse, ce que CliniquePro ne fait pas`,
+    `- [Guides](${absoluteUrl("/guides")}): repères de gestion pour choisir un logiciel de clinique`,
+    ...guides.map((g) => `  - [${g.h1}](${absoluteUrl(guidePath(g.slug))}): ${g.description}`),
     `- [À propos](${absoluteUrl("/a-propos")}): qui édite CliniquePro, à qui il s'adresse, ce qu'il couvre et ce qui est encore en développement`,
     `- [Contact et démonstration](${absoluteUrl("/contact")}): démonstration de 30 minutes`,
+    "",
+    "## Pages par besoin",
+    "",
+    ...intentRoutes.map((r) => `- [${r.label}](${absoluteUrl(r.path)}): ${intentPageBySlug(r.slug)!.description}`),
     "",
     `## Wiki des fonctionnalités (${wikiTotal} actions détaillées)`,
     "",

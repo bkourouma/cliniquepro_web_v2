@@ -2,7 +2,7 @@
 
 import { ArrowRight, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import type { ReactNode } from "react";
-import { footerProductLinks } from "@/lib/content";
+import { footerFunctionLinks, footerProductLinks, footerSolutionLinks } from "@/lib/content";
 import { contact, social, whatsappLink } from "@/lib/site";
 import { useDemo } from "./providers";
 import { SmartLink } from "./smart-link";
@@ -33,7 +33,7 @@ export function FinalCta() {
       </Reveal>
 
       <footer className="mx-auto max-w-6xl px-5 pt-14 pb-10 text-sm text-ink-900/60">
-        <div className="grid gap-10 md:grid-cols-[1.3fr_1fr_1fr_1.2fr]">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.3fr_repeat(4,1fr)_1.2fr]">
           <div>
             <Logo onLight large />
             <p className="mt-4 max-w-xs">
@@ -45,6 +45,20 @@ export function FinalCta() {
           </div>
           <FooterCol title="Produit">
             {footerProductLinks.map((l) => (
+              <SmartLink key={l.href} href={l.href} className="transition-colors hover:text-ink-900">
+                {l.label}
+              </SmartLink>
+            ))}
+          </FooterCol>
+          <FooterCol title="Solutions">
+            {footerSolutionLinks.map((l) => (
+              <SmartLink key={l.href} href={l.href} className="transition-colors hover:text-ink-900">
+                {l.label}
+              </SmartLink>
+            ))}
+          </FooterCol>
+          <FooterCol title="Fonctions">
+            {footerFunctionLinks.map((l) => (
               <SmartLink key={l.href} href={l.href} className="transition-colors hover:text-ink-900">
                 {l.label}
               </SmartLink>

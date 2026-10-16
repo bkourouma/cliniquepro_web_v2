@@ -3,6 +3,8 @@ import { pageUpdated } from "@/lib/dates";
 import { features } from "@/lib/features";
 import { packs } from "@/lib/pricing";
 import { faqGroups } from "@/lib/faq";
+import { stripLinks, type FaqItem } from "@/lib/page-content";
+import { GUIDE_AUTHOR } from "@/lib/guides";
 import { AUDIENCE, EXTRA_CAPABILITIES, SOFTWARE_CATEGORY, SOFTWARE_DESCRIPTION } from "@/lib/positionnement";
 
 const ORGANIZATION_ID = `${SITE_URL}/#organization`;
@@ -87,6 +89,9 @@ export function SoftwareJsonLd() {
           url: absoluteUrl("/tarifs"),
           price: p.monthly,
           priceCurrency: "XOF",
+          // Offre en vente, ouverte à la Côte d'Ivoire d'abord (décision de l'éditeur du 13 octobre 2026).
+          availability: "https://schema.org/InStock",
+          eligibleRegion: { "@type": "Country", name: "Côte d'Ivoire", identifier: "CI" },
           priceSpecification: {
             "@type": "UnitPriceSpecification",
             price: p.monthly,
@@ -155,6 +160,55 @@ export function FaqJsonLd() {
         "@context": "https://schema.org",
         "@type": "FAQPage",
         mainEntity: faqGroups.flatMap((g) => g.items).map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+      }}
+    />
+  );
+}
+
+/** FAQ d'une page : les questions doivent rester identiques au texte affiché sur la page. */
+export function FaqPageJsonLd({ items }: { items: FaqItem[] }) {
+  return (
+    <JsonLd
+      data={{
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: items.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: stripLinks(f.a) } })),
+      }}
+    />
+  );
+}
+
+/** Article d'un guide : l'auteur est l'équipe éditrice, jamais une personne inventée. */
+export function ArticleJsonLd({
+  path,
+  headline,
+  description,
+  datePublished,
+  dateModified,
+}: {
+  path: string;
+  headline: string;
+  description: string;
+  datePublished: string;
+  dateModified?: string;
+}) {
+  return (
+    <JsonLd
+      data={{
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "@id": `${absoluteUrl(path)}#article`,
+        headline,
+        description,
+        inLanguage: "fr",
+        datePublished,
+        dateModified: dateModified ?? pageUpdated(path),
+        mainEntityOfPage: absoluteUrl(path),
+        image: absoluteUrl("/opengraph-image"),
+        author: { "@type": "Organization", name: GUIDE_AUTHOR, url: SITE_URL },
+        publisher: { "@id": ORGANIZATION_ID },
+        isPartOf: { "@id": WEBSITE_ID },
+        about: { "@id": SOFTWARE_ID },
       }}
     />
   );

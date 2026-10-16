@@ -47,7 +47,15 @@ Règle éditoriale : ne présenter que ce que l'application fait réellement ; a
 
 ## Pages
 
-`/` (accueil) · `/fonctionnalites` · `/tarifs` · `/faq` · `/a-propos` · `/contact` · `/mentions-legales` · `/confidentialite`
+`/` (accueil) · `/fonctionnalites` · `/tarifs` · `/faq` · `/a-propos` · `/contact` · `/mentions-legales` · `/confidentialite` · `/wiki`
+
+Pages d'intention (un besoin de recherche par page, même gabarit) : `/logiciel-gestion-clinique-cote-ivoire` · `/logiciel-cabinet-medical` · `/logiciel-centre-de-sante` · `/logiciel-ophtalmologie` · `/logiciel-rendez-vous-medicaux` · `/dossier-patient-informatise` · `/facturation-assurance-clinique` · `/logiciel-clinique-hors-connexion`. Guides : `/guides` et `/guides/<slug>`.
+
+- Textes : `src/lib/intent-pages.ts` (une entrée par page : titre ≤ 46 caractères, description ≤ 155, H1, sections H2, FAQ, pages liées). Gabarit : `src/components/intent-page.tsx`, route `src/app/[slug]/page.tsx`.
+- Adresses, libellés du menu et du pied de page : `src/lib/intent-routes.ts` (fichier léger, importé par les composants client).
+- Guides : `src/lib/guides.ts` (JSON-LD `Article`, auteur « L'équipe CliniquePro — Alliance Consultants »).
+- Dans un texte, `[libellé](/chemin)` devient un lien interne. Les prix ne s'écrivent jamais à la main : une section `price` les lit dans `pricing.ts`.
+- Une nouvelle page s'ajoute à `intent-routes.ts`, `intent-pages.ts` et `dates.ts` ; le sitemap, le menu, le pied de page et `llms.txt` la reprennent seuls.
 
 ## Demande de démonstration
 
