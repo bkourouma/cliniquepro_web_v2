@@ -24,6 +24,7 @@ export const SERVICE_POINTS = [
   "Import des données existantes",
   "Support par WhatsApp",
   "Abonnement sans engagement",
+  "Sauvegarde quotidienne assurée par Alliance Consultants",
 ] as const;
 
 /** Capacités confirmées par l'éditeur en plus des modules de features.ts (données structurées « featureList »). */

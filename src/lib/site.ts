@@ -9,7 +9,7 @@ export const APP_LOGIN_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://cliniqu
 // Date (ISO) de la dernière mise à jour générale du contenu (llms.txt, pages sans date propre). La date de chaque page
 // est dans src/lib/dates.ts : <lastmod> du sitemap et « dateModified » des données structurées en dépendent. À faire
 // évoluer quand le contenu change vraiment (une fausse fraîcheur est pénalisée).
-export const SITE_UPDATED = "2026-10-13";
+export const SITE_UPDATED = "2026-10-16";
 
 /** Adresse absolue d'un chemin du site (« / » donne l'adresse racine, sans barre finale). */
 export function absoluteUrl(path = "/") {

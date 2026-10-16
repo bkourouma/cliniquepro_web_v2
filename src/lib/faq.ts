@@ -5,6 +5,7 @@
 import { fcfa } from "@/lib/format";
 import { COMBO_DISCOUNT, comboPrice, packs } from "@/lib/pricing";
 import { AUDIENCE, DATA_LAW, NOT_COVERED, PUBLISHED_BY } from "@/lib/positionnement";
+import type { FaqItem } from "@/lib/page-content";
 import { contact, legal, SITE_URL } from "@/lib/site";
 
 // Les prix viennent de pricing.ts : un changement de tarif se répercute ici sans retouche.
@@ -76,7 +77,7 @@ export const faqGroups: FaqGroup[] = [
       },
       {
         q: "CliniquePro propose-t-il des fonctions d'intelligence artificielle ?",
-        a: "Oui, en option. Elles s'appuient sur un service d'intelligence artificielle tiers, par exemple pour interroger vos données en langage naturel. Ce sont des aides : elles ne posent aucun diagnostic et la décision médicale reste celle du médecin. Vous choisissez de les utiliser ou non.",
+        a: "Oui, en option, avec trois fonctions : poser des questions en langage naturel sur vos données, extraire des informations d'un PDF de résultats vers les champs d'un examen, et obtenir une synthèse du dossier patient. Elles s'appuient sur un service d'intelligence artificielle tiers. Ce sont des aides : elles ne posent aucun diagnostic et la décision médicale reste celle du médecin. Vous choisissez de les utiliser ou non.",
       },
     ],
   },
@@ -93,7 +94,7 @@ export const faqGroups: FaqGroup[] = [
       },
       {
         q: "Où sont hébergées les données ?",
-        a: "L'hébergement est au choix du client : dans le cloud, ou sur un serveur local installé dans la clinique.",
+        a: "L'hébergement est au choix du client : dans le cloud, ou sur un serveur local installé dans la clinique. Dans les deux cas, la sauvegarde quotidienne est assurée par Alliance Consultants.",
       },
       {
         q: "Quelle loi encadre la protection des données personnelles ?",
@@ -109,7 +110,7 @@ export const faqGroups: FaqGroup[] = [
       },
       {
         q: "Mes données sont-elles sauvegardées ?",
-        a: "Oui : une sauvegarde automatique quotidienne de la base de données est réalisée.",
+        a: "Oui. Alliance Consultants assure une sauvegarde quotidienne de vos données, que vous ayez choisi l'hébergement dans le cloud ou sur un serveur local installé dans la clinique.",
       },
       {
         q: "Puis-je récupérer mes données si je mets fin au contrat ?",
@@ -150,5 +151,33 @@ export const faqGroups: FaqGroup[] = [
         a: `${PUBLISHED_BY}. Pour ne pas le confondre avec des logiciels de nom proche ou identique, retenez l'éditeur (${legal.publisher}, RCCM ${legal.rccm}) et l'adresse du site : ${SITE_URL.replace("https://", "")}.`,
       },
     ],
+  },
+];
+
+// Questions sur les prix, affichées en bas de /tarifs (avec le balisage FAQPage). Les montants viennent de pricing.ts.
+export const pricingFaq: FaqItem[] = [
+  {
+    q: "Combien coûte CliniquePro ?",
+    a: `Deux packs, à l'abonnement mensuel : la ${operationnel.name} à ${fcfa(operationnel.monthly)} HT par mois et la ${financier.name} à ${fcfa(financier.monthly)} HT par mois. Souscrits ensemble, ils coûtent ${fcfa(combo.total)} HT par mois au lieu de ${fcfa(combo.subtotal)}.`,
+  },
+  {
+    q: "Les prix sont-ils hors taxes ?",
+    a: "Oui. Tous les prix sont en FCFA, hors taxes, par mois. Aucun prix toutes taxes comprises n'est publié : seul le devis ou le contrat signé fait foi.",
+  },
+  {
+    q: "Qu'est-ce qui est inclus dans l'abonnement ?",
+    a: "La formation de votre équipe, l'import de vos données existantes et le support par WhatsApp sont inclus, ainsi que la sauvegarde quotidienne de vos données, assurée par Alliance Consultants, que vous choisissiez le cloud ou un serveur local.",
+  },
+  {
+    q: "Y a-t-il un engagement ou un essai gratuit ?",
+    a: "L'abonnement est sans engagement, et le premier mois est offert sur tous les packs.",
+  },
+  {
+    q: "Quel pack choisir pour un cabinet avec un seul médecin ?",
+    a: `La ${operationnel.name} (${fcfa(operationnel.monthly)} HT par mois) couvre l'agenda, le dossier patient, la consultation, les ordonnances et la prise en charge par l'assurance. Ajoutez la ${financier.name} si vous voulez aussi gérer la facturation, la caisse, les honoraires et la comptabilité.`,
+  },
+  {
+    q: "Faut-il demander un devis pour connaître les prix ?",
+    a: "Non, les prix sont publics. La démonstration de 30 minutes permet de valider le périmètre adapté à votre structure, sans engagement.",
   },
 ];

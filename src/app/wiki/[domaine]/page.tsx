@@ -6,6 +6,8 @@ import { BreadcrumbJsonLd, WebPageJsonLd } from "@/components/json-ld";
 import { Navbar } from "@/components/navbar";
 import { PageHero } from "@/components/page-hero";
 import { features, scopeLabel } from "@/lib/features";
+import { intentRoute } from "@/lib/intent-routes";
+import { wikiDomainPages } from "@/lib/intent-pages";
 import { pageMetadata } from "@/lib/seo";
 import { countItems, domainBySlug, domainEditorial, wikiDomains, WIKI_UPDATED_ON } from "@/lib/wiki";
 
@@ -26,6 +28,7 @@ export default async function WikiDomainPage({ params }: PageProps<"/wiki/[domai
   if (!d) notFound();
   const editorial = domainEditorial[d.slug];
   const related = editorial ? features.filter((f) => editorial.featureIds.includes(f.id)) : [];
+  const landings = (wikiDomainPages[d.slug] ?? []).map((slug) => intentRoute(slug));
 
   return (
     <>
@@ -68,6 +71,18 @@ export default async function WikiDomainPage({ params }: PageProps<"/wiki/[domai
                 {related.length > 0 && " dans les fonctionnalités, "}le <Link href="/tarifs" className="font-semibold text-brand-600 hover:underline">pack {scopeLabel[d.pack]}</Link> sur la page des tarifs et la{" "}
                 <Link href="/faq" className="font-semibold text-brand-600 hover:underline">FAQ</Link>.
               </p>
+              {landings.length > 0 && (
+                <p>
+                  Présentations par besoin :{" "}
+                  {landings.map((r, i) => (
+                    <span key={r.slug}>
+                      {i > 0 && (i === landings.length - 1 ? " et " : ", ")}
+                      <Link href={r.path} className="font-semibold text-brand-600 hover:underline">{r.label.toLowerCase()}</Link>
+                    </span>
+                  ))}
+                  .
+                </p>
+              )}
             </div>
           </section>
         )}

@@ -17,7 +17,8 @@ Décisions de l'éditeur, à respecter dans tout texte :
 - **Spécialités** : modèles de consultation **paramétrables pour toutes les spécialités** ; l'ophtalmologie est la plus détaillée. Ne pas écrire « prêt à l'emploi pour la cardiologie / la pédiatrie… ».
 - **Hors connexion** : **saisie hors ligne puis synchronisation** au retour du réseau. Ne pas écrire que toute l'application fonctionne sans Internet, ni qu'on peut tout consulter hors ligne.
 - **Hébergement** : **au choix du client** (cloud ou serveur local dans la clinique). Ne pas écrire « en Côte d'Ivoire ».
-- **Fonctions affirmables** : prise en charge assurance (assureurs et mutuelles restent **génériques**, aucun nom), multi-sites / multi-cabinets, Mobile Money intégré (paiement intégré), fonctions d'IA **optionnelles** (service tiers, une aide, aucun diagnostic ni promesse médicale).
+- **Fonctions affirmables** : prise en charge assurance (assureurs et mutuelles restent **génériques**, aucun nom), multi-sites / multi-cabinets, Mobile Money intégré (paiement intégré), fonctions d'IA **optionnelles** (service tiers, une aide, aucun diagnostic ni promesse médicale). Trois fonctions citables (décision du 16 octobre 2026) : questions en langage naturel sur ses données, extraction d'informations depuis un PDF de résultats, synthèse du dossier patient.
+- **Sauvegarde** : la sauvegarde quotidienne est assurée par Alliance Consultants dans tous les cas (cloud ou serveur local).
 - **Hors périmètre, écrit noir sur blanc** (FAQ « Que ne fait pas CliniquePro ? ») : hospitalisation, laboratoire, pharmacie.
 - **MedicPro est un autre produit** (gestion réglementaire pharmaceutique) : ne jamais le confondre avec CliniquePro.
 - **Conformité** : respect de la loi ivoirienne n° 2013-450. Ne pas écrire « conforme RGPD » ni annoncer de certification.
@@ -216,6 +217,8 @@ absente de cette liste : [coller la liste des modules de src/lib/features.ts].
 ---
 
 ## 7. Référencement (facultatif)
+
+Les pages d'intention (cabinet médical, centre de santé privé, ophtalmologie, rendez-vous, dossier patient, facturation et assurance, saisie hors connexion, page Côte d'Ivoire) et le premier guide existent depuis le 16 octobre 2026 : voir le README, section « Pages ». Le prompt ci-dessous sert à en proposer d'autres.
 
 Le site de référence avait des pages thématiques (`landings.ts`). Pour en créer pour CliniquePro :
 

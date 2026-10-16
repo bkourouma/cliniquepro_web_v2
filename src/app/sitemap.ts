@@ -1,5 +1,7 @@
 import type { MetadataRoute } from "next";
 import { pageUpdated } from "@/lib/dates";
+import { guides, guidePath } from "@/lib/guides";
+import { GUIDES_PATH, intentRoutes } from "@/lib/intent-routes";
 import { absoluteUrl } from "@/lib/site";
 import { wikiDomains } from "@/lib/wiki";
 
@@ -9,7 +11,10 @@ const paths = [
   "/",
   "/fonctionnalites",
   "/tarifs",
+  ...intentRoutes.map((r) => r.path),
   "/faq",
+  GUIDES_PATH,
+  ...guides.map((g) => guidePath(g.slug)),
   "/wiki",
   ...wikiDomains.map((d) => `/wiki/${d.slug}`),
   "/a-propos",

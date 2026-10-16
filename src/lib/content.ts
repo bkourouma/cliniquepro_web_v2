@@ -3,6 +3,8 @@
 // Règle éditoriale : ne présenter que ce que l'application fait réellement ; jamais de date de livraison,
 // jamais de chiffre ou de témoignage inventé (voir docs/PROMPTS-CONTENU.md pour les contenus à fournir).
 
+import { functionRoutes, GUIDES_PATH, intentRoutes, solutionRoutes } from "./intent-routes";
+
 export type MockupKind = "agenda" | "consultation" | "examens" | "assurance" | "caisse" | "comptabilite" | "pilotage";
 
 export type HeroCard = {
@@ -236,23 +238,21 @@ export const journey = [
 
 export type NavLink = { label: string; href: string; children?: { label: string; text: string; href: string }[]; footer?: { label: string; href: string }; wide?: boolean; /** Barre de menu : lien affiché seulement dès 1280 px (à 1024 px la barre déborde) ; toujours présent dans le menu mobile */ xlOnly?: boolean };
 
+// Le menu « Solutions » liste les pages par profil et par fonction (intent-routes.ts) ; les espaces de travail par rôle
+// (direction, médecin, accueil, caisse) restent sur l'accueil, section « Solution ».
 export const navLinks: NavLink[] = [
   {
-    label: "Solution",
+    label: "Solutions",
     href: "#roles",
     wide: true,
-    children: [
-      { label: "Direction", text: "Tableaux de bord et statistiques", href: "#roles-direction" },
-      { label: "Médecin", text: "Consultation, dossier et prescriptions", href: "#roles-medecin" },
-      { label: "Accueil", text: "Agenda, réception et assurances", href: "#roles-accueil" },
-      { label: "Caisse et comptabilité", text: "Encaissements, journal et honoraires", href: "#roles-caisse" },
-    ],
+    children: intentRoutes.map((r) => ({ label: r.label, text: r.text, href: r.path })),
     footer: { label: "Toutes les fonctionnalités", href: "/fonctionnalites" },
   },
   { label: "Wiki", href: "/wiki" },
   { label: "Écosystème", href: "#ecosysteme" },
   { label: "Tarifs", href: "/tarifs" },
   { label: "FAQ", href: "/faq" },
+  { label: "Guides", href: GUIDES_PATH, xlOnly: true },
   { label: "À propos", href: "/a-propos", xlOnly: true },
   { label: "Contact", href: "/contact" },
 ];
@@ -262,5 +262,10 @@ export const footerProductLinks = [
   { label: "Wiki des fonctionnalités", href: "/wiki" },
   { label: "Tarifs", href: "/tarifs" },
   { label: "FAQ", href: "/faq" },
+  { label: "Guides", href: GUIDES_PATH },
   { label: "Demander une démo", href: "/contact" },
 ];
+
+/** Colonnes « Solutions » (profils, page locale) et « Fonctions » du pied de page : le lien le plus direct vers les pages d'intention. */
+export const footerSolutionLinks = solutionRoutes.map((r) => ({ label: r.label, href: r.path }));
+export const footerFunctionLinks = functionRoutes.map((r) => ({ label: r.label, href: r.path }));

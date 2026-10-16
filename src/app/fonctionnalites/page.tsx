@@ -8,6 +8,8 @@ import { Navbar } from "@/components/navbar";
 import { PageHero } from "@/components/page-hero";
 import { Reveal } from "@/components/ui";
 import { featureWiki, features, scopeLabel, type ModuleScope } from "@/lib/features";
+import { featureDetailPage } from "@/lib/intent-pages";
+import { functionRoutes, intentRoute, solutionRoutes } from "@/lib/intent-routes";
 import { pageMetadata } from "@/lib/seo";
 
 const description = `Dossier patient, rendez-vous, consultations, assurance, facturation, caisse, honoraires, comptabilité : les ${features.length} modules de CliniquePro, par pack.`;
@@ -34,6 +36,29 @@ export default function FonctionnalitesPage() {
         </PageHero>
 
         <div className="mx-auto max-w-6xl px-5 py-16">
+          <nav aria-label="Pages détaillées" className="mb-16 rounded-[24px] border border-ink-900/[0.07] bg-white p-7 text-ink-900/75 shadow-sm">
+            <h2 className="font-display text-2xl font-bold text-ink-900">Une page détaillée pour chaque besoin</h2>
+            <p className="mt-2">
+              Par fonction :{" "}
+              {functionRoutes.map((r, i) => (
+                <span key={r.slug}>
+                  {i > 0 && ", "}
+                  <Link href={r.path} className="font-semibold text-brand-600 hover:underline">{r.label.toLowerCase()}</Link>
+                </span>
+              ))}
+              .
+            </p>
+            <p className="mt-2">
+              Par structure :{" "}
+              {solutionRoutes.map((r, i) => (
+                <span key={r.slug}>
+                  {i > 0 && ", "}
+                  <Link href={r.path} className="font-semibold text-brand-600 hover:underline">{r.label.toLowerCase()}</Link>
+                </span>
+              ))}
+              .
+            </p>
+          </nav>
           {groups.map((g) => (
             <section key={g} className="mb-16">
               <h2 className="font-display text-3xl font-bold tracking-tight md:text-4xl">{scopeLabel[g]}</h2>
@@ -57,6 +82,11 @@ export default function FonctionnalitesPage() {
                           ))}
                         </ul>
                         <p className="mt-5 rounded-xl bg-paper p-3 text-sm font-medium text-ink-900/70">{f.value}</p>
+                        {featureDetailPage[f.id] && (
+                          <Link href={intentRoute(featureDetailPage[f.id]).path} className="mt-4 mr-5 inline-block text-sm font-semibold text-brand-600 hover:underline">
+                            Page dédiée : {intentRoute(featureDetailPage[f.id]).label.toLowerCase()} →
+                          </Link>
+                        )}
                         {featureWiki[f.id] && (
                           <Link href={featureWiki[f.id]} className="mt-4 inline-block text-sm font-semibold text-brand-600 hover:underline">
                             Voir le détail action par action →
