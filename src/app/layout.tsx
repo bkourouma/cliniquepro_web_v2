@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, Inter } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@/components/analytics";
+import { CookieConsent } from "@/components/consent/cookie-consent";
+import { GoogleAnalytics } from "@/components/consent/google-analytics";
 import { SiteJsonLd } from "@/components/json-ld";
 import { Providers } from "@/components/providers";
 import { fcfa } from "@/lib/format";
@@ -56,6 +58,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SiteJsonLd />
         <Providers>{children}</Providers>
         <Analytics />
+        <GoogleAnalytics />
+        <CookieConsent />
       </body>
     </html>
   );

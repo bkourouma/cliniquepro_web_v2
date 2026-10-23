@@ -2,7 +2,7 @@
 # sur le modèle de celle du site ImmoTopia.
 # Aucun secret : le formulaire lit N8N_WEBHOOK_URL à l'exécution et les variables NEXT_PUBLIC_*
 # ont des valeurs par défaut dans le code, le build n'a donc besoin de rien.
-# Pas de tests automatisés dans ce projet (pas de script « test ») : types, lint et build.
+# Vérifications : types, lint et build. Le script « npm test » (tests unitaires du consentement) existe mais n'est pas joué ici.
 #
 # Ce workflow tourne sur chaque pull request, et il est aussi appelé par
 # deploy.yml (workflow_call) à chaque poussée sur main : les vérifications
