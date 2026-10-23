@@ -29,7 +29,7 @@ export const PAGE_UPDATED: Record<string, string> = {
   "/guides/logiciel-clinique-saas-ou-sur-mesure": "2026-10-16",
   // Pages légales : texte inchangé depuis leur rédaction (dates affichées en bas de page)
   "/mentions-legales": "2026-10-02",
-  "/confidentialite": "2026-10-06",
+  "/confidentialite": "2026-10-23",
 };
 
 /** Date de dernière modification d'une page ; à défaut, la date générale du site. */

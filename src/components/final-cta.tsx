@@ -4,6 +4,7 @@ import { ArrowRight, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import type { ReactNode } from "react";
 import { footerFunctionLinks, footerProductLinks, footerSolutionLinks } from "@/lib/content";
 import { contact, social, whatsappLink } from "@/lib/site";
+import { ManageCookiesButton } from "./consent/manage-cookies-button";
 import { useDemo } from "./providers";
 import { SmartLink } from "./smart-link";
 import { Logo, MagneticButton, Reveal } from "./ui";
@@ -101,6 +102,7 @@ export function FinalCta() {
         </div>
         <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-ink-900/[0.07] pt-6 text-xs text-ink-900/60">
           <p>© {new Date().getFullYear()} CliniquePro. Tous droits réservés.</p>
+          <ManageCookiesButton className="inline-flex min-h-11 items-center underline-offset-2 transition-colors hover:text-ink-900 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500" />
         </div>
       </footer>
     </section>
