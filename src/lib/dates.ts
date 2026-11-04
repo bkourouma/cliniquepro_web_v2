@@ -12,7 +12,7 @@ export const PAGE_UPDATED: Record<string, string> = {
   "/tarifs": "2026-10-16",
   "/faq": "2026-10-16",
   "/a-propos": "2026-10-16",
-  "/contact": "2026-10-16",
+  "/contact": "2026-11-04",
   "/wiki": "2026-10-16",
   // Les 10 domaines du wiki (/wiki/<domaine>) : repris de la clé « /wiki/* »
   "/wiki/*": "2026-10-16",
@@ -25,7 +25,7 @@ export const PAGE_UPDATED: Record<string, string> = {
   "/dossier-patient-informatise": "2026-10-16",
   "/facturation-assurance-clinique": "2026-10-16",
   "/logiciel-clinique-hors-connexion": "2026-10-16",
-  "/guides": "2026-10-16",
+  "/guides": "2026-11-04",
   "/guides/logiciel-clinique-saas-ou-sur-mesure": "2026-10-16",
   // Pages légales : texte inchangé depuis leur rédaction (dates affichées en bas de page)
   "/mentions-legales": "2026-10-02",
