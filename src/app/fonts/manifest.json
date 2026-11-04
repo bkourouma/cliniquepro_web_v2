@@ -1,0 +1,21 @@
+{
+  "downloaded": "2026-11-04",
+  "fonts": [
+    {
+      "file": "inter-latin-100-900.woff2",
+      "weight": "100 900",
+      "css": "https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap",
+      "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2",
+      "bytes": 48432,
+      "sha256": "c940764593d0fe5d596be327ca7558855e018039fb78509aa21921fd3644c3e4"
+    },
+    {
+      "file": "bricolage-grotesque-latin-500-800.woff2",
+      "weight": "500 800",
+      "css": "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&display=swap",
+      "url": "https://fonts.gstatic.com/s/bricolagegrotesque/v9/3y9H6as8bTXq_nANBjzKo3IeZx8z6up5BeSl5jBNz_19PpbpMXuECpwUxJBOm_OJWiawA1XphjhQYg.woff2",
+      "bytes": 41236,
+      "sha256": "4fd48b2c1ab27220e71f15f990550261b35245c3bdfd8d8025b4bdac0459ee2d"
+    }
+  ]
+}
