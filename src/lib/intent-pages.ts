@@ -412,9 +412,19 @@ export const intentPages: IntentPage[] = [
           "Les plages de travail de chaque médecin se règlent dans l'application. L'agenda n'accepte un créneau que dans ces plages actives. Si la connexion se coupe, la saisie peut continuer et elle est synchronisée au retour du réseau ([saisie hors connexion](/logiciel-clinique-hors-connexion)).",
         ],
       },
+      {
+        h2: "Notes internes et lien avec le dossier patient",
+        paragraphs: [
+          "Chaque rendez-vous peut porter des notes internes pour l'équipe. Depuis le [dossier patient informatisé](/dossier-patient-informatise), vous retrouvez les rendez-vous liés au patient, à côté de ses consultations, de ses examens et de ses paiements : l'accueil et les médecins s'appuient sur la même information.",
+        ],
+      },
       { h2: "Prix : l'agenda est dans la Gestion opérationnelle", price: "operationnel" },
     ],
     faq: [
+      {
+        q: "Quels types de rendez-vous et quels statuts l'agenda propose-t-il ?",
+        a: "Les types sont la consultation, le suivi, l'urgence, l'examen, la chirurgie, l'injection et le laser. Un rendez-vous est planifié, confirmé, en cours, reporté, terminé, annulé ou absent ; terminé, annulé et absent sont des statuts définitifs.",
+      },
       {
         q: "Les rappels de rendez-vous sont-ils automatiques ?",
         a: "Oui, des rappels WhatsApp peuvent être envoyés automatiquement, et le médecin reçoit un récapitulatif quotidien à heure fixe. Vous pouvez aussi envoyer un rappel manuel à une sélection de patients.",
