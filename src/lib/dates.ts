@@ -13,7 +13,7 @@ export const PAGE_UPDATED: Record<string, string> = {
   "/faq": "2026-10-16",
   "/a-propos": "2026-10-16",
   "/contact": "2026-11-04",
-  "/wiki": "2026-10-16",
+  "/wiki": "2026-11-04",
   // Les 10 domaines du wiki (/wiki/<domaine>) : repris de la clé « /wiki/* »
   "/wiki/*": "2026-10-16",
   // Pages d'intention (profils, fonctions, page locale) et guides : date de création, à faire évoluer quand leur contenu change
