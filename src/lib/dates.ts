@@ -20,7 +20,7 @@ export const PAGE_UPDATED: Record<string, string> = {
   "/logiciel-gestion-clinique-cote-ivoire": "2026-10-16",
   "/logiciel-cabinet-medical": "2026-10-16",
   "/logiciel-centre-de-sante": "2026-10-16",
-  "/logiciel-ophtalmologie": "2026-10-16",
+  "/logiciel-ophtalmologie": "2026-11-04",
   "/logiciel-rendez-vous-medicaux": "2026-10-16",
   "/dossier-patient-informatise": "2026-10-16",
   "/facturation-assurance-clinique": "2026-10-16",
