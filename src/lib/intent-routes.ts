@@ -10,7 +10,8 @@ export type IntentSlug =
   | "logiciel-rendez-vous-medicaux"
   | "dossier-patient-informatise"
   | "facturation-assurance-clinique"
-  | "logiciel-clinique-hors-connexion";
+  | "logiciel-clinique-hors-connexion"
+  | "logiciel-clinique-mobile-money";
 
 export type IntentRoute = {
   slug: IntentSlug;
@@ -33,6 +34,7 @@ export const intentRoutes: IntentRoute[] = [
   route("dossier-patient-informatise", "Dossier patient", "Un dossier unique, accès par rôle", "fonction"),
   route("facturation-assurance-clinique", "Facturation et assurance", "Part patient, part assurance, tiers payant", "fonction"),
   route("logiciel-clinique-hors-connexion", "Saisie hors connexion", "Saisie hors ligne puis synchronisation", "fonction"),
+  route("logiciel-clinique-mobile-money", "Caisse et Mobile Money", "Paiement Mobile Money intégré à la caisse", "fonction"),
 ];
 
 export const intentRoute = (slug: IntentSlug) => intentRoutes.find((r) => r.slug === slug)!;
