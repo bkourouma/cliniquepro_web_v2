@@ -626,7 +626,7 @@ export const intentPages: IntentPage[] = [
       {
         h2: "Caisse et encaissement",
         paragraphs: [
-          "À la caisse, le caissier sélectionne les prestations à encaisser, avec le total calculé en direct. Il accepte les espèces avec la monnaie rendue, la carte, le virement, le chèque, le paiement direct par l'assurance et le paiement Mobile Money intégré. La session de caisse s'ouvre avec un fond de caisse et se ferme avec le suivi des écarts ; les remboursements sont encadrés, et chaque encaissement génère l'écriture comptable correspondante.",
+          "À la caisse, le caissier sélectionne les prestations à encaisser, avec le total calculé en direct. Il accepte les espèces avec la monnaie rendue, la carte, le virement, le chèque, le paiement direct par l'assurance et le paiement [Mobile Money](/logiciel-clinique-mobile-money) intégré. La session de caisse s'ouvre avec un fond de caisse et se ferme avec le suivi des écarts ; les remboursements sont encadrés, et chaque encaissement génère l'écriture comptable correspondante.",
         ],
       },
       { h2: "Prix : facturation, caisse et comptabilité", price: "financier" },
@@ -738,6 +738,81 @@ export const intentPages: IntentPage[] = [
     ],
     related: ["logiciel-rendez-vous-medicaux", "dossier-patient-informatise", "logiciel-gestion-clinique-cote-ivoire", "logiciel-cabinet-medical"],
     wiki: [{ href: "/wiki/clinique", label: "Clinique médicale : consultations, agenda, dossiers" }],
+  },
+
+  /* ------------------------------------------------------------------ caisse et Mobile Money */
+  // Sources : features.ts (caisse), positionnement.ts (« Paiement Mobile Money intégré »), faq.ts, wiki « argent ». Aucun opérateur n'est
+  // nommé : les sources ne les citent pas. Pas de rapprochement bancaire ni de frais annoncés : non documentés.
+  {
+    slug: "logiciel-clinique-mobile-money",
+    title: "Logiciel de caisse clinique avec Mobile Money",
+    description: `Caisse de clinique avec paiement Mobile Money intégré, sessions de caisse, écarts suivis et remboursements encadrés. ${fromPrice}.`,
+    eyebrow: "Caisse et Mobile Money",
+    h1: "Encaissez par Mobile Money dans votre clinique",
+    lead: "Le paiement Mobile Money est intégré à la caisse de CliniquePro : il s'encaisse comme les espèces ou la carte, dans la même session de caisse et avec la même facture.",
+    sections: [
+      {
+        h2: "Le problème de la caisse en clinique",
+        paragraphs: [
+          "Quand les paiements arrivent par plusieurs moyens, la caisse devient difficile à tenir : il faut savoir ce qui a été encaissé, par qui, pour quelle prestation, et si le total de la journée est juste. Un paiement noté à part ou oublié crée un écart que l'on cherche ensuite à la fermeture.",
+        ],
+      },
+      {
+        h2: "Les paiements pris en charge",
+        paragraphs: [
+          "À la caisse, le caissier sélectionne les prestations à encaisser, avec le total calculé en direct, puis choisit le moyen de paiement.",
+        ],
+        bullets: [
+          "Espèces, avec la monnaie rendue",
+          "Carte, virement et chèque",
+          "Paiement Mobile Money intégré",
+          "Paiement direct par l'assurance, avec la part de l'assurance et la part du patient distinguées sur la facture",
+        ],
+      },
+      {
+        h2: "Des écarts suivis et une comptabilité alimentée",
+        paragraphs: [
+          "La caisse fonctionne par session : elle s'ouvre avec un fond de caisse et se ferme avec le suivi des écarts. Chaque encaissement génère l'écriture comptable correspondante, ce qui évite de ressaisir. Les écritures comptables font partie du pack Gestion financière et comptable. Pour le détail du parcours, voir la page [facturation et prise en charge assurance](/facturation-assurance-clinique).",
+        ],
+      },
+      {
+        h2: "Des remboursements encadrés",
+        paragraphs: [
+          "Les remboursements sont encadrés dans la caisse, et ils sont repris dans la comptabilité avec les encaissements. Pour les règles précises, demandez-les pendant la démonstration.",
+        ],
+      },
+      { h2: "Tarif : la caisse est dans la Gestion financière et comptable", price: "financier" },
+      {
+        h2: "Voir la caisse en démonstration",
+        paragraphs: [
+          "La démonstration de 30 minutes montre la caisse appliquée à votre organisation. Les modules sont présentés sur la page [fonctionnalités](/fonctionnalites).",
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: "CliniquePro accepte-t-il le paiement Mobile Money ?",
+        a: "Oui, le paiement Mobile Money est intégré à la caisse, avec les espèces, la carte, le virement, le chèque et le paiement direct par l'assurance.",
+      },
+      {
+        q: "Quels opérateurs Mobile Money sont pris en charge ?",
+        a: "Nous ne publions pas de liste d'opérateurs sur ce site. Demandez-la pendant la démonstration de 30 minutes.",
+      },
+      {
+        q: "Les remboursements sont-ils contrôlés ?",
+        a: "Les remboursements sont encadrés dans la caisse et reportés dans la comptabilité.",
+      },
+      {
+        q: "Les paiements sont-ils suivis à la fermeture de la caisse ?",
+        a: "Oui. La session de caisse s'ouvre avec un fond de caisse et se ferme avec le suivi des écarts.",
+      },
+      {
+        q: "Quel est le tarif ?",
+        a: "La caisse fait partie de la Gestion financière et comptable. Les prix sont publiés sur la page des tarifs, en FCFA, hors taxes, par mois.",
+      },
+    ],
+    related: ["facturation-assurance-clinique", "logiciel-gestion-clinique-cote-ivoire", "logiciel-cabinet-medical", "logiciel-centre-de-sante"],
+    wiki: [{ href: "/wiki/argent", label: "Caisse, facturation et comptabilité : toutes les actions" }],
   },
 ];
 
