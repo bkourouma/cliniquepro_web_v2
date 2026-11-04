@@ -140,10 +140,10 @@ export const intentPages: IntentPage[] = [
   // rappels WhatsApp), décisions de l'éditeur (multi-cabinets, hors connexion, hébergement au choix).
   {
     slug: "logiciel-cabinet-medical",
-    title: "Logiciel de cabinet médical en Côte d'Ivoire",
+    title: "Logiciel de cabinet médical à Abidjan et en Côte d'Ivoire",
     description: `Agenda, dossier patient, ordonnances, caisse et assurance pour votre cabinet médical. ${fromPrice}, premier mois offert.`,
     eyebrow: "Cabinet médical",
-    h1: "Le logiciel de gestion de votre cabinet médical",
+    h1: "Le logiciel de gestion de votre cabinet médical à Abidjan",
     lead: "Un cabinet a besoin d'un outil simple : un agenda qui tient, un dossier patient retrouvé en quelques secondes, des ordonnances propres et une caisse juste. CliniquePro réunit tout cela, toutes spécialités.",
     sections: [
       {
@@ -157,6 +157,12 @@ export const intentPages: IntentPage[] = [
           "Réception, prestations du jour et prise en charge assurance",
           "Consultations structurées avec modèles paramétrables par spécialité",
           "Ordonnances, bulletins d'examens et certificats médicaux",
+        ],
+      },
+      {
+        h2: "Cabinet dentaire, pédiatrique, généraliste : exemples de modèles",
+        paragraphs: [
+          "Les modèles de consultation sont paramétrables pour toutes les spécialités : un cabinet dentaire, un cabinet de pédiatrie ou un cabinet de médecine générale crée sa spécialité et son modèle dans l'application, avec les rubriques dont il a besoin. L'ophtalmologie est la spécialité la plus détaillée, et sert d'exemple sur la page [logiciel d'ophtalmologie](/logiciel-ophtalmologie).",
         ],
       },
       {
