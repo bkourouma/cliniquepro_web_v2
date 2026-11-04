@@ -74,7 +74,7 @@ export function Hero() {
     setTimeout(() => (dragging.current = false), 0);
   }
 
-  const title = "Le logiciel de gestion pour cliniques, centres de santé et cabinets médicaux.";
+  const title = "Le logiciel de gestion pour cliniques, centres de santé et cabinets.";
   // Index du premier mot mis en dégradé
   const gradientFrom = 4;
   const accent = cards[active].accent;

@@ -29,7 +29,7 @@ export const guides: Guide[] = [
   {
     slug: "logiciel-clinique-saas-ou-sur-mesure",
     title: "Logiciel de clinique : SaaS ou sur mesure ?",
-    h1: "Logiciel de clinique : prêt à l'emploi (SaaS) ou développement sur mesure ?",
+    h1: "Logiciel de clinique : SaaS ou développement sur mesure ?",
     description: "Prêt à l'emploi (SaaS) ou développement sur mesure : les critères pour choisir un logiciel de clinique, et la place de CliniquePro.",
     published: "2026-10-16",
     lead: "Une clinique, un centre de santé ou un cabinet qui s'informatise a deux grandes voies : un logiciel déjà développé, que l'on loue par abonnement, ou un logiciel conçu sur mesure. Ce guide donne les critères pour décider, sans conseil médical : il s'agit de gestion d'établissement.",
