@@ -301,7 +301,7 @@ export const intentPages: IntentPage[] = [
   // d'un examen depuis un PDF par IA). Pas d'imagerie intégrée ni de connexion aux appareils : non confirmé, donc non écrit.
   {
     slug: "logiciel-ophtalmologie",
-    title: "Logiciel d'ophtalmologie : clinique et cabinet",
+    title: "Logiciel d'ophtalmologie en Côte d'Ivoire",
     description: "Acuité, pression intraoculaire, réfraction, OCT, champ visuel, ordonnances de lunettes : le dossier ophtalmologique de CliniquePro.",
     eyebrow: "Ophtalmologie",
     h1: "Logiciel de gestion pour cliniques et cabinets d'ophtalmologie",
