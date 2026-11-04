@@ -19,8 +19,8 @@ const bricolage = Bricolage_Grotesque({
 
 // Titre ≤ 60 caractères, description ≤ 155 (au-delà, Google les tronque). Le prix vient de pricing.ts : un changement de tarif
 // se répercute ici sans retouche (vérifier alors que la description reste sous 155 caractères).
-const HOME_TITLE = "CliniquePro : logiciel de clinique, cabinet, centre de santé";
-const HOME_DESCRIPTION = `Logiciel web pour cliniques, centres de santé et cabinets médicaux : dossier patient, rendez-vous, assurance, caisse, facturation. Dès ${fcfa(Math.min(...packs.map((p) => p.monthly)))} HT/mois.`;
+const HOME_TITLE = "Logiciel de gestion de clinique en Côte d'Ivoire | CliniquePro";
+const HOME_DESCRIPTION = `Logiciel web pour cliniques, centres de santé et cabinets à Abidjan : dossier patient, rendez-vous, assurance, caisse, Mobile Money. Dès ${fcfa(Math.min(...packs.map((p) => p.monthly)))} HT/mois, 1er mois offert.`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

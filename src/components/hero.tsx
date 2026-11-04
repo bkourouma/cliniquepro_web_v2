@@ -74,9 +74,9 @@ export function Hero() {
     setTimeout(() => (dragging.current = false), 0);
   }
 
-  const title = "Le logiciel de gestion pour cliniques, centres de santé et cabinets médicaux.";
+  const title = "Le logiciel de gestion de clinique en Côte d'Ivoire : cliniques, centres de santé et cabinets.";
   // Index du premier mot mis en dégradé
-  const gradientFrom = 4;
+  const gradientFrom = 5;
   const accent = cards[active].accent;
 
   return (
