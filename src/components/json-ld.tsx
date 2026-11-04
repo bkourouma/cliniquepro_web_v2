@@ -79,6 +79,7 @@ export function SoftwareJsonLd() {
         operatingSystem: "Web",
         inLanguage: "fr",
         description: SOFTWARE_DESCRIPTION,
+        image: absoluteUrl("/opengraph-image"),
         audience: { "@type": "BusinessAudience", audienceType: AUDIENCE },
         featureList: [...features.map((f) => f.title), ...EXTRA_CAPABILITIES],
         publisher: { "@id": ORGANIZATION_ID },
@@ -145,6 +146,7 @@ export function WebPageJsonLd({
         description,
         inLanguage: "fr",
         dateModified: dateModified ?? pageUpdated(path),
+        primaryImageOfPage: { "@type": "ImageObject", url: absoluteUrl("/opengraph-image") },
         isPartOf: { "@id": WEBSITE_ID },
         about: { "@id": SOFTWARE_ID },
       }}
