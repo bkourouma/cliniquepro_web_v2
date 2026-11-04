@@ -48,6 +48,19 @@ export const intentPages: IntentPage[] = [
           "Le nom CliniquePro ressemble à celui d'autres logiciels. Pour ne pas les confondre, retenez l'éditeur, Alliance Consultants (Abidjan), et l'adresse de ce site.",
         ],
       },
+      {
+        h2: "Le parcours du patient, de l'accueil à la comptabilité",
+        paragraphs: [
+          "CliniquePro relie les étapes de la vie d'une clinique dans un seul logiciel, pour que l'information saisie une fois serve à tous les postes.",
+        ],
+        bullets: [
+          "Dossier patient unique : identité, contact, personne à prévenir, assurances rattachées, historique et paiements liés",
+          "Agenda partagé par médecin et par type d'acte, avec statuts et rappels",
+          "Accueil : enregistrement de l'arrivée, prestations prévues, assurance du patient et demande de prise en charge",
+          "Consultation : motif, antécédents, diagnostic, prescription, avec des modèles paramétrables pour toutes les spécialités",
+          "Facturation, caisse, honoraires des médecins et comptabilité SYSCOHADA alimentés par l'activité",
+        ],
+      },
       { h2: "Des prix publics en FCFA, premier mois offert", price: "both" },
       {
         h2: "Prise en charge par l'assurance et tiers payant",
