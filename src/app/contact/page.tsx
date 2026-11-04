@@ -7,7 +7,7 @@ import { FinalCta } from "@/components/final-cta";
 import { BreadcrumbJsonLd, WebPageJsonLd } from "@/components/json-ld";
 import { Navbar } from "@/components/navbar";
 import { PageHero } from "@/components/page-hero";
-import { PUBLISHED_BY, SERVICE_POINTS } from "@/lib/positionnement";
+import { AUDIENCE, EXTRA_CAPABILITIES, NOT_COVERED, PUBLISHED_BY, SERVICE_POINTS } from "@/lib/positionnement";
 import { pageMetadata } from "@/lib/seo";
 import { contact, legal, whatsappLink } from "@/lib/site";
 
@@ -69,6 +69,21 @@ export default function ContactPage() {
                 <li key={p}>{p}</li>
               ))}
             </ul>
+          </section>
+          <section className="mt-12 text-ink-900/75">
+            <h2 className="font-display text-2xl font-bold text-ink-900">Ce dont nous pouvons parler</h2>
+            <p className="mt-3">
+              CliniquePro s&apos;adresse aux {AUDIENCE}, toutes spécialités. Pendant la démonstration de 30 minutes, vous pouvez poser vos questions sur votre organisation et sur les points suivants :
+            </p>
+            <ul className="mt-4 grid gap-1.5 sm:grid-cols-2 [&_li]:ml-5 [&_li]:list-disc">
+              {EXTRA_CAPABILITIES.map((c) => (
+                <li key={c}>{c}</li>
+              ))}
+            </ul>
+            <p className="mt-4">
+              CliniquePro ne prend pas en charge {NOT_COVERED.join(", ")}. Les écrans de démonstration contiennent des données fictives. Le détail des modules se trouve sur la page{" "}
+              <Link href="/fonctionnalites" className="font-semibold text-brand-600 hover:underline">fonctionnalités</Link>.
+            </p>
           </section>
           <div className="mt-10 overflow-hidden rounded-[28px] bg-ink-900">
             <BookingEmbed />

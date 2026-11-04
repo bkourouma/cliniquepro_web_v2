@@ -6,6 +6,7 @@ import { PageHero } from "@/components/page-hero";
 import { LinkCards, Prose, RichText } from "@/components/page-sections";
 import { GUIDE_AUTHOR, guidePath, guides } from "@/lib/guides";
 import { GUIDES_PATH } from "@/lib/intent-routes";
+import { AUDIENCE, NOT_COVERED } from "@/lib/positionnement";
 import { pageMetadata } from "@/lib/seo";
 
 const description = "Guides de gestion pour cliniques, centres de santé et cabinets médicaux : choisir un logiciel, comparer les options, éviter les erreurs courantes.";
@@ -33,6 +34,16 @@ export default function GuidesPage() {
               Chaque guide propose des critères de choix et une liste de questions à poser à n&apos;importe quel éditeur de logiciel. Les prix cités sont ceux de la page des tarifs : aucun chiffre ne vient d&apos;une source extérieure. Pour une question précise, écrivez-nous par WhatsApp ou réservez une démonstration de 30 minutes sur la page <RichText text="[contact](/contact)" />.
             </p>
             <LinkCards links={guides.map((g) => ({ href: guidePath(g.slug), label: g.h1, text: g.description }))} />
+          </section>
+          <section>
+            <h2>À qui s&apos;adressent ces guides</h2>
+            <p>
+              Ils s&apos;adressent aux décideurs des {AUDIENCE} qui comparent des solutions. CliniquePro ne prend pas en charge {NOT_COVERED.join(", ")} ; les guides s&apos;en tiennent
+              donc à la gestion courante d&apos;un établissement.
+            </p>
+            <p>
+              Pour passer des critères à la pratique, la <RichText text="[page des fonctionnalités](/fonctionnalites)" /> détaille les modules et la <RichText text="[page À propos](/a-propos)" /> présente l&apos;éditeur, Alliance Consultants.
+            </p>
           </section>
         </Prose>
       </main>
