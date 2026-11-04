@@ -18,7 +18,7 @@ export const PAGE_UPDATED: Record<string, string> = {
   "/wiki/*": "2026-10-16",
   // Pages d'intention (profils, fonctions, page locale) et guides : date de création, à faire évoluer quand leur contenu change
   "/logiciel-gestion-clinique-cote-ivoire": "2026-10-16",
-  "/logiciel-cabinet-medical": "2026-10-16",
+  "/logiciel-cabinet-medical": "2026-11-04",
   "/logiciel-centre-de-sante": "2026-10-16",
   "/logiciel-ophtalmologie": "2026-10-16",
   "/logiciel-rendez-vous-medicaux": "2026-10-16",
