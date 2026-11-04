@@ -34,7 +34,7 @@ export default function AProposPage() {
       <WebPageJsonLd path="/a-propos" type="AboutPage" name="À propos de CliniquePro" description={description} />
       <BreadcrumbJsonLd trail={[{ name: "À propos", path: "/a-propos" }]} />
       <main className="bg-paper">
-        <PageHero eyebrow="À propos" title={<>Un logiciel de gestion pensé pour <span className="text-gradient">les cliniques, centres de santé et cabinets.</span></>}>
+        <PageHero eyebrow="À propos" title={<>Un logiciel de gestion pour <span className="text-gradient">cliniques, centres de santé et cabinets.</span></>}>
           CliniquePro réunit dans une seule application web la gestion des patients, des consultations, des assurances, de la caisse et de la comptabilité, pour toutes les spécialités.
         </PageHero>
 
