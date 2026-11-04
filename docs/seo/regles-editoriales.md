@@ -31,3 +31,7 @@ Ces règles encadrent les propositions SEO et leur vérification. Elles ne const
 16. Conserver les liens internes utiles, canonicals, données structurées, sitemap et événements des CTA. Les prix et fonctionnalités du JSON-LD doivent rester issus des mêmes sources que la page.
 17. Mettre à jour `src/lib/dates.ts` uniquement pour les pages réellement modifiées. Ne pas rafraîchir toutes les dates pour simuler de la fraîcheur.
 18. Limiter chaque PR à la recommandation. Formulaires, routes serveur, secrets, dépendances, déploiement, prix, pages juridiques et sources éditoriales restent hors des modifications autonomes. Lister les informations manquantes dans la PR, sans les publier comme des faits.
+
+## Preuves dans la proposition
+
+La PR précise les pages modifiées, la source de chaque fait ajouté, les éventuelles contradictions et les vérifications réellement exécutées. Une estimation SEO ou une CI verte ne valide pas un prix, une capacité médicale ou une garantie commerciale.
