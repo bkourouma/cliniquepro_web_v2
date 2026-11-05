@@ -28,7 +28,7 @@ const keyActions: Record<string, string[]> = {
   administration: ["Créer un utilisateur", "Réinitialiser un mot de passe", "Désactiver un utilisateur", "Consulter le journal d'audit"],
 };
 
-export const metadata: Metadata = pageMetadata({ title: `Fonctionnalités logiciel clinique : ${wikiTotal} actions`, description, path: "/wiki" });
+export const metadata: Metadata = pageMetadata({ title: `Fonctionnalités du logiciel : ${wikiTotal} actions`, description, path: "/wiki" });
 
 export default function WikiPage() {
   return (
