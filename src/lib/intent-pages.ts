@@ -140,7 +140,7 @@ export const intentPages: IntentPage[] = [
   // rappels WhatsApp), décisions de l'éditeur (multi-cabinets, hors connexion, hébergement au choix).
   {
     slug: "logiciel-cabinet-medical",
-    title: "Logiciel de cabinet médical à Abidjan et en Côte d'Ivoire",
+    title: "Logiciel de cabinet médical à Abidjan",
     description: `Agenda, dossier patient, ordonnances, caisse et assurance pour votre cabinet médical. ${fromPrice}, premier mois offert.`,
     eyebrow: "Cabinet médical",
     h1: "Le logiciel de gestion de votre cabinet médical à Abidjan",
