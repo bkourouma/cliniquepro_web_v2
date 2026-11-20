@@ -3,64 +3,62 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 import ts from 'typescript';
+import * as reception from '../src/lib/lead-reception-server.mjs';
 
-const SITE_KIND = 'clinique';
-const ROOT_SOURCE = 'src/app/api/lead/route.ts';
-function scenario({ failure = false, noWebhook = false, noDurableSink = false } = {}) {
-  const calls = { prepared: [], confirmed: [] };
-  const env = { N8N_WEBHOOK_URL: noWebhook ? '' : 'https://upstream.invalid', LEADS_TO_EMAIL: 'test@example.test', LEADS_FROM_EMAIL: 'test@example.test' };
-  const helper = { prepareBusinessSubmission: async input => { calls.prepared.push(input); return 'ticket'; }, confirmBusinessSubmission: async (...args) => { calls.confirmed.push(args); return true; }, submissionDevice: () => 'MOBILE' };
-  class NextResponse extends Response { static json(body, options) { return Response.json(body, options); } }
-  class DispatchError extends Error {}
-  const exportsByPath = new Map();
-  const load = path => {
-    if (exportsByPath.has(path)) return exportsByPath.get(path);
-    const sandboxModule = { exports: {} }; exportsByPath.set(path, sandboxModule.exports);
-    const source = readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
-    const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, esModuleInterop: true } }).outputText;
-    const require = name => {
-      if (name.endsWith('/seo-business-outbox.mjs')) return helper;
-      if (name === 'next/server') return { NextResponse };
-      if (name === 'bcryptjs') return { hash: async () => 'test-hash' };
-      if (name === '@/lib/validators/lead') return { LeadInputSchema: { safeParse: data => ({ success: true, data: { intent: 'demo', ...data } }) } };
-      if (name === '@/lib/prisma') return { prisma: { lead: { create: async () => { if (failure) throw new Error('isolated persistence failure'); return { id: 'durable-test-lead' }; } } } };
-      if (name === '@/lib/mailer') return { sendLeadNotification: async () => undefined };
-      if (name === '@/lib/public-request') return { redirectToPath: () => new Response(null, { status: 303 }) };
-      if (name === '@/lib/site') return { contact: { email: 'test@example.test' } };
-      if (name === '@/lib/leads/lead.schema') return { LeadSubmissionSchema: { parse: data => data } };
-      if (name === '@/lib/leads/handler') return load('lib/leads/handler.ts');
-      if (name === '@/lib/leads/rate-limit') return { checkRateLimit: () => ({ allowed: true }), getClientIp: () => 'isolated' };
-      if (name === '@/lib/leads/sinks') return { LeadDispatchError: DispatchError };
-      if (name.endsWith('/resend.sink')) return { ResendLeadSink: class { critical = true; async handle() { if (failure) throw new Error('isolated sink failure'); return noDurableSink ? undefined : { delivered: true }; } } };
-      if (name.endsWith('/log.sink')) return { LogLeadSink: class { critical = false; async handle() {} } };
-      if (name === 'zod') return { ZodError: class extends Error {} };
-      throw new Error(`Unexpected import in isolated handler test: ${name}`);
-    };
-    vm.runInNewContext(compiled, { module: sandboxModule, exports: sandboxModule.exports, require, Request, Response, Headers, AbortSignal, Buffer, process: { env }, console: { warn() {}, error() {} }, fetch: async () => new Response(null, { status: failure ? 502 : 200 }) });
-    return sandboxModule.exports;
+const CLINIQUE = true;
+const origin = CLINIQUE ? 'https://cliniquepro-web.allianceconsultants.net' : 'https://immotopia.cloud';
+const sourceId = CLINIQUE ? 'site-form-clinique-v1' : 'site-form-immotopia-v1';
+const submissionId = '123e4567-e89b-42d3-a456-426614174000';
+const receiptId = '123e4567-e89b-42d3-a456-426614174111';
+const body = { structure: 'RECETTE', volume: 'RECETTE', ...(CLINIQUE ? { need: 'RECETTE' } : {}), role: 'RECETTE', name: 'Test', company: 'Test', email: 'recipe@example.test', phone: '0000000000', locale: 'fr', website: '', elapsedMs: 2500, submissionId, submittedAt: '2026-11-20T20:45:00.000Z' };
+function scenario({ failure = false, noWebhook = false, invalidAck = false } = {}) {
+  const calls = { prepared: [], confirmed: [], forwarded: [] };
+  const env = { N8N_WEBHOOK_URL: noWebhook ? '' : 'https://workflow.example.test/production', N8N_WEBHOOK_SECRET: 'isolated-production-secret-value-00000000', N8N_WEBHOOK_TEST_URL: 'https://workflow.example.test/recipe', N8N_WEBHOOK_TEST_SECRET: 'isolated-workflow-recipe-secret-00000000', FORM_RECIPE_AUTH_TOKEN: 'isolated-site-recipe-secret-0000000000000', MC_FORM_SOURCE_ID: sourceId };
+  const measurements = { prepareBusinessSubmission: async input => { calls.prepared.push(input); return 'ticket'; }, confirmBusinessSubmission: async (...args) => { calls.confirmed.push(args); return true; }, submissionDevice: () => 'MOBILE' };
+  const upstream = async (url, init) => {
+    const envelope = JSON.parse(init.body); calls.forwarded.push(envelope);
+    if (failure) return new Response(null, { status: 503 });
+    return Response.json({ version: 1, accepted: true, sourceId, submissionId: invalidAck ? 'wrong' : envelope.submissionId, receiptId, receivedAt: envelope.submittedAt, duplicate: false, isTest: url.endsWith('/recipe') });
   };
-  return { calls, handler: load(ROOT_SOURCE) };
+  const server = { ...reception, createLeadHandler: (config, deps) => reception.createLeadHandler(config, { ...deps, fetch: upstream, sleep: async () => undefined }) };
+  const sandboxModule = { exports: {} };
+  const source = readFileSync(new URL('../src/app/api/lead/route.ts', import.meta.url), 'utf8');
+  const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, esModuleInterop: true } }).outputText;
+  const require = name => {
+    if (name === '@/lib/seo-business-outbox.mjs') return measurements;
+    if (name === '@/lib/lead-reception-server.mjs') return server;
+    throw new Error(`Unexpected import in isolated handler: ${name}`);
+  };
+  vm.runInNewContext(compiled, { module: sandboxModule, exports: sandboxModule.exports, require, Request, Response, Headers, AbortSignal, process: { env } });
+  const request = (data = body, recipe = false) => new Request(origin + '/api/lead', { method: 'POST', headers: { Origin: origin, 'Content-Type': 'application/json', ...(recipe ? { 'x-mc-form-test': env.FORM_RECIPE_AUTH_TOKEN } : {}) }, body: JSON.stringify(data) });
+  return { calls, handler: sandboxModule.exports, request };
 }
-const body = { structure: 'test', volume: 'test', need: 'test', role: 'test', name: 'Test', company: 'Test', email: 'test@example.test', phone: '0102030405', sourcePage: '/demonstration', locale: 'en', consent: true };
-const request = input => new Request('https://site.example.test/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json', 'user-agent': 'isolated mobile' }, body: JSON.stringify(input) });
-test('a real successful sink confirms exactly one non-personal submission measurement', async () => {
-  const { calls, handler } = scenario(); const response = await handler.POST(request(body));
-  assert.equal(response.status, 200); assert.equal(calls.confirmed.length, 1); assert.equal(calls.prepared.length, 1);
-  assert.ok(!JSON.stringify(calls.prepared).includes('test@example.test')); assert.ok(!JSON.stringify(calls.prepared).includes('0102030405'));
+
+test('the actual route confirms SEO only after a correlated durable receipt', async () => {
+  const s = scenario(); const response = await s.handler.POST(s.request());
+  assert.equal(response.status, 200); assert.equal((await response.json()).receiptId, receiptId);
+  assert.equal(s.calls.prepared.length, 1); assert.deepEqual(s.calls.confirmed, [['ticket', receiptId]]);
+  assert.ok(!JSON.stringify(s.calls.prepared).includes(body.email)); assert.ok(!JSON.stringify(s.calls.prepared).includes(body.phone));
 });
-test('a honeypot success response creates no measurement', async () => {
-  const { calls, handler } = scenario(); const response = await handler.POST(request({ ...body, website: 'bot', honeypot: 'bot' }));
-  assert.ok([200, 204].includes(response.status)); assert.equal(calls.confirmed.length, 0); assert.equal(calls.prepared.length, 0);
+test('the actual honeypot path forwards nothing and creates no measurement', async () => {
+  const s = scenario(); const response = await s.handler.POST(s.request({ ...body, website: 'bot' }));
+  assert.equal(response.status, 200); assert.equal(s.calls.forwarded.length, 0); assert.equal(s.calls.prepared.length, 0); assert.equal(s.calls.confirmed.length, 0);
 });
-test('a failed persistence or critical sink never confirms a conversion', async () => {
-  const { calls, handler } = scenario({ failure: true }); const response = await handler.POST(request(body));
-  assert.ok(response.status >= 500); assert.equal(calls.confirmed.length, 0);
+test('a failed upstream never confirms a conversion or prepares a misleading success', async () => {
+  const s = scenario({ failure: true }); const response = await s.handler.POST(s.request());
+  assert.equal(response.status, 502); assert.equal(s.calls.prepared.length, 0); assert.equal(s.calls.confirmed.length, 0);
 });
-if (SITE_KIND === 'immo') test('forwarded:false is not a transmitted submission', async () => {
-  const { calls, handler } = scenario({ noWebhook: true }); const response = await handler.POST(request(body));
-  assert.equal((await response.json()).forwarded, false); assert.equal(calls.prepared.length, 0); assert.equal(calls.confirmed.length, 0);
+test('missing N8N configuration is unavailable on both sites, never forwarded:false success', async () => {
+  const s = scenario({ noWebhook: true }); const response = await s.handler.POST(s.request());
+  assert.equal(response.status, 503); assert.equal(s.calls.forwarded.length, 0); assert.equal(s.calls.prepared.length, 0);
+  if (CLINIQUE) assert.equal((await (await s.handler.GET()).json()).formulaire, false);
 });
-if (SITE_KIND === 'ecole') test('a missing real email provider never turns a log-only success into a conversion', async () => {
-  const { calls, handler } = scenario({ noDurableSink: true }); const response = await handler.POST(request(body));
-  assert.equal(response.status, 200); assert.equal(calls.confirmed.length, 0);
+test('the real recipe route receives a receipt while excluding all measurement hooks', async () => {
+  const s = scenario(); const response = await s.handler.POST(s.request(body, true));
+  assert.equal(response.status, 200); assert.equal((await response.json()).isTest, true); assert.equal(s.calls.forwarded.length, 1); assert.equal(s.calls.prepared.length, 0); assert.equal(s.calls.confirmed.length, 0);
 });
+test('a mismatched ACK in the actual route is refused and never measured', async () => {
+  const s = scenario({ invalidAck: true }); const response = await s.handler.POST(s.request());
+  assert.equal(response.status, 502); assert.equal(s.calls.prepared.length, 0); assert.equal(s.calls.confirmed.length, 0);
+});
+
