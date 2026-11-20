@@ -75,7 +75,8 @@ describe("politique de confidentialité", () => {
     assert.match(page, /calendrier de réservation/);
   });
   it("affiche la date de mise à jour du jour de la modification", () => {
-    assert.match(page, /updated="23 octobre 2026"/);
+    assert.match(page, /updated="20 novembre 2026"/);
     assert.match(read("src/lib/dates.ts"), /"\/confidentialite": "2026-10-23"/);
   });
 });
+

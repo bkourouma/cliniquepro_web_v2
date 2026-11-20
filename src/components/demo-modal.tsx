@@ -5,6 +5,7 @@ import { CalendarCheck, Loader2, Mail, MessageCircle, Phone, X } from "lucide-re
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { contact, whatsappLink } from "@/lib/site";
 import { BookingFrame, Thanks } from "./booking-frame";
+import { getSubmissionMetadata, readLeadReceipt, type LeadReceipt } from "@/lib/lead-reception-client.mjs";
 
 // Lien public de réservation Calendly ou Cal.com (ex. https://calendly.com/cliniquepro).
 // S'il est absent, un formulaire de qualification intégré est affiché à la place, à condition que le serveur ait un webhook
@@ -13,6 +14,7 @@ const BOOKING_URL = process.env.NEXT_PUBLIC_BOOKING_URL;
 
 export function DemoModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const dialogRef = useRef<HTMLDivElement>(null);
+  const [callback, setCallback] = useState(false);
 
   useEffect(() => {
     if (!open) return;
@@ -65,8 +67,15 @@ export function DemoModal({ open, onClose }: { open: boolean; onClose: () => voi
               </button>
             </div>
             <div className="min-h-0 flex-1 overflow-y-auto">
-              {BOOKING_URL ? (
-                <BookingFrame url={BOOKING_URL} onDone={onClose} />
+              {BOOKING_URL && !callback ? (
+                <>
+                  <BookingFrame url={BOOKING_URL} onDone={onClose} />
+                  <div className="border-t border-white/10 p-5 text-center">
+                    <button type="button" data-testid="lead-callback-open" onClick={() => setCallback(true)} className="cursor-pointer rounded-full border border-white/30 px-5 py-3 text-sm font-semibold text-white underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4">
+                      Préférer être recontacté
+                    </button>
+                  </div>
+                </>
               ) : (
                 <LeadOrContact onDone={onClose} />
               )}
@@ -123,7 +132,7 @@ function LeadOrContact({ onDone }: { onDone: () => void }) {
   }, []);
 
   if (formulaire === null) return <div className="h-72 animate-pulse bg-white/5" aria-busy="true" />;
-  return formulaire ? <LeadForm onDone={onDone} onUnavailable={() => setFormulaire(false)} /> : <ContactOptions />;
+  return formulaire ? <LeadForm onDone={onDone} /> : <ContactOptions />;
 }
 
 function ContactOptions() {
@@ -159,33 +168,43 @@ function ContactOptions() {
   );
 }
 
-function LeadForm({ onDone, onUnavailable }: { onDone: () => void; onUnavailable: () => void }) {
+function LeadForm({ onDone }: { onDone: () => void }) {
   const [state, setState] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [receipt, setReceipt] = useState<LeadReceipt | null>(null);
+  const startedAt = useRef(0);
+  useEffect(() => { startedAt.current = Date.now(); }, []);
 
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (state === "sending") return;
     setState("sending");
     const data = Object.fromEntries(new FormData(e.currentTarget));
     try {
+      const metadata = await getSubmissionMetadata("site-vitrine-cliniquepro", data, "fr");
       const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, ...metadata, locale: "fr", elapsedMs: startedAt.current ? Date.now() - startedAt.current : 0 }),
       });
-      // 503 : le webhook a disparu entre l'affichage et l'envoi, on bascule sur les coordonnées
-      if (res.status === 503) return onUnavailable();
-      setState(res.ok ? "sent" : "error");
+      const result: unknown = await res.json();
+      const mode = res.headers.get("x-mc-form-recipe");
+      const accepted = res.ok && (mode === "0" || mode === "1")
+        ? readLeadReceipt(result, { sourceId: "site-form-clinique-v1", submissionId: metadata.submissionId, isTest: mode === "1" })
+        : null;
+      if (!accepted) throw new Error("Receipt not confirmed");
+      setReceipt(accepted);
+      setState("sent");
     } catch {
+      // The form and its non-personal idempotency metadata are retained for a safe retry.
       setState("error");
     }
   }
 
-  if (state === "sent") {
+  if (state === "sent" && receipt) {
     return (
-      <Thanks
-        onDone={onDone}
-        text="Un expert CliniquePro vous recontacte sous 24 h ouvrées pour fixer le créneau de votre démonstration."
-      />
+      <div role="status" data-testid="lead-receipt" data-submission-id={receipt.submissionId} data-receipt-id={receipt.receiptId} data-is-test={String(receipt.isTest)} className="min-w-0 break-words">
+        <Thanks onDone={onDone} text={`${receipt.isTest ? "Demande de recette enregistrée." : "Votre demande est enregistrée."} Référence : ${receipt.receiptId}`} />
+      </div>
     );
   }
 
@@ -212,7 +231,7 @@ function LeadForm({ onDone, onUnavailable }: { onDone: () => void; onUnavailable
         </button>
         {state === "error" && (
           <p role="alert" className="mt-3 text-center text-sm text-rose-300">
-            L&apos;envoi a échoué. Vérifiez votre connexion et réessayez.
+            L&apos;enregistrement n&apos;a pas pu être confirmé. Réessayez sans modifier la demande.
           </p>
         )}
         <p className="mt-3 text-center text-xs text-white/40">

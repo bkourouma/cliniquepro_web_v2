@@ -11,7 +11,7 @@ export const metadata: Metadata = pageMetadata({
 
 export default function ConfidentialitePage() {
   return (
-    <LegalPage title="Politique de confidentialité" updated="23 octobre 2026">
+    <LegalPage title="Politique de confidentialité" updated="20 novembre 2026">
       <p>
         {legal.publisher}, éditeur de CliniquePro, s&apos;engage à protéger vos données personnelles conformément à la loi ivoirienne n° 2013-450 du 19 juin 2013 relative à la protection des données à caractère personnel.
       </p>
@@ -42,9 +42,16 @@ export default function ConfidentialitePage() {
         Les données sont destinées à l&apos;équipe commerciale de CliniquePro. Elles peuvent être traitées, pour notre compte, par des prestataires techniques : notre hébergeur {legal.host}, un outil de prise de rendez-vous le cas échéant, et nos outils internes de suivi des demandes. Si vous acceptez les cookies de mesure d&apos;audience, Google Ireland Limited (Google Analytics 4) reçoit également des données de navigation. Certains de ces prestataires peuvent être situés hors de Côte d&apos;Ivoire.
       </p>
 
+      <p>
+        Le formulaire transmet votre demande par un workflow N8N dédié vers notre outil interne de réception Mission Control,
+        pour permettre à notre équipe de la traiter et de vous répondre. Cet enregistrement ne vous inscrit pas à des communications marketing.
+      </p>
+
       <h2>Durée de conservation</h2>
       <p>
-        Les données des prospects sont conservées au maximum 3 ans après le dernier contact, puis supprimées. Les données des clients sont conservées pendant la durée de la relation contractuelle et les délais légaux qui s&apos;y appliquent.
+        Les demandes de ce formulaire restent dans notre boîte de réception pendant leur traitement. Une demande clôturée est supprimée
+        90 jours après sa dernière modification. Les autres dossiers de prospection sont conservés au maximum 3 ans après le dernier contact,
+        puis supprimés. Les données des clients sont conservées pendant la durée de la relation contractuelle et les délais légaux qui s&apos;y appliquent.
       </p>
 
       <h2 id="cookies">Cookies et mesure d&apos;audience</h2>
@@ -64,6 +71,11 @@ export default function ConfidentialitePage() {
       </p>
       <p id="cookies-reservation">
         Un éventuel calendrier de réservation intégré (service tiers) peut déposer ses propres cookies nécessaires à son fonctionnement ; ils relèvent de la politique de ce service et ne sont pas concernés par le bouton « Gérer mes cookies ».
+      </p>
+
+      <p>
+        Pour réessayer un envoi sans créer de doublon, un identifiant technique et une empreinte du formulaire sont conservés
+        dans votre onglet pendant 24 heures au plus. Les coordonnées saisies ne sont pas recopiées dans ce stockage.
       </p>
 
       <h2>Vos droits</h2>
