@@ -2,11 +2,11 @@
 # sur le modèle de celui du site ImmoTopia.
 #
 # À chaque fusion dans main (ou à la main depuis l'onglet Actions) :
-#   1. les vérifications de ci.yml (types, lint, build) ;
+#   1. les vérifications de ci.yml (types, lint, tests, build) ;
 #   2. le déploiement sur le serveur « alliance », par un runner auto-hébergé
 #      (label cliniquepro-site, utilisateur deployer) : synchronisation du code
-#      dans /home/deployer/apps/cliniquepro-web-v2, « docker compose up -d --build »,
-#      puis contrôle de santé sur 127.0.0.1:3030.
+#      dans /home/deployer/apps/cliniquepro-web-v2, construction avec le SHA GitHub,
+#      puis contrôle de santé et du SHA sur 127.0.0.1:3030.
 #
 # Aucun secret dans ce dépôt. Si un .env de production existe un jour dans le dossier
 # du serveur, il n'est jamais touché par le déploiement (exclu du rsync).
@@ -76,7 +76,11 @@ jobs:
         run: |
           set -euo pipefail
           # Si la construction échoue, l'ancien conteneur reste en service.
-          docker compose up -d --build
+          [[ "$GITHUB_SHA" =~ ^[a-f0-9]{40}$ ]]
+          docker compose build --build-arg "BUILD_COMMIT_SHA=$GITHUB_SHA"
+          image_sha=$(docker image inspect "$IMAGE:latest" --format '{{ index .Config.Labels "org.opencontainers.image.revision" }}')
+          test "$image_sha" = "$GITHUB_SHA"
+          docker compose up -d --no-build
           docker compose ps
 
       - name: Contrôle de santé
@@ -84,10 +88,14 @@ jobs:
         run: |
           set +e
           set -uo pipefail
+          headers=$(mktemp)
+          trap 'rm -f "$headers"' EXIT
           check() {
             for i in $(seq 1 30); do
-              if curl -fsS -o /dev/null --max-time 10 "$APP_URL$1"; then
-                echo "OK $1 (tentative $i)"
+              status=$(curl -sS -o /dev/null -D "$headers" -w '%{http_code}' --max-time 10 "$APP_URL$1")
+              served_sha=$(awk -F ': *' 'tolower($1) == "x-commit-sha" { sub(/\r$/, "", $2); print $2 }' "$headers")
+              if [ "$status" = "200" ] && [ "$served_sha" = "$GITHUB_SHA" ]; then
+                echo "OK $1 SHA $served_sha (tentative $i)"
                 return 0
               fi
               sleep 5
