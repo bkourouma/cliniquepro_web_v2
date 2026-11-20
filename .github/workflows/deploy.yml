@@ -1,49 +1,87 @@
-# Déploiement automatique du site vitrine CliniquePro (https://cliniquepro-web.allianceconsultants.net),
-# sur le modèle de celui du site ImmoTopia.
-#
-# À chaque fusion dans main (ou à la main depuis l'onglet Actions) :
-#   1. les vérifications de ci.yml (types, lint, tests, build) ;
-#   2. le déploiement sur le serveur « alliance », par un runner auto-hébergé
-#      (label cliniquepro-site, utilisateur deployer) : synchronisation du code
-#      dans /home/deployer/apps/cliniquepro-web-v2, construction avec le SHA GitHub,
-#      puis contrôle de santé et du SHA sur 127.0.0.1:3030.
-#
-# Aucun secret dans ce dépôt. Si un .env de production existe un jour dans le dossier
-# du serveur, il n'est jamais touché par le déploiement (exclu du rsync).
-# Procédure, retour arrière et secours manuel : README.md (section Déploiement).
+# Images construites sur GitHub, déploiement du digest exact sans compilation sur le VPS.
+# Les fichiers .env du serveur sont exclus de la synchronisation ; les volumes restent conservés.
 name: Déploiement
-
-on:
+"on":
   push:
-    branches: [main]
-  workflow_dispatch:
-
-# Un seul déploiement à la fois ; un déploiement en cours n'est jamais
-# interrompu, les suivants attendent (le plus récent passe en dernier).
+    branches:
+      - main
+  workflow_dispatch: null
 concurrency:
   group: deploiement-cliniquepro-site
   cancel-in-progress: false
-
 permissions:
   contents: read
-
 jobs:
   verifier:
     name: Vérifications
     uses: ./.github/workflows/ci.yml
-
+  build:
+    name: Image GHCR construite sur GitHub
+    needs: verifier
+    if: ${{ github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      digest: ${{ steps.image.outputs.digest }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - name: Connexion au registre GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Construire et publier l'image immuable
+        id: image
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ghcr.io/bkourouma/cliniquepro-site:${{ github.sha }}
+          labels: |
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
+          build-args: |
+            BUILD_COMMIT_SHA=${{ github.sha }}
+            NEXT_PUBLIC_SITE_URL=${{ vars.NEXT_PUBLIC_SITE_URL || 'https://cliniquepro-web.allianceconsultants.net' }}
+            NEXT_PUBLIC_APP_URL=${{ vars.NEXT_PUBLIC_APP_URL || 'https://cliniquepro.allianceconsultants.net/demo-login' }}
+            NEXT_PUBLIC_BOOKING_URL=${{ vars.NEXT_PUBLIC_BOOKING_URL || 'https://calendly.com/immotopia/demo-cliniquepro' }}
+            GOOGLE_SITE_VERIFICATION=${{ secrets.GOOGLE_SITE_VERIFICATION }}
+            BING_SITE_VERIFICATION=${{ secrets.BING_SITE_VERIFICATION }}
   deployer:
     name: Déployer sur alliance
-    needs: verifier
-    runs-on: [self-hosted, linux, x64, cliniquepro-site]
+    needs:
+      - verifier
+      - build
+    runs-on:
+      - self-hosted
+      - linux
+      - x64
+      - cliniquepro-site
     timeout-minutes: 25
     env:
       APP_DIR: /home/deployer/apps/cliniquepro-web-v2
       APP_URL: http://127.0.0.1:3030
       IMAGE: cliniquepro-site
+      PUBLIC_APP_URL: https://cliniquepro-web.allianceconsultants.net
     steps:
       - uses: actions/checkout@v4
-
+      - name: Vérifier la branche publiée
+        shell: bash
+        run: |
+          set -euo pipefail
+          CURRENT_SHA=$(git ls-remote origin refs/heads/main | cut -f1)
+          test "$CURRENT_SHA" = "$GITHUB_SHA" || { echo "::error::Commit dépassé : aucun déploiement."; exit 1; }
+      - name: Connexion au registre GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Synchroniser le code vers le serveur
         shell: bash
         run: |
@@ -69,20 +107,26 @@ jobs:
             --exclude='tsconfig.tsbuildinfo' \
             --exclude='*.tgz' --exclude='deploy.log' \
             ./ "$APP_DIR/"
-
-      - name: Reconstruire et relancer le conteneur
+      - name: Tirer l'image GitHub et relancer sans construction
         shell: bash
         working-directory: /home/deployer/apps/cliniquepro-web-v2
         run: |
           set -euo pipefail
-          # Si la construction échoue, l'ancien conteneur reste en service.
           [[ "$GITHUB_SHA" =~ ^[a-f0-9]{40}$ ]]
-          docker compose build --build-arg "BUILD_COMMIT_SHA=$GITHUB_SHA"
-          image_sha=$(docker image inspect "$IMAGE:latest" --format '{{ index .Config.Labels "org.opencontainers.image.revision" }}')
-          test "$image_sha" = "$GITHUB_SHA"
-          docker compose up -d --no-build
+          [[ "$BUILT_DIGEST" =~ ^sha256:[a-f0-9]{64}$ ]]
+          IMAGE_REF="ghcr.io/bkourouma/cliniquepro-site@$BUILT_DIGEST"
+          docker pull "$IMAGE_REF"
+          IMAGE_SHA=$(docker image inspect "$IMAGE_REF" --format '{{ index .Config.Labels "org.opencontainers.image.revision" }}')
+          test "$IMAGE_SHA" = "$GITHUB_SHA"
+          CURRENT_SHA=$(git -C "$GITHUB_WORKSPACE" ls-remote origin refs/heads/main | cut -f1)
+          test "$CURRENT_SHA" = "$GITHUB_SHA" || { echo "::error::Commit dépassé : ancien conteneur conservé."; exit 1; }
+          docker tag "$IMAGE_REF" "cliniquepro-site:latest"
+          echo "replace_attempted=true" >> "$GITHUB_OUTPUT"
+          docker compose up -d --no-build --pull never web
           docker compose ps
-
+        id: deploy_image
+        env:
+          BUILT_DIGEST: ${{ needs.build.outputs.digest }}
       - name: Contrôle de santé
         shell: bash
         run: |
@@ -92,7 +136,7 @@ jobs:
           trap 'rm -f "$headers"' EXIT
           check() {
             for i in $(seq 1 30); do
-              status=$(curl -sS -o /dev/null -D "$headers" -w '%{http_code}' --max-time 10 "$APP_URL$1")
+              status=$(curl -sS -o /dev/null -D "$headers" -w '%{http_code}' --max-time 10 "${2:-$APP_URL}$1")
               served_sha=$(awk -F ': *' 'tolower($1) == "x-commit-sha" { sub(/\r$/, "", $2); print $2 }' "$headers")
               if [ "$status" = "200" ] && [ "$served_sha" = "$GITHUB_SHA" ]; then
                 echo "OK $1 SHA $served_sha (tentative $i)"
@@ -102,7 +146,7 @@ jobs:
             done
             return 1
           }
-          if check /robots.txt && check /; then
+          if check /robots.txt && check / && check / "$PUBLIC_APP_URL"; then
             echo "Déploiement de ${GITHUB_SHA::7} en ligne."
             exit 0
           fi
@@ -114,14 +158,14 @@ jobs:
           if [ -n "${ROLLBACK_TAG:-}" ] && docker image inspect "$IMAGE:$ROLLBACK_TAG" >/dev/null 2>&1; then
             echo "Retour arrière sur $IMAGE:$ROLLBACK_TAG"
             docker tag "$IMAGE:$ROLLBACK_TAG" "$IMAGE:latest"
-            (cd "$APP_DIR" && docker compose up -d --no-build)
+            (cd "$APP_DIR" && docker compose up -d --no-build --pull never)
             sleep 10
             curl -fsS -o /dev/null --max-time 10 "$APP_URL/" \
               && echo "Ancienne version rétablie." \
               || echo "::error::L'ancienne version ne répond pas non plus : intervention manuelle nécessaire."
           fi
           exit 1
-
+        if: ${{ always() && steps.deploy_image.outputs.replace_attempted == 'true' }}
       - name: Nettoyer les images
         if: always()
         shell: bash
@@ -130,3 +174,7 @@ jobs:
           docker image prune -f >/dev/null || true
           docker image ls "$IMAGE" --format '{{.Tag}}' | grep '^avant-ci-' | sort -r | tail -n +6 \
             | xargs -r -I{} docker rmi "$IMAGE:{}" || true
+    if: ${{ github.ref == 'refs/heads/main' }}
+    permissions:
+      contents: read
+      packages: read

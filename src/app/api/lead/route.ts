@@ -1,3 +1,5 @@
+import { prepareBusinessSubmission, confirmBusinessSubmission, submissionDevice } from '@/lib/seo-business-outbox.mjs';
+
 // Reçoit les demandes de démonstration et les transmet au webhook configuré (n8n, Zapier, etc.).
 // L'URL du webhook reste côté serveur : N8N_WEBHOOK_URL (jamais exposée au navigateur).
 // Sans webhook, rien ne peut être transmis : la route refuse la demande (503) au lieu de la perdre en silence,
@@ -49,6 +51,7 @@ export async function POST(request: Request) {
     return Response.json({ error: "E-mail invalide" }, { status: 400 });
   }
 
+  const measurement = await prepareBusinessSubmission({ device: submissionDevice(request.headers.get('user-agent')) });
   try {
     const res = await fetch(webhook, {
       method: "POST",
@@ -62,5 +65,7 @@ export async function POST(request: Request) {
     return Response.json({ error: "Transmission impossible" }, { status: 502 });
   }
 
+  await confirmBusinessSubmission(measurement);
   return Response.json({ ok: true, forwarded: true });
 }
+

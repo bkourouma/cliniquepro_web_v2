@@ -53,8 +53,11 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      - name: Durable business measurement regressions
+        run: node --test scripts/test-seo-business-outbox.mjs scripts/test-seo-business-hooks.mjs scripts/test-ghcr-deployment.mjs scripts/test-ghcr-deployment.mjs scripts/test-ghcr-deployment.mjs
       - name: Tests unitaires
         run: npm test
 
       - name: Build
         run: npm run build
+
