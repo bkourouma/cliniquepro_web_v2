@@ -7,7 +7,7 @@
 import { SITE_UPDATED } from "./site";
 
 export const PAGE_UPDATED: Record<string, string> = {
-  "/": "2026-10-16",
+  "/": "2026-11-21",
   "/fonctionnalites": "2026-10-16",
   "/tarifs": "2026-10-16",
   "/faq": "2026-10-16",
