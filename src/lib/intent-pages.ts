@@ -575,10 +575,10 @@ export const intentPages: IntentPage[] = [
   // Assureurs génériques : aucun nom, aucune télétransmission, aucun délai de remboursement.
   {
     slug: "facturation-assurance-clinique",
-    title: "Facturation de clinique et tiers payant",
-    description: "Factures par prestation, part patient et part assurance, validation par l'assureur, créances suivies. Pour clinique et cabinet.",
+    title: "Logiciel de facturation assurance clinique",
+    description: "Logiciel de facturation pour clinique : part patient et part assurance, validation par l'assureur, tiers payant et créances suivies.",
     eyebrow: "Facturation et assurance",
-    h1: "Facturation et prise en charge assurance pour clinique",
+    h1: "Logiciel de facturation et de prise en charge assurance pour clinique",
     lead: "De l'assurance rattachée au patient à la créance suivie : CliniquePro relie la réception, la décision de l'assureur, la facture et la caisse, pour que chaque prestation soit facturée à la bonne personne, au bon montant.",
     sections: [
       {
@@ -632,6 +632,10 @@ export const intentPages: IntentPage[] = [
       { h2: "Prix : facturation, caisse et comptabilité", price: "financier" },
     ],
     faq: [
+      {
+        q: "Que fait un logiciel de facturation assurance pour une clinique ?",
+        a: "Dans CliniquePro, il relie l'assurance rattachée au patient, la demande de prise en charge, la décision de l'assureur prestation par prestation, la facture avec part patient et part assurance, puis le suivi du tiers payant jusqu'au paiement.",
+      },
       {
         q: "Comment CliniquePro gère-t-il les assurances et les mutuelles ?",
         a: "Vous créez dans un catalogue les assurances et mutuelles avec lesquelles vous travaillez, puis vous les rattachez aux patients. La demande de prise en charge est envoyée à l'assureur, qui valide ou rejette chaque prestation via un lien sécurisé.",
